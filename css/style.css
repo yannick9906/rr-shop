@@ -1,0 +1,50 @@
+header, main, footer {
+    padding-left: 240px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+.button-back {
+    line-height: 58px;
+    height: 58px;
+    font-size: 2.7rem;
+    left: 0;
+    position: fixed;
+}
+
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 10000;
+}
+
+@font-face {
+    font-family: 'American-Captain';
+    src:url('../fonts/American-Captain.ttf.woff') format('woff'),
+    url('../fonts/American-Captain.ttf.svg#American-Captain') format('svg'),
+    url('../fonts/American-Captain.ttf.eot'),
+    url('../fonts/American-Captain.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.preview {
+    width: 100%;
+    padding: 0 20px 20px;
+    vertical-align: top;
+    height: 150px;
+    font-family: 'American-Captain';
+}
+
+.card-title {
+    font-family: 'American-Captain';
+    letter-spacing: 3px;
+}

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Rheinhessen Riders Shop</title>
+
+    <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet" />
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="rrshop.appcache" />
+    <link rel="icon" href="icon/RRMainz-32.png">
+    <link rel="apple-touch-icon-precomposed" href="img/preview/RH%20Mainz.jpg">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;">
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper black" style="padding-left: 10px;">
+            <a href="#home" class="button-collapse" id="backbutton" onclick="shopHome()"><i class="material-icons mddi mddi-arrow-left"></i></a>
+            <a href="#home" class="brand-logo hide-on-small-only" style="letter-spacing: 5px; font-family: 'American-Captain';">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-med-and-up" style="letter-spacing: 5px; font-family: 'American-Captain';">RR Shop</a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="#shopping-cart"><i class="material-icons mddi mddi-shopping"></i></a></li>
+            </ul>
+        </div>
+        <div class="nav-wrapper black" style="padding-left: 10px;">
+            <div class="col s12">
+                <a onclick="shopHome()" href="#home" class="breadcrumb">Home</a>
+                <a id="breadShirt" href="#shirt" class="breadcrumb" style="display:none">RheinhessenRiders Shirt</a>
+                <a id="breadHoodie" href="#hoodie" class="breadcrumb" style="display:none">RheinhessenRiders Hoodie</a>
+                <a id="breadSticker" href="#sticker" class="breadcrumb" style="display:none">RheinhessenRiders Sticker</a>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="container" style="height: 50px;"></div>
+<div class="container row" id="shopHome">
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-image">
+                <img src="img/hoodie/Hoodie-Back-1.jpg">
+                <span class="card-title" style="text-shadow: 0 0 4px black;">RheinhessenRiders Hoodie</span>
+            </div>
+            <div class="card-content black-text">
+                <p>Der Winter steht an und auch wenn die Reifen kalt bleiben,
+                    hält euch der RheinhessenRiders Hoodie immer warm!
+                    Exklusiv mit deinem Namen und der Stadt wird jeder sofort erkennen,
+                    dass hier ein echter RR-Member am Start ist!</p>
+            </div>
+            <div class="card-action">
+                <a href="#hoodie" onclick="hoodieDetail()" class="green-text text-darken-2">ab 30€/Stk - Jetzt bestellen</a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-image">
+                <img src="img/shirt/Shirt-Back-Mainz.jpg">
+                <span class="card-title" style="text-shadow: 0 0 10px black;">RheinhessenRiders Shirt</span>
+            </div>
+            <div class="card-content black-text">
+                <p>Du bist so heiß, dass dir der Hoodie zu warm ist oder möchtest auch im Sommer
+                    zeigen zu wem du gehörst? Dann ist das RheinhessenRiders Shirt perfekt für
+                    dich. Ebenfalls mit deinem Namen, Stadt und natürlich den Logos wird jeder
+                    dich erkennen!</p>
+            </div>
+            <div class="card-action">
+                <a href="#shirt" onclick="shirtDetail()" class="green-text text-darken-2">ab 19€/Stk - Jetzt bestellen</a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-image">
+                <img src="img/sticker/Sticker-Mainz.jpg">
+                <span class="card-title" style="text-shadow: 0 0 10px black;">RheinhessenRiders Sticker</span>
+            </div>
+            <div class="card-content black-text">
+                <p>Du möchtest dein Motorrad, Auto, die Shisha oder was auch immer optisch aufwerten?
+                    Mit den Stickern hast du die Möglichkeit auch ohne den Merch Flagge zu zeigen -
+                    Er passt perfekt auf alles außer Roller und Fahrräder, und für den Spitzenpreis
+                    erhaltet ihr 20PS mehr!</p>
+            </div>
+            <div class="card-action">
+                <a href="#sticker" onclick="stickerDetail()" class="green-text text-darken-2">ab 1€/Stk - Jetzt bestellen</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" id="shopDetailHoodie">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text">RheinhessenRiders Hoodie</h4>
+        <div class="col s12 m6">
+            <div class="carousel carousel-slider" id="slider1">
+                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-1.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-2.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-3.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-4.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-5.jpg"></a>
+            </div>
+            <p class="black-text">Der Winter steht an und auch wenn die Reifen kalt bleiben,
+                hält euch der RheinhessenRiders Hoodie immer warm!
+                Exklusiv mit deinem Namen und der Stadt wird jeder sofort erkennen,
+                dass hier ein echter RR-Member am Start ist!</p>
+        </div>
+        <div class="col s12 m6 row">
+            <div class="col s12 row black">
+                <div class="col s6" style="line-height: normal;">
+                    <p class="bolden white-text">Vorderseite:</p>
+                    <img src="img/preview/bike.gif" width="100%"/>
+                    <div class="white-text center preview" id="preview-front">
+                        <span>NAME</span>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <p class="bolden white-text">Rückseite:</p>
+                    <img src="img/preview/RH%20Mainz.png" width="100%" id="preview-back"/>
+                </div>
+            </div>
+            <div class="col s12">
+                <form class="row">
+                    <div class="input-field col s12 m6">
+                        <input id="front_name" type="text" onkeyup="refreshPreview()" value="Name">
+                        <label for="front_name">Name auf der Front</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="citysel" onchange="refreshPreview()">
+                            <option value="" disabled selected>Stadt auswählen</option>
+                            <option value="mz">Mainz</option>
+                            <option value="wi">Wiesbaden</option>
+                            <option value="ffm">Frankfurt</option>
+                            <option value="az">Alzey</option>
+                            <option value="wo">Worms</option>
+                        </select>
+                        <label>Stadt</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="hoodieAmount" onchange="hoodieRefreshPrice()">
+                            <option value="1" selected>1 Stk.</option>
+                            <option value="2">2 Stk.</option>
+                            <option value="3">3 Stk.</option>
+                            <option value="4">4 Stk.</option>
+                            <option value="5">5 Stk.</option>
+                        </select>
+                        <label>Anzahl</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="hoodieSize">
+                            <option value="" disabled selected>Größe wählen</option>
+                            <option value="s">S</option>
+                            <option value="m">M</option>
+                            <option value="l">L</option>
+                            <option value="xl">XL</option>
+                            <option value="xxl">XXL</option>
+                        </select>
+                        <label>Größe</label>
+                    </div>
+                    <h4 class="col s5 offset-s4 bolden right-align" style="font-family: American-Captain;" id="hoodie_price"> 30 €</h4>
+                    <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="hoodieAdd()"><i class="mddi mddi-basket-fill"></i></a>
+                </form>
+            </div>
+        </div>
+        <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
+    </div>
+</div>
+<div class="container" id="shopDetailShirt">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text">RheinhessenRiders Shirt</h4>
+        <div class="col s12 m6">
+            <div class="carousel carousel-slider" id="slider2">
+                <a class="carousel-item" href="#!"><img src="img/shirt/Shirt-Back-Mainz.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/shirt/Shirt-Back-Alzey.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/shirt/Shirt-Back-Worms.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/shirt/Shirt-Back-Frankfurt.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/shirt/Shirt-Back-Wiesbaden.jpg"></a>
+            </div>
+            <p>Du bist so heiß, dass dir der Hoodie zu warm ist oder möchtest auch im Sommer
+            zeigen zu wem du gehörst? Dann ist das RheinhessenRiders Shirt perfekt für
+            dich. Ebenfalls mit deinem Namen, Stadt und natürlich den Logos wird jeder
+            dich erkennen!</p>
+        </div>
+        <div class="col s12 m6 row">
+            <div class="col s12 row black">
+                <div class="col s6" style="line-height: normal;">
+                    <p class="bolden white-text">Vorderseite:</p>
+                    <img src="img/preview/bike.gif" width="100%"/>
+                    <div class="white-text center preview" id="preview-front-shirt">
+                        <span>NAME</span>
+                    </div>
+                </div>
+                <div class="col s6">
+                    <p class="bolden white-text">Rückseite:</p>
+                    <img src="img/preview/RH%20Mainz.png" width="100%" id="preview-back-shirt"/>
+                </div>
+            </div>
+            <div class="col s12">
+                <form class="row">
+                    <div class="input-field col s12 m6">
+                        <input id="front_name_shirt" type="text" onkeyup="refreshPreviewShirt()" value="Name">
+                        <label for="front_name_shirt">Name auf der Front</label>
+                    </div>
+                    <div class="input-field col s6 m6">
+                        <select id="cityselShirt" onchange="refreshPreviewShirt()">
+                            <option value="" disabled selected>Stadt auswählen</option>
+                            <option value="mz">Mainz</option>
+                            <option value="wi">Wiesbaden</option>
+                            <option value="ffm">Frankfurt</option>
+                            <option value="az">Alzey</option>
+                            <option value="wo">Worms</option>
+                        </select>
+                        <label>Stadt</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="shirtAmount" onchange="shirtRefreshPrice()">
+                            <option value="1" selected>1 Stk.</option>
+                            <option value="2">2 Stk.</option>
+                            <option value="3">3 Stk.</option>
+                            <option value="4">4 Stk.</option>
+                            <option value="5">5 Stk.</option>
+                        </select>
+                        <label>Anzahl</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select id="shirtSize">
+                            <option value="" disabled selected>Größe wählen</option>
+                            <option value="s">S</option>
+                            <option value="m">M</option>
+                            <option value="l">L</option>
+                            <option value="xl">XL</option>
+                            <option value="xxl">XXL</option>
+                        </select>
+                        <label>Größe</label>
+                    </div>
+                    <h4 class="col s5 offset-s4 bolden right-align" style="font-family: American-Captain;" id="shirt_price"> 19 €</h4>
+                    <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="shirtAdd()"><i class="mddi mddi-basket-fill"></i></a>
+                </form>
+            </div>
+        </div>
+        <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
+    </div>
+</div>
+<div class="container" id="shopDetailSticker">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text">RheinhessenRiders Sticker</h4>
+        <div class="col s12 m6">
+            <div class="carousel carousel-slider" id="slider3">
+                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Mainz.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Alzey.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Worms.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Frankfurt.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Wiesbaden.jpg"></a>
+            </div>
+            <p>Du möchtest dein Motorrad, Auto, die Shisha oder was auch immer optisch aufwerten?
+                Mit den Stickern hast du die Möglichkeit auch ohne den Merch Flagge zu zeigen -
+                Er passt perfekt auf alles außer Roller und Fahrräder, und für den Spitzenpreis
+                erhaltet ihr 20PS mehr!</p>
+        </div>
+        <div class="col s12 m6 row">
+            <div class="col s12 row black">
+                <div class="col s6">
+                    <p class="bolden white-text">Vorderseite:</p>
+                    <img src="img/preview/RH%20Mainz.png" width="100%" id="preview-back-sticker"/>
+                </div>
+            </div>
+            <div class="col s12">
+                <form class="row">
+                    <div class="input-field col s6">
+                        <select id="cityselSticker" onchange="refreshPreviewSticker()">
+                            <option value="mz" selected>Mainz</option>
+                            <option disabled value="wi">Wiesbaden</option>
+                            <option disabled value="ffm">Frankfurt</option>
+                            <option disabled value="az">Alzey</option>
+                            <option disabled value="wo">Worms</option>
+                        </select>
+                        <label>Stadt</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <select id="stickerAmount" onchange="stickerRefreshPrice()">
+                            <option value="1" selected>1 Stk.</option>
+                            <option value="2">2 Stk.</option>
+                            <option value="3">3 Stk.</option>
+                            <option value="4">4 Stk.</option>
+                            <option value="5">5 Stk.</option>
+                            <option disabled value="10">10 Stk.</option>
+                            <option disabled value="15">15 Stk.</option>
+                            <option disabled value="20">20 Stk.</option>
+                            <option disabled value="25">25 Stk.</option>
+                            <option disabled value="50">50 Stk.</option>
+                            <option disabled value="100">100 Stk.</option>
+                        </select>
+                        <label>Anzahl</label>
+                    </div>
+                    <div class="input-field col s3">
+                        <select id="stickerSize">
+                            <option value="4" selected>4x4cm</option>
+                            <option disabled value="5">5x5cm</option>
+                            <option disabled value="10">10x10cm</option>
+                            <option disabled value="15">15x15cm</option>
+                            <option disabled value="20">20x20cm</option>
+                        </select>
+                        <label>Größe</label>
+                    </div>
+                    <h4 class="col s5 offset-s4 bolden right-align" style="font-family: American-Captain;" id="sticker_price"> ab 1 €</h4>
+                    <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="stickerAdd()"><i class="mddi mddi-basket-fill"></i></a>
+                </form>
+            </div>
+        </div>
+        <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
+    </div>
+</div>
+<div class="container" id="shopping-cart">
+
+</div>
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
+<script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+<script type="text/javascript" src="shop.js"></script>
+<script>
+    $(document).ready(() => {
+        $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});
+        $(".dropdown-button").dropdown();
+        $("select").material_select();
+        shopHome();
+        if(window.location.hash) {
+            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+            if (hash === "hoodie") hoodieDetail();
+            if (hash === "shirt") shirtDetail();
+            if (hash === "sticker") stickerDetail();
+            if (hash === "shopping-cart") shoppingCart();
+        }
+        window.onhashchange = hashChange;
+    });
+</script>
+</html>

@@ -1,0 +1,60 @@
+{
+  "manifest_version": 2,
+
+  "name": "RheinhessenRiders Shop",
+  "short_name": "RR Shop",
+  "description": "RheinhessenRiders Shop",
+  "version": "1.0.0a",
+  "icons": [
+    {
+      "src": "icon/RRMainz-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "density": "1.0"
+    },
+    {
+      "src": "icon/RRMainz-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "density": "1.0"
+    },
+    {
+      "src": "icon/RRMainz-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "density": "1.0"
+    },
+    {
+      "src": "icon/RRMainz-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "density": "1.0"
+    },
+    {
+      "src": "icon/RRMainz-64.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "density": "1.0"
+    },
+    {
+      "src": "icon/RRMainz-32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "density": "1.0"
+    }
+  ],
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "default-locale": "de",
+  "developer": "Yannick F&#233;lix",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "chrome": { "navigation": false },
+  "permissions": [
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    "icon/RRMainz-192.png"
+  ]
+}
