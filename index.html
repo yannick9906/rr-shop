@@ -22,10 +22,11 @@
 <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper black" style="padding-left: 10px;">
-            <a href="#home" class="button-collapse" id="backbutton" onclick="shopHome()"><i class="material-icons mddi mddi-arrow-left"></i></a>
-            <a href="#home" class="brand-logo hide-on-small-only" style="letter-spacing: 5px; font-family: 'American-Captain';">RheinhessenRiders Shop</a>
-            <a href="#home" class="brand-logo hide-on-med-and-up" style="letter-spacing: 5px; font-family: 'American-Captain';">RR Shop</a>
+            <a href="#home" class="button-collapse" id="backbutton" onclick="window.history.back()"><i class="material-icons mddi mddi-arrow-left"></i></a>
+            <a href="#home" class="brand-logo hide-on-small-only rrSpace">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-med-and-up rrSpace">RR Shop</a>
             <ul id="nav-mobile" class="right">
+                <li><a><span class="new badge white black-text rr" id="cartAmount">2</span></a></li>
                 <li><a href="#shopping-cart"><i class="material-icons mddi mddi-shopping"></i></a></li>
             </ul>
         </div>
@@ -35,6 +36,7 @@
                 <a id="breadShirt" href="#shirt" class="breadcrumb" style="display:none">RheinhessenRiders Shirt</a>
                 <a id="breadHoodie" href="#hoodie" class="breadcrumb" style="display:none">RheinhessenRiders Hoodie</a>
                 <a id="breadSticker" href="#sticker" class="breadcrumb" style="display:none">RheinhessenRiders Sticker</a>
+                <a id="breadCart" href="#shopping-cart" class="breadcrumb" style="display:none">Einkaufswagen</a>
             </div>
         </div>
     </nav>
@@ -45,7 +47,7 @@
         <div class="card">
             <div class="card-image">
                 <img src="img/hoodie/Hoodie-Back-1.jpg">
-                <span class="card-title" style="text-shadow: 0 0 4px black;">RheinhessenRiders Hoodie</span>
+                <span class="card-title rrSpace" style="text-shadow: 0 0 4px black;">RheinhessenRiders Hoodie</span>
             </div>
             <div class="card-content black-text">
                 <p>Der Winter steht an und auch wenn die Reifen kalt bleiben,
@@ -62,7 +64,7 @@
         <div class="card">
             <div class="card-image">
                 <img src="img/shirt/Shirt-Back-Mainz.jpg">
-                <span class="card-title" style="text-shadow: 0 0 10px black;">RheinhessenRiders Shirt</span>
+                <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">RheinhessenRiders Shirt</span>
             </div>
             <div class="card-content black-text">
                 <p>Du bist so heiß, dass dir der Hoodie zu warm ist oder möchtest auch im Sommer
@@ -79,7 +81,7 @@
         <div class="card">
             <div class="card-image">
                 <img src="img/sticker/Sticker-Mainz.jpg">
-                <span class="card-title" style="text-shadow: 0 0 10px black;">RheinhessenRiders Sticker</span>
+                <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">RheinhessenRiders Sticker</span>
             </div>
             <div class="card-content black-text">
                 <p>Du möchtest dein Motorrad, Auto, die Shisha oder was auch immer optisch aufwerten?
@@ -126,11 +128,11 @@
             <div class="col s12">
                 <form class="row">
                     <div class="input-field col s12 m6">
-                        <input id="front_name" type="text" onkeyup="refreshPreview()" value="Name">
+                        <input id="front_name" type="text" onkeyup="refreshPreviewHoodie()" value="Name">
                         <label for="front_name">Name auf der Front</label>
                     </div>
                     <div class="input-field col s6">
-                        <select id="citysel" onchange="refreshPreview()">
+                        <select id="citysel" onchange="refreshPreviewHoodie()">
                             <option value="" disabled selected>Stadt auswählen</option>
                             <option value="mz">Mainz</option>
                             <option value="wi">Wiesbaden</option>
@@ -161,7 +163,7 @@
                         </select>
                         <label>Größe</label>
                     </div>
-                    <h4 class="col s5 offset-s4 bolden right-align" style="font-family: American-Captain;" id="hoodie_price"> 30 €</h4>
+                    <h4 class="col s5 offset-s4 bolden right-align rr" id="hoodie_price"> 30 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="hoodieAdd()"><i class="mddi mddi-basket-fill"></i></a>
                 </form>
             </div>
@@ -237,7 +239,7 @@
                         </select>
                         <label>Größe</label>
                     </div>
-                    <h4 class="col s5 offset-s4 bolden right-align" style="font-family: American-Captain;" id="shirt_price"> 19 €</h4>
+                    <h4 class="col s5 offset-s4 bolden right-align rr" id="shirt_price"> 19 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="shirtAdd()"><i class="mddi mddi-basket-fill"></i></a>
                 </form>
             </div>
@@ -306,7 +308,7 @@
                         </select>
                         <label>Größe</label>
                     </div>
-                    <h4 class="col s5 offset-s4 bolden right-align" style="font-family: American-Captain;" id="sticker_price"> ab 1 €</h4>
+                    <h4 class="col s5 offset-s4 bolden right-align rr" id="sticker_price"> ab 1 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="stickerAdd()"><i class="mddi mddi-basket-fill"></i></a>
                 </form>
             </div>
@@ -315,14 +317,28 @@
     </div>
 </div>
 <div class="container" id="shopping-cart">
-
+    <div class="card-panel row">
+        <h4 class="col s12 black-text">Einkaufswagen</h4>
+        <div id="cart-list">
+            <!-- To be filled by JS -->
+        </div>
+        <div class="col s12">
+            <a id="buyButton" class="waves-effect waves-green btn black white-text">Zur Kasse</a>
+            <a id="clearButton" class="waves-effect waves-red btn black-text white" onclick="clearCart()">Warenkorb leeren</a>
+        </div>
+    </div>
 </div>
 </body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
 <script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-<script type="text/javascript" src="shop.js"></script>
+<script type="text/javascript" src="lib/handlebars.min.js"></script>
+<script type="text/javascript" src="lib/lockr.js"></script>
+<script type="text/javascript" src="js/shopBase.js"></script>
+<script type="text/javascript" src="js/shopCart.js"></script>
+<script type="text/javascript" src="js/shopHoodie.js"></script>
+<script type="text/javascript" src="js/shopShirt.js"></script>
+<script type="text/javascript" src="js/shopSticker.js"></script>
 <script>
     $(document).ready(() => {
         $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});

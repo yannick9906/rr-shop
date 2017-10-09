@@ -44,7 +44,24 @@ header, main, footer {
     font-family: 'American-Captain';
 }
 
-.card-title {
-    font-family: 'American-Captain';
-    letter-spacing: 3px;
+.rr {
+    font-family: American-Captain;
+}
+
+.rrSpace {
+    font-family: American-Captain;
+    letter-spacing: 5px;
+}
+
+.bolden {
+    font-weight: bold;
+}
+
+.bigger {
+    font-size: 25px;
+}
+
+.price {
+    font-size: 30px;
+    vertical-align: top;
 }
