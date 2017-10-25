@@ -18,7 +18,7 @@
     <meta name="theme-color" content="#000000" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
-<body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;">
+<body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;" onresize="updateBreadCrump();">
 <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper black" style="padding-left: 10px;">
@@ -37,6 +37,7 @@
                 <a id="breadHoodie" href="#hoodie" class="breadcrumb" style="display:none">RheinhessenRiders Hoodie</a>
                 <a id="breadSticker" href="#sticker" class="breadcrumb" style="display:none">RheinhessenRiders Sticker</a>
                 <a id="breadCart" href="#shopping-cart" class="breadcrumb" style="display:none">Einkaufswagen</a>
+                <a id="breadBuy" href="#buyerInfo" class="breadcrumb" style="display:none">Bezahlen</a>
             </div>
         </div>
     </nav>
@@ -97,7 +98,8 @@
 </div>
 <div class="container" id="shopDetailHoodie">
     <div class="card-panel row">
-        <h4 class="col s12 black-text">RheinhessenRiders Hoodie</h4>
+        <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Hoodie</h4>
+        <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Hoodie</h4>
         <div class="col s12 m6">
             <div class="carousel carousel-slider" id="slider1">
                 <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-1.jpg"></a>
@@ -173,7 +175,8 @@
 </div>
 <div class="container" id="shopDetailShirt">
     <div class="card-panel row">
-        <h4 class="col s12 black-text">RheinhessenRiders Shirt</h4>
+        <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Shirt</h4>
+        <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Shirt</h4>
         <div class="col s12 m6">
             <div class="carousel carousel-slider" id="slider2">
                 <a class="carousel-item" href="#!"><img src="img/shirt/Shirt-Back-Mainz.jpg"></a>
@@ -249,7 +252,8 @@
 </div>
 <div class="container" id="shopDetailSticker">
     <div class="card-panel row">
-        <h4 class="col s12 black-text">RheinhessenRiders Sticker</h4>
+        <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Sticker</h4>
+        <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Sticker</h4>
         <div class="col s12 m6">
             <div class="carousel carousel-slider" id="slider3">
                 <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Mainz.jpg"></a>
@@ -318,14 +322,65 @@
 </div>
 <div class="container" id="shopping-cart">
     <div class="card-panel row">
-        <h4 class="col s12 black-text">Einkaufswagen</h4>
+        <h4 class="col s12 black-text rrSpace">Einkaufswagen</h4>
         <div id="cart-list">
             <!-- To be filled by JS -->
         </div>
         <div class="col s12">
-            <a id="buyButton" class="waves-effect waves-green btn black white-text">Zur Kasse</a>
+            <a id="buyButton" class="waves-effect waves-green btn black white-text" onclick="buy()" href="#buyerInfo">Zur Kasse</a>
             <a id="clearButton" class="waves-effect waves-red btn black-text white" onclick="clearCart()">Warenkorb leeren</a>
         </div>
+    </div>
+</div>
+<div class="container" id="buyerInfo">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text rrSpace">Kasse</h4>
+        <form class="col s12 row">
+            <div class="input-field col s6">
+                <input id="first_name" type="text">
+                <label for="first_name">Vorname</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="last_name" type="text">
+                <label for="last_name">Nachname</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="email" type="email">
+                <label for="email">Email</label>
+            </div>
+            <div class="col s12 m6">
+                <h6 class="bolden">Bezahlmethode</h6>
+                <p>
+                    <input name="payment" type="radio" id="cash" />
+                    <label for="cash">Bar</label>
+                </p>
+                <p>
+                    <input name="payment" type="radio" id="transfer" />
+                    <label for="transfer">Überweisung</label>
+                </p>
+                <p>
+                    <input name="payment" type="radio" id="paypal"  />
+                    <label for="paypal">PayPal</label>
+                </p>
+                <p>
+                    <input name="payment" type="radio" id="directdebit" disabled="disabled" />
+                    <label for="directdebit">Lastschrift</label>
+                </p>
+                <p><br/></p>
+            </div>
+            <div class="col s12 m6">
+                <h6 class="bolden">Abholpräferenz</h6>
+                <p>
+                    <input name="destination" type="radio" id="mz" value="mz"/>
+                    <label for="mz">Mainz-Lerchenberg (Yannick Félix)</label>
+                </p>
+                <p>
+                    <input name="destination" type="radio" id="fries" value="fries"/>
+                    <label for="fries">Friesenheim (Philipp Lommel)</label>
+                </p>
+            </div>
+        </form>
+        <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
     </div>
 </div>
 </body>
@@ -339,6 +394,7 @@
 <script type="text/javascript" src="js/shopHoodie.js"></script>
 <script type="text/javascript" src="js/shopShirt.js"></script>
 <script type="text/javascript" src="js/shopSticker.js"></script>
+<script type="text/javascript" src="js/shopBuy.js"></script>
 <script>
     $(document).ready(() => {
         $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});
@@ -351,8 +407,10 @@
             if (hash === "shirt") shirtDetail();
             if (hash === "sticker") stickerDetail();
             if (hash === "shopping-cart") shoppingCart();
+            if (hash === "buyerInfo") buy();
         }
         window.onhashchange = hashChange;
+        updateBreadCrump();
     });
 </script>
 </html>

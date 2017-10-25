@@ -53,11 +53,14 @@ function shopHome() {
     $("#shopDetailSticker").hide();
     $("#shopDetailHoodie").hide();
     $("#shopping-cart").hide();
+    $("#buyerInfo").hide();
     $("#breadHoodie").hide();
     $("#breadShirt").hide();
     $("#breadSticker").hide();
     $("#breadCart").hide();
+    $("#breadBuy").hide();
     $("#backbutton").hide();
+    window.scrollTo(0,0);
     updateCartAmount();
 }
 
@@ -70,5 +73,14 @@ function hashChange() {
         if (hash === "shirt") shirtDetail();
         if (hash === "sticker") stickerDetail();
         if (hash === "shopping-cart") shoppingCart();
+        if (hash === "buyerInfo") buy();
+    }
+}
+
+function updateBreadCrump() {
+    if(window.innerWidth <= 350 && $("#breadBuy").is(":visible")) {
+        $("#breadCart").html("...");
+    } else {
+        $("#breadCart").html("Einkaufswagen");
     }
 }
