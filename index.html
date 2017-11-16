@@ -30,15 +30,11 @@
                 <li><a href="#shopping-cart"><i class="material-icons mddi mddi-shopping"></i></a></li>
             </ul>
         </div>
-        <div class="nav-wrapper black" style="padding-left: 10px;">
-            <div class="col s12">
-                <a onclick="shopHome()" href="#home" class="breadcrumb">Home</a>
-                <a id="breadShirt" href="#shirt" class="breadcrumb" style="display:none">RheinhessenRiders Shirt</a>
-                <a id="breadHoodie" href="#hoodie" class="breadcrumb" style="display:none">RheinhessenRiders Hoodie</a>
-                <a id="breadSticker" href="#sticker" class="breadcrumb" style="display:none">RheinhessenRiders Sticker</a>
-                <a id="breadCart" href="#shopping-cart" class="breadcrumb" style="display:none">Einkaufswagen</a>
-                <a id="breadBuy" href="#buyerInfo" class="breadcrumb" style="display:none">Bezahlen</a>
-            </div>
+        <div class="nav-content black">
+            <ul class="tabs tabs-transparent row">
+                <li class="tab col s6 m3 l2"><a class="active" href="#home">Shop</a></li>
+                <li class="tab col s6 m3 l2"><a href="#test2">Fundgrube</a></li>
+            </ul>
         </div>
     </nav>
 </div>
@@ -47,7 +43,12 @@
     <div class="col s12 m4">
         <div class="card">
             <div class="card-image">
-                <img src="img/hoodie/Hoodie-Back-1.jpg">
+                <picture>
+                    <source srcset="img/hoodie/Hoodie-Back-8-25.jpg" media="(max-width: 600px)">
+                    <source srcset="img/hoodie/Hoodie-Back-8-50.jpg" media="(max-width: 992px)">
+                    <source srcset="img/hoodie/Hoodie-Back-8-100.jpg">
+                    <img srcset="img/hoodie/Hoodie-Back-8-100.jpg" alt="RR Hoodie">
+                </picture>
                 <span class="card-title rrSpace" style="text-shadow: 0 0 4px black;">RheinhessenRiders Hoodie</span>
             </div>
             <div class="card-content black-text">
@@ -81,7 +82,7 @@
     <div class="col s12 m4">
         <div class="card">
             <div class="card-image">
-                <img src="img/sticker/Sticker-Mainz.jpg">
+                <img src="img/sticker/Sticker-Mainz-1.jpg">
                 <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">RheinhessenRiders Sticker</span>
             </div>
             <div class="card-content black-text">
@@ -102,11 +103,70 @@
         <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Hoodie</h4>
         <div class="col s12 m6">
             <div class="carousel carousel-slider" id="slider1">
-                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-1.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-2.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-3.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-4.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/hoodie/Hoodie-Back-5.jpg"></a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-1-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-1-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-1-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-1-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-2-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-2-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-2-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-2-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-3-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-3-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-3-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-3-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-4-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-4-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-4-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-4-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-5-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-5-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-5-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-5-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-6-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-6-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-6-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-6-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-7-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-7-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-7-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-7-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
+                <a class="carousel-item" href="#hoodie">
+                    <picture>
+                        <source srcset="img/hoodie/Hoodie-Back-8-25.jpg" media="(max-width: 600px)">
+                        <source srcset="img/hoodie/Hoodie-Back-8-50.jpg" media="(max-width: 992px)">
+                        <source srcset="img/hoodie/Hoodie-Back-8-100.jpg">
+                        <img srcset="img/hoodie/Hoodie-Back-8-100.jpg" alt="RR Hoodie" style="width:100%;">
+                    </picture>
+                </a>
             </div>
             <p class="black-text">Der Winter steht an und auch wenn die Reifen kalt bleiben,
                 hält euch der RheinhessenRiders Hoodie immer warm!
@@ -256,11 +316,13 @@
         <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Sticker</h4>
         <div class="col s12 m6">
             <div class="carousel carousel-slider" id="slider3">
-                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Mainz.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Alzey.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Worms.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Frankfurt.jpg"></a>
-                <a class="carousel-item" href="#!"><img src="img/sticker/Sticker-Wiesbaden.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Mainz-s1.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Mainz-2.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Mainz.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Alzey.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Worms.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Frankfurt.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Wiesbaden.jpg"></a>
             </div>
             <p>Du möchtest dein Motorrad, Auto, die Shisha oder was auch immer optisch aufwerten?
                 Mit den Stickern hast du die Möglichkeit auch ohne den Merch Flagge zu zeigen -
@@ -383,6 +445,40 @@
         <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
     </div>
 </div>
+<div class="container" id="orderInfo">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text rrSpace">Bestellungsstatus</h4>
+        <div class="col s4 black-text">
+            <div class="center grey-text text-lighten-2" id="orderApproved">
+                <i class="mddi mddi-playlist-check large"></i>
+                <p class="bolden">Bestellung angenommen</p>
+            </div>
+        </div>
+        <div class="col s4 black-text">
+            <div class="center grey-text text-lighten-2" id="orderPayed">
+                <i class="mddi mddi-credit-card-multiple large"></i>
+                <p class="bolden">Bestellung bezahlt</p>
+            </div>
+        </div>
+        <div class="col s4 black-text">
+            <div class="center grey-text text-lighten-2" id="orderShipped">
+                <i class="mddi mddi-truck-delivery large"></i>
+                <p class="bolden">Bestellung abholbereit</p>
+            </div>
+        </div>
+        <div class="progress col s8 offset-s2 grey lighten-3">
+            <div class="determinate black" style="width: 0%" id="orderProgress"></div>
+        </div>
+        <div class="col s12 spacer">&nbsp;</div>
+        <div class="col s12 row">
+            <div class="col s6 l3 bolden">Bestellnummer: </div><div class="col s6 l3" id="info_orderID">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">Status: </div><div class="col s6 l3 green-text" id="info_state">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">Bezahlmethode: </div><div class="col s6 l3" id="info_payment">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">Abholbereit: </div><div class="col s6 l3" id="info_shippingDate">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">Abholort: </div><div class="col s6 l3" id="info_shippingPlace">Laden ...</div><br/>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
@@ -395,6 +491,7 @@
 <script type="text/javascript" src="js/shopShirt.js"></script>
 <script type="text/javascript" src="js/shopSticker.js"></script>
 <script type="text/javascript" src="js/shopBuy.js"></script>
+<script type="text/javascript" src="js/shopInfo.js"></script>
 <script>
     $(document).ready(() => {
         $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});
@@ -408,6 +505,7 @@
             if (hash === "sticker") stickerDetail();
             if (hash === "shopping-cart") shoppingCart();
             if (hash === "buyerInfo") buy();
+            if (hash.startsWith("order")) orderInfo(hash);
         }
         window.onhashchange = hashChange;
         updateBreadCrump();

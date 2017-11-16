@@ -65,3 +65,9 @@ header, main, footer {
     font-size: 30px;
     vertical-align: top;
 }
+
+.spacer {
+    content: ' ';
+    height: 50px !important;
+    min-height: 50px;
+}

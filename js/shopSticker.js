@@ -6,11 +6,11 @@ function refreshPreviewSticker() {
     let city = $("#cityselSticker").val();
     let previewBack = $("#preview-back-sticker");
     console.log(city);
-    if(city === "mz") {slider3.carousel('set', 0); previewBack.attr('src', "img/preview/RH%20Mainz.png");}
-    else if(city === "az") {slider3.carousel('set', 1); previewBack.attr('src', "img/preview/RH%20Alzey.png");}
-    else if(city === "wo") {slider3.carousel('set', 2); previewBack.attr('src', "img/preview/RH%20Worms.png");}
-    else if(city === "ffm") {slider3.carousel('set', 3); previewBack.attr('src', "img/preview/RH%20Frankfurt.png");}
-    else if(city === "wi") {slider3.carousel('set', 4); previewBack.attr('src', "img/preview/RH%20Wiesbaden.png");}
+    if(city === "mz") {/*slider3.carousel('set', 0);*/ previewBack.attr('src', "img/preview/RH%20Mainz.png");}
+    else if(city === "az") {/*slider3.carousel('set', 1); */previewBack.attr('src', "img/preview/RH%20Alzey.png");}
+    else if(city === "wo") {/*slider3.carousel('set', 2); */previewBack.attr('src', "img/preview/RH%20Worms.png");}
+    else if(city === "ffm") {/*slider3.carousel('set', 3); */previewBack.attr('src', "img/preview/RH%20Frankfurt.png");}
+    else if(city === "wi") {/*slider3.carousel('set', 4); */previewBack.attr('src', "img/preview/RH%20Wiesbaden.png");}
 }
 
 function stickerRefreshPrice() {
