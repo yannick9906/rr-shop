@@ -397,7 +397,7 @@
 <div class="container" id="buyerInfo">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace">Kasse</h4>
-        <form class="col s12 row">
+        <form class="col s12 row" id="innerBuyerInfo">
             <div class="input-field col s6">
                 <input id="first_name" type="text">
                 <label for="first_name">Vorname</label>
@@ -413,19 +413,19 @@
             <div class="col s12 m6">
                 <h6 class="bolden">Bezahlmethode</h6>
                 <p>
-                    <input name="payment" type="radio" id="cash" />
+                    <input name="payment" type="radio" id="cash" value="0" />
                     <label for="cash">Bar</label>
                 </p>
                 <p>
-                    <input name="payment" type="radio" id="transfer" />
+                    <input name="payment" type="radio" id="transfer" value="1" />
                     <label for="transfer">Überweisung</label>
                 </p>
                 <p>
-                    <input name="payment" type="radio" id="paypal"  />
+                    <input name="payment" type="radio" id="paypal" value="2" />
                     <label for="paypal">PayPal</label>
                 </p>
                 <p>
-                    <input name="payment" type="radio" id="directdebit" disabled="disabled" />
+                    <input name="payment" type="radio" id="directdebit" disabled="disabled" value="3" />
                     <label for="directdebit">Lastschrift</label>
                 </p>
                 <p><br/></p>
@@ -433,16 +433,48 @@
             <div class="col s12 m6">
                 <h6 class="bolden">Abholpräferenz</h6>
                 <p>
-                    <input name="destination" type="radio" id="mz" value="mz"/>
+                    <input name="destination" type="radio" id="mz" value="0"/>
                     <label for="mz">Mainz-Lerchenberg (Yannick Félix)</label>
                 </p>
                 <p>
-                    <input name="destination" type="radio" id="fries" value="fries"/>
+                    <input name="destination" type="radio" id="fries" value="1" />
                     <label for="fries">Friesenheim (Philipp Lommel)</label>
                 </p>
             </div>
+            <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
         </form>
-        <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
+        <div style="display: none;" id="buyerLoading" class="center col s12">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: none;" id="buyerCheck" class="center col s12">
+            <i class="mddi mddi-check large green-text"></i>
+        </div>
+        <div style="display: none;" id="buyerFail" class="center col s12">
+            <i class="mddi mddi-alert-octagon large red-text"></i><br/>
+            <span class="red-text bolden">Es ist ein Fehler aufgetreten. Da machste nix!</span>
+        </div>
+        <div style="display: none;" id="buyerSuccess" class="center col s12 container">
+            <div class="row">
+                <div class="col s12 m6 left-align">
+                    <span class="bolden">Bestellung erfolgreich.</span><br/>
+                    Weitere Infos folgen per Email.<br/>
+                    //Todo weitere Infos hier anzeigen.
+                </div>
+                <img src="img/Boll.png" alt="Bollinater freut sich. ;)" class="col s12 m6"/>
+            </div>
+        </div>
     </div>
 </div>
 <div class="container" id="orderInfo">
