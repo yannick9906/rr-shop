@@ -29,6 +29,7 @@ function buyNow() {
                     window.setTimeout(() => {
                         $("#buyerCheck").hide();
                         $("#buyerSuccess").show();
+                        clearCart();
                     }, 500);
                 });
             } else {

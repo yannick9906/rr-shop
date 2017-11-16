@@ -6,10 +6,18 @@
      * Time: 04:44 PM
      */
 
-    echo json_encode([
-        "orderID" => "e79g54h987",
+    require_once "../../classes/Order.php";
+    require_once "../../classes/PDO_Mysql.php";
+
+    $orderID = $_GET["orderID"];
+    $order = \rrshop\Order::fromOrderID($orderID);
+
+    echo json_encode($order);
+
+    /*echo json_encode([
+        "orderID" => uniqid(),
         "state" => 2,
         "nextClose" => "31.12.",
         "payment" => 0,
         "shipping" => 0
-    ]);
+    ]);*/

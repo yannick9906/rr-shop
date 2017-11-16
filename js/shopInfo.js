@@ -5,7 +5,7 @@ function orderInfo(id) {
     $("#shopHome").hide();
     $("#orderInfo").show();
 
-    $.getJSON("backend/api/order/checkInfo.php", {orderID: id}, (data) => {
+    $.getJSON("backend/api/order/checkInfo.php", {orderID: id.replace('order-','')}, (data) => {
         let stateText = setStateProgress(data.state);
         $("#info_orderID").html(data.orderID);
         $("#info_state").html(stateText);
