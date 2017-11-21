@@ -40,3 +40,12 @@ function buyNow() {
         });
     });
 }
+
+function resetBuy() {
+    $("#innerBuyerInfo").show();
+    $("#buyerLoading").hide();
+    $("#buyerCheck").hide();
+    $("#buyerSuccess").hide();
+    $("#buyerFail").hide();
+    $("#buyerInfo").hide();
+}

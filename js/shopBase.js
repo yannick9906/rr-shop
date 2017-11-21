@@ -55,6 +55,7 @@ function shoppingCart() {
     $("#backbutton").show();
     displayCart();
     updateCartAmount();
+    resetBuy()
 }
 
 function shopHome() {
@@ -68,6 +69,7 @@ function shopHome() {
     $("#backbutton").hide();
     window.scrollTo(0,0);
     updateCartAmount();
+    resetBuy()
 }
 
 function hashChange() {
