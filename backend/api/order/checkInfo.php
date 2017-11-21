@@ -7,6 +7,7 @@
      */
 
     require_once "../../classes/Order.php";
+    require_once "../../classes/Customer.php";
     require_once "../../classes/PDO_Mysql.php";
 
     $orderID = $_GET["orderID"];

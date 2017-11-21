@@ -16,7 +16,8 @@ function buyNow() {
         lastname: $("#last_name").val(),
         email: $("#email").val(),
         payment: $('input[name=payment]:checked').val(),
-        shipment: $('input[name=destination]:checked').val()
+        shipment: $('input[name=destination]:checked').val(),
+        items: JSON.stringify(Lockr.smembers("items"))
     }
     console.log(orderData);
 
