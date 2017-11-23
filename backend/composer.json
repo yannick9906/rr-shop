@@ -1,6 +1,7 @@
 {
     "minimum-stability":"dev",
     "require":{
-        "minishlink/web-push":"1.4.*"
+        "minishlink/web-push":"1.4.*",
+        "phpmailer/phpmailer":"6.0"
     }
 }

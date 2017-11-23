@@ -23,9 +23,9 @@
          * @param $customerID
          */
         public function __construct($customerID, $firstname, $lastname, $email) {
-            $this->firstname = $firstname;
-            $this->lastname = $lastname;
-            $this->email = $email;
+            $this->firstname = utf8_encode($firstname);
+            $this->lastname = utf8_encode($lastname);
+            $this->email = utf8_encode($email);
             $this->customerID = $customerID;
             $this->PDO = new PDO_MYSQL();
         }
@@ -38,7 +38,7 @@
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_customers WHERE customerID = :cid", [":cid" => $customerID]);
             if($customerID == $res->customerID) return new Customer($customerID, $res->firstname, $res->lastname, $res->email);
-            else return false;
+            else return new Customer(-1, "Kunde", "nicht gefunden", "null@null.null");
         }
 
         /**

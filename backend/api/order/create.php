@@ -9,6 +9,14 @@
     require_once "../../classes/Order.php";
     require_once "../../classes/Customer.php";
     require_once "../../classes/PDO_Mysql.php";
+    require_once "../../classes/passwords.php";
+    require_once "../../classes/Template.php";
+    require_once "../../vendor/autoload.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/PHPMailer.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/Exception.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/OAuth.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/POP3.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/SMTP.php";
 
     $firstname = utf8_decode($_POST["firstname"]);
     $lastname = utf8_decode($_POST["lastname"]);
@@ -20,6 +28,6 @@
 
     $customer = \rrshop\Customer::checkEMail($email);
     if(!$customer) $customer = \rrshop\Customer::createNew($firstname, $lastname, $email);
-    \rrshop\Order::createOrder($customer, $items, $payment, $shipment);
+    $order = \rrshop\Order::createOrder($customer, $items, $payment, $shipment);
 
-    echo json_encode(["success" => true]);
+    echo json_encode(["success" => true, "order" => $order]);
