@@ -58,8 +58,8 @@
          * @param integer $index index of loop item
          * @return string replaced content
          */
-        private function parseSingle( $key, $value, $string, $index ) {
-            if ( isset( $index ) ) {
+        private function parseSingle( $key, $value, $string, $index=null) {
+            if ( $index!=null ) {
                 $string = str_replace( $this->l_delim . '%index%' . $this->r_delim, $index, $string );
             }
             return str_replace( $this->l_delim . $key . $this->r_delim, $value, $string );

@@ -25,10 +25,11 @@
          * @param $shipment
          * @param $payment
          * @param $state
+         * @param $estDate
          */
         public function __construct($orderID, $customer, $items, $shipment, $payment, $state, $estDate) {
             $this->orderID = $orderID;
-            $this->customer = Customer::fromCustomerID(intval($customer)); //Todo create customer instance
+            $this->customer = Customer::fromCustomerID(intval($customer));
             $this->items = $items;
             $this->shipment = intval($shipment);
             $this->payment = intval($payment);
@@ -53,6 +54,7 @@
          * @param int      $payment
          * @param int      $shipment
          * @return Order
+         * @throws \PHPMailer\PHPMailer\Exception
          */
         public static function createOrder($customer, $items, $payment, $shipment) {
             $pdo = new PDO_MYSQL();
@@ -76,12 +78,16 @@
 
             //Send Email
             $template->assign("orderID", $res->orderID);
+            $invoice = new Invoice($items, $res->orderID, $customer);
+            $invoice->preparePDF();
+            $invoice->getPDFAttachment();
 
             $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
             $mail->addAddress($customer->getEmail(),$customer->getFirstname()." ".$customer->getLastname());
-            $mail->addEmbeddedImage('../../../img/reimann.jpg', 'reimann');    // Optional name
-            $mail->addEmbeddedImage('../../../img/title.jpg', 'title');    // Optional name
-            //Todo generate invoice and qr code
+            $mail->addEmbeddedImage('../../../img/reimann.jpg', 'reimann');
+            $mail->addEmbeddedImage('../../../img/title.jpg', 'title');
+            $mail->addAttachment($res->orderID."-rechnung.pdf",$res->orderID."-rechnung.pdf");
+
 
             $mail->isHTML(true);
             //Todo add plain text version

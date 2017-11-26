@@ -10,8 +10,11 @@
 
 
 
-    class Item implements \JsonSerializable {
-        private $type, $amount, $itemData;
+    class Item {
+        private $Names = [1=>"RheinhessenRiders Hoodie",2=>"RheinhessenRiders Shirt",3=>"RheinhessenRiders Sticker"];
+        private $Prices = [1=>30,2=>17,3=>1];
+        private $Options = ["frontName"=>"Name auf der Front", "city"=>"Stadt", "size"=>"Größe"];
+        private $name, $amount, $itemData,$options,$price;
 
         /**
          * Item constructor.
@@ -21,38 +24,44 @@
          * @param $itemData
          */
         public function __construct($type, $amount, $itemData) {
-            $this->type = $type;
+            $this->name = $this->Names[$type];
+            $this->price = $this->Prices[$type];
             $this->amount = $amount;
             $this->itemData = $itemData;
+            foreach($itemData as $option => $value) {
+                $this->options .= (sizeof($this->options)==0?"":"; ").$this->Options[$option].": ".strtoupper($value);
+            }
         }
 
         /**
-         * @return mixed
+         * @return string
          */
-        public function getType() {
-            return $this->type;
+        public function getName() {
+            return $this->name;
         }
 
         /**
-         * @param mixed $type
+         * @return int
          */
-        public function setType($type) {
-            $this->type = $type;
+        public function getAmount() {
+            return $this->amount;
         }
 
         /**
-         * Specify data which should be serialized to JSON
-         *
-         * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
-         * @return mixed data which can be serialized by <b>json_encode</b>,
-         * which is a value of any type other than a resource.
-         * @since 5.4.0
+         * @return array
          */
-        function jsonSerialize() {
-            return [
-                "itemType" => $this->type,
-                "amount" => $this->amount,
-                "itemData" => $this->itemData
-            ];
+        public function getItemData() {
+            return $this->itemData;
+        }
+
+        /**
+         * @return string
+         */
+        public function getOptions() {
+            return $this->options;
+        }
+
+        public function getTotalPrice() {
+            return $this->amount * $this->price;
         }
     }

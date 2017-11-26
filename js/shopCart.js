@@ -16,7 +16,7 @@ let cartItemTemplate = Handlebars.compile(`
             </div>
             <div class="card-action">
                 <a href="#{{{itemRef}}}">Info</a>
-                <a class="red-text" onclick="delItem({{{itemID}}})">Entfernen</a>
+                <a href="#shopping-cart" class="red-text" onclick="delItem({{{itemID}}})">Entfernen</a>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@ let cartItemTemplate = Handlebars.compile(`
         </div>
         <div class="card-action">
             <a href="#{{{itemRef}}}">Info</a>
-            <a class="red-text" onclick="delItem({{{itemID}}})">Entfernen</a>
+            <a href="#shopping-cart" class="red-text" onclick="delItem({{{itemID}}})">Entfernen</a>
         </div>
     </div>
 </div>
@@ -82,7 +82,7 @@ function displayCart() {
             }));
         }
     }
-    if(items.length == 0) {
+    if(items.length === 0) {
         target.html(`
 <div style="height: 50px; "></div>
 <p class="center">Der Einkaufswagen ist leer.</p>
