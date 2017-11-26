@@ -2,8 +2,8 @@
     /**
      * Created by PhpStorm.
      * User: yanni
-     * Date: 06.03.2016
-     * Time: 18:53
+     * Date: 26.09.2016
+     * Time: 22:20
      */
     namespace rrshop;
     use PDO;
@@ -20,12 +20,6 @@
         private $pass   = "";
         private $user   = 'USER302476';
         private $dbname = 'db_302476_3';
-        //private $host   = 'localhost';
-        //private $port   = 3306;
-        //private $pass   = "";
-        //private $user   = 'root';
-        //private $dbname = 'pos';
-
         /**
          * @return PDO PDO-Object
          */
@@ -47,7 +41,7 @@
             else $stmt->execute();
             return $stmt;
         }
-        public function queryPagedList($tablename, $startElem = 0, $endElem = 99999999, $searchableFields = [], $search = "", $mysql = "") {
+        public function queryPagedList($tablename, $startElem, $endElem, $searchableFields, $search, $sortSQL, $additionalWhere = "") {
             $db = $this->connect();
             if($search != "") {
                 $lastField = $searchableFields[sizeof($searchableFields)-1];
@@ -56,34 +50,21 @@
                     $bindString .= $field;
                     $bindString .= ($field === $lastField ? '' : '," ",');
                 }
-                $mysql = str_replace("WHERE", "AND", $mysql);
-                $stmt = $db->prepare("SELECT * FROM " . $tablename . " WHERE lower(concat(" . $bindString . ")) LIKE lower(concat('%',:search,'%')) " . $mysql . " LIMIT :start,:end");
+                if($additionalWhere != "")
+                    $stmt = $db->prepare("SELECT * FROM " . $tablename . " WHERE lower(concat(" . $bindString . ")) LIKE lower(concat('%',:search,'%')) and " . $additionalWhere . " " . $sortSQL . " LIMIT :start,:end");
+                else
+                    $stmt = $db->prepare("SELECT * FROM " . $tablename . " WHERE lower(concat(" . $bindString . ")) LIKE lower(concat('%',:search,'%')) " . $sortSQL . " LIMIT :start,:end");
                 $stmt->bindValue(":search", $search, PDO::PARAM_STR);
             } else {
-                $stmt = $db->prepare("SELECT * FROM " . $tablename . " " . $mysql . " LIMIT :start,:end");
+                if($additionalWhere != "")
+                    $stmt = $db->prepare("SELECT * FROM " . $tablename . " where " . $additionalWhere . " " .  $sortSQL . " LIMIT :start,:end");
+                else
+                    $stmt = $db->prepare("SELECT * FROM " . $tablename . " " .  $sortSQL . " LIMIT :start,:end");
             }
             $stmt->bindValue(":start", $startElem, PDO::PARAM_INT);
             $stmt->bindValue(":end", $endElem, PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt;
-        }
-        public function queryPagedLinkList($tablename, $startElem = 0, $endElem = 99999999, $search = "") {
-            $db = $this->connect();
-            if($search != "") {
-                $stmt = $db->prepare("SELECT * FROM " . $tablename . " WHERE lower(concat((SELECT stationName FROM moovit_stations WHERE moovit_stationLnks.startStationID = stID),' ',(SELECT stationName FROM moovit_stations WHERE moovit_stationLnks.endStationID = stID))) LIKE lower(concat('%',:search,'%')) LIMIT :start,:end");
-                $stmt->bindValue(":search", $search, PDO::PARAM_STR);
-            } else {
-                $stmt = $db->prepare("SELECT * FROM " . $tablename . " LIMIT :start,:end");
-            }
-            $stmt->bindValue(":start", $startElem, PDO::PARAM_INT);
-            $stmt->bindValue(":end", $endElem, PDO::PARAM_INT);
-            $stmt->execute();
-            return $stmt;
-        }
-        public function queryList($tablename) {
-            $db = $this->connect();
-            $stmt = $db->prepare("SELECT * FROM " . $tablename . " ");
-            $stmt->execute();
+            //var_dump($stmt->errorInfo());
             return $stmt;
         }
         /**

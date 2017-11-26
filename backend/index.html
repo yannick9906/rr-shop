@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>RRShop - Admin Panel</title>
+
+    <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="../lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="../css/style.css" media="all" type="text/css" />
+
+    <link rel="manifest" href="../manifest.json" />
+    <link rel="manifest" href="../rrshop.appcache" />
+    <link rel="icon" href="../icon/RRMainz-32.png">
+    <link rel="apple-touch-icon-precomposed" href="../icon/RRMainz-32.png">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+</body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="../lib/jquery.textfill.min.js"></script>
+<script type="text/javascript" src="../lib/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="../lib/handlebars.min.js"></script>
+<script type="text/javascript" src="../lib/lockr.js"></script>
+<script>
+    $(document).ready(() => {
+        $(".dropdown-button").dropdown();
+        $("select").material_select();
+        shopHome();
+        if(window.location.hash) {
+            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+            if (hash.startsWith("order")) orderEdit(hash);
+        }
+        window.onhashchange = hashChange;
+        updateBreadCrump();
+    });
+</script>
+</html>
