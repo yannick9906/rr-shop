@@ -116,7 +116,8 @@
                 "nextClose" => $this->estDate,
                 "payment" => $this->payment,
                 "shipping" => $this->shipment,
-                "customername" => $this->customer->getFirstname()." ".$this->customer->getLastname()
+                "customername" => $this->customer->getFirstname()." ".$this->customer->getLastname(),
+                "items" => json_decode($this->items)
             ];
         }
     }

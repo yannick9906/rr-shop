@@ -5,9 +5,9 @@
      * Date: 2017-11-10
      * Time: 04:44 PM
      */
-    ini_set('display_errors', 1);
+    /*ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    error_reporting(E_ALL);*/
 
     require_once "../../classes/Order.php";
     require_once "../../classes/Invoice.php";

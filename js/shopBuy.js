@@ -2,6 +2,34 @@
  * Created by yanni on 2017-10-10.
  */
 
+let cartItemBoughtTemplate = Handlebars.compile(`
+<div class="col s12">
+    <div class="card horizontal hide-on-small-only">
+        <div class="card-image" style="max-width: 35%; width: 35%;">
+            <img src="{{{imageSrc}}}">
+        </div>
+        <div class="card-stacked">
+            <div class="card-content">
+                <span class="right rr price">{{itemPrice}} €</span>
+                <span class="rr bigger">{{itemName}}</span>
+                {{{itemData}}}
+            </div>
+        </div>
+    </div>
+    <div class="card hide-on-med-and-up">
+        <div class="card-image">
+            <img src="{{{imageSrc}}}">
+            <span class="card-title rr">{{itemName}}</span>
+        </div>
+        <div class="card-content">
+            <span class="right rr price">{{itemPrice}} €</span>
+            {{{itemData}}}
+        </div>
+    </div>
+</div>
+`);
+
+
 function buy() {
     $("#shopHome").hide();
     $("#breadCart").show();
@@ -30,7 +58,47 @@ function buyNow() {
                     window.setTimeout(() => {
                         $("#buyerCheck").hide();
                         $("#buyerSuccess").show();
-                        clearCart();
+                        //clearCart();
+                        let target = $("#cart-list-bought");
+                        let items = JSON.parse(data).order.items;
+                        console.log(items);
+                        for(let i = 0; i < items.length; i++) {
+                            if(items[i].itemType === 1) {
+                                target.append(cartItemBoughtTemplate({
+                                    imageSrc:"img/hoodie/Hoodie-Back-1.jpg",
+                                    itemID:i,
+                                    itemRef:"hoodie",
+                                    itemName:"RheinhessenRiders Hoodie",
+                                    itemPrice: 30*items[i].amount,
+                                    itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
+                                    '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
+                                    '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
+                                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
+                                }));
+                            } else if(items[i].itemType === 2) {
+                                target.append(cartItemBoughtTemplate({
+                                    imageSrc:"img/shirt/Shirt-Back-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
+                                    itemID:i,
+                                    itemRef:"shirt",
+                                    itemName:"RheinhessenRiders Shirt",
+                                    itemPrice: 19*items[i].amount,
+                                    itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
+                                    '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
+                                    '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
+                                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
+                                }));
+                            } else if(items[i].itemType === 3) {
+                                target.append(cartItemBoughtTemplate({
+                                    imageSrc:"img/sticker/Sticker-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
+                                    itemID:i,
+                                    itemRef:"sticker",
+                                    itemName:"RheinhessenRiders Sticker",
+                                    itemPrice: 1*items[i].amount,
+                                    itemData: '<p><span class="bolden">Größe: </span>'+items[i].itemData.size+'</p>' +
+                                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
+                                }));
+                            }
+                        }
                     }, 500);
                 });
             } else {

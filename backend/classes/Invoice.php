@@ -20,7 +20,8 @@
          * @param Customer $customer
          */
         public function __construct($items, $orderID, $customer) {
-            $this->items = json_decode(utf8_decode($items),true);
+            $this->items = json_decode(utf8_encode($items),true);
+            //var_dump($this->items);
             $this->orderID = $orderID;
             $this->customer = $customer;
             $this->pdf = new \PDF_Code128();

@@ -45,6 +45,7 @@ function displayCart() {
     target.html("");
     $("#buyButton").removeClass("disabled");
     $("#clearButton").removeClass("disabled");
+    let totalPrice = 0;
     for(let i = 0; i < items.length; i++) {
         if(items[i].itemType === 1) {
             target.append(cartItemTemplate({
@@ -58,6 +59,7 @@ function displayCart() {
                 '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
                 '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
             }));
+            totalPrice += 30*items[i].amount;
         } else if(items[i].itemType === 2) {
             target.append(cartItemTemplate({
                 imageSrc:"img/shirt/Shirt-Back-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
@@ -70,6 +72,7 @@ function displayCart() {
                 '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
                 '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
             }));
+            totalPrice += 19*items[i].amount;
         } else if(items[i].itemType === 3) {
             target.append(cartItemTemplate({
                 imageSrc:"img/sticker/Sticker-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
@@ -80,7 +83,9 @@ function displayCart() {
                 itemData: '<p><span class="bolden">Größe: </span>'+items[i].itemData.size+'</p>' +
                 '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
             }));
+            totalPrice += 1*items[i].amount;
         }
+        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€");
     }
     if(items.length === 0) {
         target.html(`
@@ -90,6 +95,7 @@ function displayCart() {
         `);
         $("#buyButton").addClass("disabled");
         $("#clearButton").addClass("disabled");
+        $("#cartTotalPrice").html("Gesamt: 0€");
     }
 }
 
