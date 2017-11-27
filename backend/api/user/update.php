@@ -12,7 +12,6 @@
     require_once '../../classes/PDO_Mysql.php'; //DB Anbindung
     require_once '../../classes/User.php';
     require_once '../../classes/Permissions.php';
-    require_once '../../classes/Util.php';
 
     $user = \rrshop\Util::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();

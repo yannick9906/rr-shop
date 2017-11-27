@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>RRShop - Admin Panel</title>
 
-    <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen,projection"/>
-    <link rel="stylesheet" href="../lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
-    <link rel="stylesheet" href="../css/style.css" media="all" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="../lib/materialize/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="../lib/mdi/css/materialdesignicons.min.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="../css/style.css" media="all" />
 
     <link rel="manifest" href="../manifest.json" />
     <link rel="manifest" href="../rrshop.appcache" />
@@ -18,13 +18,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-
+    <div class="valign-wrapper" style="position: absolute; height: 100%; width: 100%;">
+        <div class="valign center" style="width: 100%;">
+            <div id="loginPlane" class="card-panel row left-align black" style="display: inline-block">
+                <span class="bolden white-text col s6">RRSHOP ADMIN PANEL LOGIN</span><span class="right-align grey-text text-darken-2 col s6">rrshop beta</span><br/><br/>
+                <div id="loginFields">
+                    <div class="input-field col s12">
+                        <i class="white-text mddi mddi-account-circle prefix"></i>
+                        <input class="white-text" id="username" type="text" required data-error="Benutzername existiert nicht">
+                        <label for="username">Benutzername</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <i class="white-text mddi mddi-lock prefix"></i>
+                        <input class="white-text" id="password" type="password" required data-error="Passwort falsch">
+                        <label for="password">Passwort</label>
+                        <br/><br/>
+                    </div>
+                    <a href="../" class="btn btn-flat indigo-text col s2 offset-s5"><i class="white-text mddi mddi-format-clear large"></i></a>
+                    <button class="btn waves-effect waves-light white black-text col s4 offset-s1" onclick="doLogin()">
+                        <i class="mddi mddi-send"></i>
+                    </button>
+                </div>
+                <div id="loading" style="display: none;" class="center col s12">
+                    <div class="preloader-wrapper big active">
+                        <div class="spinner-layer spinner-blue-only">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div><div class="gap-patch">
+                            <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 center" style="display: none;" id="success">
+                    <i class="mddi mddi-check large green-text"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div></div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="../lib/jquery.textfill.min.js"></script>
 <script type="text/javascript" src="../lib/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="../lib/handlebars.min.js"></script>
 <script type="text/javascript" src="../lib/lockr.js"></script>
+<script type="text/javascript" src="../lib/md5.js"></script>
+<script type="text/javascript" src="js/adminLogin.js"></script>
 <script>
     $(document).ready(() => {
         $(".dropdown-button").dropdown();

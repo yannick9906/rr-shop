@@ -252,6 +252,7 @@
          * @return bool
          */
         public function comparePassHash($passHash) {
+            //echo $this->uPassHash." <-> ".$passHash;
             return $this->uPassHash == $passHash;
         }
 
