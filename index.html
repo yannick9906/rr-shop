@@ -21,9 +21,9 @@
 <div class="navbar-fixed">
     <nav>
         <div class="nav-wrapper black" style="padding-left: 10px;">
-            <a href="#home" class="button-collapse" id="backbutton" onclick="window.history.back()"><i class="material-icons mddi mddi-arrow-left"></i></a>
-            <a href="#home" class="brand-logo hide-on-small-only rrSpace">RheinhessenRiders Shop</a>
-            <a href="#home" class="brand-logo hide-on-med-and-up rrSpace">RR Shop</a>
+            <a class="button-collapse" id="backbutton" onclick="window.history.go(-1)"><i class="material-icons mddi mddi-arrow-left"></i></a>
+            <a href="#home" class="brand-logo hide-on-small-only rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-med-and-up rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RR Shop</a>
             <ul id="nav-mobile" class="right">
                 <li><a><span class="new badge white black-text rr" id="cartAmount">2</span></a></li>
                 <li><a href="#shopping-cart"><i class="material-icons mddi mddi-shopping"></i></a></li>
