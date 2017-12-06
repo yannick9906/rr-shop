@@ -11,19 +11,17 @@
 
     require_once '../../classes/PDO_Mysql.php'; //DB Anbindung
     require_once '../../classes/User.php';
-    require_once '../../classes/Permissions.php';
 
-    $user = \rrshop\Util::checkSession();
+    $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
     $username = $_POST["username"];
-    $realname = $_POST["realname"];
     $passhash = $_POST["passhash"];
     $email = $_POST["email"];
 
     if(!\rrshop\User::doesUserNameExist($username)) {
-        if($username != "" && $realname != "" && $passhash != "" && $email) {
-            \rrshop\User::createUser($username, $realname, $passhash, $email);
+        if($username != "" && $passhash != "" && $email) {
+            \rrshop\User::createUser($username, $passhash, $email);
             echo json_encode(["success" => "1"]);
         } else  echo json_encode(["success" => "0", "error" => "missing fields"]);
     } else  echo json_encode(["success" => "0", "error" => "username exists"]);

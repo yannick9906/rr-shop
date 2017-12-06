@@ -11,9 +11,8 @@
 
     require_once '../../classes/PDO_Mysql.php'; //DB Anbindung
     require_once '../../classes/User.php';
-    require_once '../../classes/Permissions.php';
 
-    $user = \rrshop\Util::checkSession();
+    $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
     $userToEdit = \rrshop\User::fromUID(intval($_GET["id"]));

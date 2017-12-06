@@ -11,9 +11,8 @@
 
     require_once '../../classes/PDO_Mysql.php'; //DB Anbindung
     require_once '../../classes/User.php';
-    require_once '../../classes/Permissions.php';
 
-    $user = \rrshop\Util::checkSession();
+    $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
     $users = \rrshop\User::getList($_GET["page"], intval($_GET["pagesize"]), utf8_decode($_GET["search"]), $_GET["sort"]);

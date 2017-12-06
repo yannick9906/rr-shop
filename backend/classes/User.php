@@ -9,26 +9,33 @@
     namespace rrshop;
 
     class User implements \JsonSerializable {
-        private $pdo, $uID, $uName, $uPassHash, $uEmail;
+        private $uID;
+        private $username;
+        private $passwdHash;
+        private $email;
+        private $endpoints;
+        private $pdo;
 
         /**
          * User constructor.
          *
          * @param int    $uID
-         * @param string $uName
-         * @param string $uPassHash
-         * @param string $uEmail
+         * @param string $username
+         * @param string $passwdHash
+         * @param string $email
+         * @param string $endpoints
          */
-        public function __construct($uID, $uName, $uPassHash, $uEmail) {
+        public function __construct($uID, $username, $passwdHash, $email, $endpoints) {
             $this->uID = $uID;
-            $this->uName = utf8_encode($uName);
-            $this->uPassHash = $uPassHash;
-            $this->uEmail = $uEmail;
-            $this->pdo = new PDO_MYSQL();
+            $this->username = utf8_encode($username);
+            $this->passwdHash = $passwdHash;
+            $this->email = utf8_encode($email);
+            $this->endpoints = json_decode($endpoints);
+            $this->pdo = new PDO_Mysql();
         }
 
         /**
-         * Creates a new User Object from a give user ID
+         * creates a new instance from a specific uID using data from db
          *
          * @param int $uID
          * @return User
@@ -36,7 +43,7 @@
         public static function fromUID($uID) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE uID = :uid", [":uid" => $uID]);
-            return new User($res->uID, $res->username, $res->passhash, $res->email);
+            return new User($res->uID, $res->username, $res->passhash, $res->email, $res->endpoint);
         }
 
         /**
@@ -48,7 +55,7 @@
         public static function fromUName($uName) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE username = :uname", [":uname" => $uName]);
-            return new User($res->uID, $res->username, $res->passhash, $res->email);
+            return new User($res->uID, $res->username, $res->passhash, $res->email, $res->endpoint);
         }
 
         /**
@@ -59,8 +66,8 @@
         public function __toString() {
             return
                 "id:        ".$this->uID."\n".
-                "usrname:   ".$this->uName."\n".
-                "email:     ".$this->uEmail."\n";
+                "usrname:   ".$this->username."\n".
+                "email:     ".$this->email."\n";
         }
 
         /**
@@ -173,9 +180,10 @@
          */
         public function saveChanges() {
             $this->pdo->queryUpdate("rrshop_user",
-                ["username" => utf8_decode($this->uName),
-                 "passhash" => $this->uPassHash,
-                 "email" => utf8_decode($this->uEmail)],
+                ["username" => utf8_decode($this->username),
+                 "passhash" => $this->passwdHash,
+                 "email" => utf8_decode($this->email),
+                 "endpoint" => json_encode($this->endpoints)],
                 "uID = :uid",
                 ["uid" => $this->uID]
             );
@@ -193,8 +201,43 @@
             $pdo->queryInsert("rrshop_user",
                 ["username" => utf8_decode($username),
                  "passhash" => $passwdhash,
+                 "endpoints" => "[]",
                  "email" => utf8_decode($email)]
             );
+        }
+
+        /**
+         * Checks a users session and logs him in, also printing some debug data if requested
+         *
+         * @param bool $check
+         * @return bool|User
+         */
+        public static function checkSession($check = false) {
+            session_start();
+            if(!isset($_SESSION["uID"])) {
+                echo json_encode(["success" => false, "error" => "NoLogin"]);
+                exit;
+            } else {
+                $user = User::fromUID($_SESSION["uID"]);
+                if($_GET["m"] == "debug") {
+                    echo "<pre style='display: block; position: absolute'>\n";
+                    echo "[0] Perm Array Information:\n";
+                    echo "Not available on this platform";
+                    echo "\n[1] Permission Information:\n";
+                    echo "Not available on this platform";
+                    echo "\n[2] User Information:\n";
+                    echo json_encode($user);
+                    echo "\n[3] Client Information:\n";
+                    echo "    Arguments: ".$_SERVER["REQUEST_URI"]."\n";
+                    echo "    Req Time : ".$_SERVER["REQUEST_TIME"]."ns\n";
+                    echo "    Remote IP: ".$_SERVER["REMOTE_ADDR"]."\n";
+                    echo "    Usr Agent: ".$_SERVER["HTTP_USER_AGENT"]."\n";
+                    echo "</pre>\n";
+                } elseif($check) {
+                    echo json_encode(["success" => true, "user" => $user]);
+                }
+                return $user;
+            }
         }
 
         /**
@@ -252,8 +295,7 @@
          * @return bool
          */
         public function comparePassHash($passHash) {
-            //echo $this->uPassHash." <-> ".$passHash;
-            return $this->uPassHash == $passHash;
+            return $this->passwdHash == $passHash;
         }
 
         /**
@@ -267,8 +309,18 @@
         function jsonSerialize() {
             return [
                 "uID" => $this->uID,
-                "username" => $this->uName,
-                "email" => $this->uEmail
+                "username" => $this->username,
+                "email" => $this->email
             ];
+        }
+
+        public function addEndpoint($endpoint) {
+            //require_once "Util.php";
+            array_push($this->endpoints, $endpoint);
+            //Util::sendPushNotification($endpoint);
+        }
+
+        public function getEndpoints() {
+            return $this->endpoints;
         }
     }

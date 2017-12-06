@@ -2,32 +2,23 @@ var usernameField =  $("#username");
 var passwordField =  $("#password");
 
 $(document).ready(function() {
-    if(0 == 1) {
-        Materialize.toast("Kennwort falsch", 2000, "red");
-        usernameField.removeClass("valid");
-        usernameField.addClass("invalid");
-    } else if(0 == 2) {
-        Materialize.toast("Benutzername falsch", 2000, "red");
-        passwordField.removeClass("valid");
-        passwordField.addClass("invalid");
-    } else if(0 == 3) {
-        Materialize.toast("Logout erfolgreich", 2000, "green");
-    } else if(0 == 4) {
-        Materialize.toast("Bitte erneut anmelden", 2000, "orange");
-    } else {
-        passwordField.removeClass("valid");
-        passwordField.removeClass("invalid");
-        usernameField.removeClass("valid");
-        usernameField.removeClass("invalid");
-    }
+    // Switch: Login form / Dashboard
+    $.getJSON("api/user/checkSession.php",null, (json) => {
+        if(json.success) startDash();
+        else startLogin();
+    });
 
     document.querySelector("#password").addEventListener('keypress', function(e) {
         var key = e.which || e.keyCode;
         if(key === 13) {
             doLogin();
         }
-    })
+    });
 });
+
+function startLogin() {
+    $("#loginPanel").show();
+}
 
 function doLogin() {
     let username = usernameField.val();
@@ -40,18 +31,18 @@ function doLogin() {
             if(json["exists"] == 1) {
                 $.getJSON("api/user/tryLogin.php?username="+username+"&passhash="+passhash, null, function(json2) {
                     if(json2["success"] == 1) {
-                        $("#loading").fadeOut(250, function() {
-                            $("#success").fadeIn(250, function() {
-                                $("#bg").fadeOut(250, function() {
-                                    alert("Okay");
-                                });
+                        $("#loading").fadeOut(250, () => {
+                            $("#success").fadeIn(250, () => {
+                                $("#loginPanel").fadeOut(500, () =>  {
+                                    $("#mainPanel").fadeIn(500);
+                                })
                             })
                         });
                     } else {
                         Materialize.toast("Kennwort falsch", 2000, "red");
                         passwordField.removeClass("valid");
                         passwordField.addClass("invalid");
-                        $("#loading").fadeOut(500, function() {
+                        $("#loading").fadeOut(500, () => {
                             $("#loginFields").fadeIn(500);
                         });
                     }
@@ -66,4 +57,8 @@ function doLogin() {
             }
         });
     });
+}
+
+function doLogout() {
+
 }

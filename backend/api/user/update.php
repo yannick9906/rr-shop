@@ -11,20 +11,17 @@
 
     require_once '../../classes/PDO_Mysql.php'; //DB Anbindung
     require_once '../../classes/User.php';
-    require_once '../../classes/Permissions.php';
 
-    $user = \rrshop\Util::checkSession();
+    $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
     $userToEdit = \rrshop\User::fromUID(intval($_GET["id"]));
-    $realname = $_POST["realname"];
     $passhash = $_POST["passhash"];
     $email = $_POST["email"];
 
-    if($realname != "" && $passhash != "" && $email) {
+    if($passhash != "" && $email) {
         $userToEdit->setUEmail($email);
         if($passhash != "NOUPDATE") $userToEdit->setUPassHash($passhash);
-        $userToEdit->setURealname($realname);
         $userToEdit->saveChanges();
         echo json_encode(["success" => "1"]);
     } else echo json_encode(["success" => "0", "error" => "missing fields"]);
