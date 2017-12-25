@@ -59,7 +59,15 @@ function shoppingCart() {
 }
 
 function shopHome() {
-    $("#shopHome").show();
+    if(Cookies.get("access") === "4f3f8169c06c52139d9f432be783c80a") {
+        $("#shopHome").show();
+        $("#shoppingcartbtn").show();
+        $("#shopCode").hide();
+    } else {
+        $("#shopHome").hide();
+        $("#shoppingcartbtn").hide();
+        $("#shopCode").show();
+    }
     $("#shopDetailShirt").hide();
     $("#shopDetailSticker").hide();
     $("#shopDetailHoodie").hide();
@@ -84,6 +92,7 @@ function hashChange() {
         if (hash === "buyerInfo") buy();
         if (hash.startsWith("order")) orderInfo(hash);
     }
+    shopClosed();
 }
 
 function updateBreadCrump() {
@@ -92,4 +101,36 @@ function updateBreadCrump() {
     } else {
         $("#breadCart").html("Einkaufswagen");
     }
+}
+
+function shopClosed() {
+    if (Cookies.get("beta") === "d7a0e8bbb6f212c2089021e908e55a00") {
+        $("#shoppingcartbtn").show();
+        $("#shopClosed").hide();
+        shopHome();
+        if(window.location.hash) {
+            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+            if (hash === "hoodie") hoodieDetail();
+            if (hash === "shirt") shirtDetail();
+            if (hash === "sticker") stickerDetail();
+            if (hash === "shopping-cart") shoppingCart();
+            if (hash === "buyerInfo") buy();
+            if (hash.startsWith("order")) orderInfo(hash);
+        }
+    } else {
+        shopHome();
+        $("#shopHome").hide();
+        $("#shoppingcartbtn").hide();
+    }
+}
+
+function checkCode(e) {
+    let code = $("#betacode").val();
+    Cookies.set("beta", md5(code), {expires: 31});
+    shopClosed()
+}
+
+function checkAccessCode() {
+    let code = $("#accesscode").val();
+    Cookies.set("accesscode", md5(code), {expires: 90});
 }

@@ -22,11 +22,12 @@
     <nav>
         <div class="nav-wrapper black" style="padding-left: 10px;">
             <a class="button-collapse" id="backbutton" onclick="window.history.go(-1)"><i class="material-icons mddi mddi-arrow-left"></i></a>
-            <a href="#home" class="brand-logo hide-on-small-only rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-med-and-down rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-large-only hide-on-small-only rr" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
             <a href="#home" class="brand-logo hide-on-med-and-up rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RR Shop</a>
             <ul id="nav-mobile" class="right">
                 <li><a><span class="new badge white black-text rr" id="cartAmount">2</span></a></li>
-                <li><a href="#shopping-cart"><i class="material-icons mddi mddi-shopping"></i></a></li>
+                <li><a href="#shopping-cart" id="shoppingcartbtn"><i class="material-icons mddi mddi-shopping"></i></a></li>
             </ul>
         </div>
         <!--<div class="nav-content black">
@@ -38,7 +39,63 @@
     </nav>
 </div>
 <div class="container" style="height: 50px;"></div>
-<div class="container row" id="shopHome">
+<div class="container" id="shopClosed">
+    <div class="card-panel row">
+        <div class="col s12">
+            <h4 class="col s12 black-text rrSpace hide-on-small-only">Der Shop ist geschlossen</h4>
+            <h4 class="col s12 black-text rr hide-on-med-and-up">Der Shop ist geschlossen</h4>
+            <br/><p>Und das bleibt auch so bis er fertig ist.</p>
+            <p>Tut mir leid. Vorerst darf ihn <b>nicht jeder</b> sehen. Beta-Zugang wird ist mit Code möglich.</p>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s8 m4">
+                        <input id="betacode" type="password">
+                        <label for="betacode">Beta-Code</label>
+                    </div>
+                    <a class="btn waves-effect waves-light black" onclick="checkCode()">
+                        <i class="mddi mddi-send right"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container" id="shopCode">
+    <div class="card-panel row">
+        <div class="col s12">
+            <h4 class="col s12 black-text rrSpace hide-on-med-and-down">Willkommen im RheinhessenRiders Shop</h4>
+            <h4 class="col s12 black-text rr hide-on-small-only hide-on-large-only">Willkommen im RheinhessenRiders Shop</h4>
+            <h4 class="col s12 black-text rr hide-on-med-and-up">Willkommen im RR Shop</h4><br/>
+            <div class="col s12 m6">
+                <p class="bolden">Dieser Shop ist nur f&uuml;r Gruppenmitglieder.</p>
+                <p>Demnach wird ein Zugangscode benötigt um diesen Shop zu benutzen.<br/>
+                Um einen Code zu erhalten spreche bitte eine Person aus unserem Admin-Team an.</p>
+                <form>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="accesscode" type="password">
+                            <label for="accesscode">Zugangscode</label>
+                        </div>
+                        <a class="btn waves-effect waves-light black col s12" onclick="checkAccessCode()">
+                            <i class="mddi mddi-send"></i>
+                        </a>
+                    </div>
+                </form>
+            </div>
+            <div class="col s12 m6">
+                <span class="bolden">RR-Admin Team:</span><br/><br/>
+                <span class="bolden">Yannick F&#233;lix </span>
+                <span class="bolden">Philipp Lommel </span>
+                <span class="bolden">Johannes Wucher </span>
+                <span class="bolden">Pascal Strub </span>
+                <span class="bolden">Henrik Weckheuer </span>
+                <span class="bolden">Lukas Morch </span>
+                <span class="bolden">Marcel Boll </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container row" id="shopHome" style="display: none;">
     <div class="col s12 m4">
         <div class="card">
             <div class="card-image">
@@ -57,7 +114,7 @@
                     dass hier ein echter RR-Member am Start ist!</p>
             </div>
             <div class="card-action">
-                <a href="#hoodie" onclick="hoodieDetail()" class="green-text text-darken-2">ab 30€/Stk - Jetzt bestellen</a>
+                <a href="#hoodie" onclick="hoodieDetail()" class="green-text text-darken-2">ab 30€/Stk - Details</a>
             </div>
         </div>
     </div>
@@ -74,7 +131,7 @@
                     dich erkennen!</p>
             </div>
             <div class="card-action">
-                <a href="#shirt" onclick="shirtDetail()" class="green-text text-darken-2">ab 19€/Stk - Jetzt bestellen</a>
+                <a href="#shirt" onclick="shirtDetail()" class="green-text text-darken-2">ab 19€/Stk - Details</a>
             </div>
         </div>
     </div>
@@ -91,12 +148,12 @@
                     erhaltet ihr 20PS mehr!</p>
             </div>
             <div class="card-action">
-                <a href="#sticker" onclick="stickerDetail()" class="green-text text-darken-2">ab 1€/Stk - Jetzt bestellen</a>
+                <a href="#sticker" onclick="stickerDetail()" class="green-text text-darken-2">ab 1€/Stk - Details</a>
             </div>
         </div>
     </div>
 </div>
-<div class="container" id="shopDetailHoodie">
+<div class="container" id="shopDetailHoodie" style="display: none;">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Hoodie</h4>
         <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Hoodie</h4>
@@ -203,7 +260,7 @@
                         </select>
                         <label>Stadt</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s4">
                         <select id="hoodieAmount" onchange="hoodieRefreshPrice()">
                             <option value="1" selected>1 Stk.</option>
                             <option value="2">2 Stk.</option>
@@ -213,7 +270,21 @@
                         </select>
                         <label>Anzahl</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s4">
+                        <select id="hoodieColor">
+                            <option value="" disabled selected>Farbe wählen</option>
+                            <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz">Schwarz</option>
+                            <option data-icon="img/color/FFFFFF-1.png" class="left circle" value="weiss">Weiß</option>
+                            <option data-icon="img/color/FF0000-1.png" class="left circle" value="rot">Rot</option>
+                            <option data-icon="img/color/00FF00-1.png" class="left circle" value="gruen">Grün</option>
+                            <option data-icon="img/color/0000FF-1.png" class="left circle" value="blau">Blau</option>
+                            <option data-icon="img/color/FFFF00-1.png" class="left circle" value="gelb">Gelb</option>
+                            <option data-icon="img/color/00FFFF-1.png" class="left circle" value="cyan">Cyan</option>
+                            <option data-icon="img/color/FF00FF-1.png" class="left circle" value="magenta">Magenta</option>
+                        </select>
+                        <label>Größe</label>
+                    </div>
+                    <div class="input-field col s4">
                         <select id="hoodieSize">
                             <option value="" disabled selected>Größe wählen</option>
                             <option value="s">S</option>
@@ -232,7 +303,7 @@
         <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
     </div>
 </div>
-<div class="container" id="shopDetailShirt">
+<div class="container" id="shopDetailShirt" style="display: none;">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Shirt</h4>
         <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Shirt</h4>
@@ -309,7 +380,7 @@
         <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
     </div>
 </div>
-<div class="container" id="shopDetailSticker">
+<div class="container" id="shopDetailSticker" style="display: none;">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Sticker</h4>
         <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Sticker</h4>
@@ -381,7 +452,7 @@
         <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
     </div>
 </div>
-<div class="container" id="shopping-cart">
+<div class="container" id="shopping-cart" style="display: none;">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace">Einkaufswagen</h4>
         <span class="col s12 rr bigger right-align black-text" id="cartTotalPrice">Gesamt: 0€</span>
@@ -394,7 +465,7 @@
         </div>
     </div>
 </div>
-<div class="container" id="buyerInfo">
+<div class="container" id="buyerInfo" style="display: none;">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace">Kasse</h4>
         <form class="col s12 row" id="innerBuyerInfo">
@@ -483,7 +554,7 @@
         </div>
     </div>
 </div>
-<div class="container" id="orderInfo">
+<div class="container" id="orderInfo" style="display: none;">
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace">Bestellungsstatus</h4>
         <div class="col s4 black-text">
@@ -523,6 +594,8 @@
 <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
 <script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
 <script type="text/javascript" src="lib/handlebars.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script type="text/javascript" src="lib/md5.js"></script>
 <script type="text/javascript" src="lib/lockr.js"></script>
 <script type="text/javascript" src="js/shopBase.js"></script>
 <script type="text/javascript" src="js/shopCart.js"></script>
@@ -548,6 +621,7 @@
         }
         window.onhashchange = hashChange;
         updateBreadCrump();
+        shopClosed();
     });
 </script>
 </html>
