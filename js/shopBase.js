@@ -59,7 +59,7 @@ function shoppingCart() {
 }
 
 function shopHome() {
-    if(Cookies.get("access") === "4f3f8169c06c52139d9f432be783c80a") {
+    if(Cookies.get("accesscode") === "4f3f8169c06c52139d9f432be783c80a") {
         $("#shopHome").show();
         $("#shoppingcartbtn").show();
         $("#shopCode").hide();
@@ -127,10 +127,11 @@ function shopClosed() {
 function checkCode(e) {
     let code = $("#betacode").val();
     Cookies.set("beta", md5(code), {expires: 31});
-    shopClosed()
+    shopClosed();
 }
 
 function checkAccessCode() {
     let code = $("#accesscode").val();
     Cookies.set("accesscode", md5(code), {expires: 90});
+    shopHome();
 }
