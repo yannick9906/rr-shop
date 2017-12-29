@@ -32,8 +32,15 @@
     require_once "classes/PDO_Mysql.php";
     require_once "classes/User.php";
     require_once "vendor/autoload.php";
+    require_once "lib/fpdf.php";
+    require_once "lib/qrcode.class.php";
+    require_once "vendor/phpmailer/phpmailer/src/PHPMailer.php";
+    require_once "vendor/phpmailer/phpmailer/src/Exception.php";
+    require_once "vendor/phpmailer/phpmailer/src/OAuth.php";
+    require_once "vendor/phpmailer/phpmailer/src/POP3.php";
+    require_once "vendor/phpmailer/phpmailer/src/SMTP.php";
 
-    $user = \rrshop\User::checkSession();
+    //$user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_Mysql();
 
     /*$user->sendPushNotification($payload = json_encode([
@@ -44,10 +51,14 @@
         "orderPrice" => 100.00
     ]));*/
 
-    \rrshop\User::sendOutNotifications(json_encode([
+    /*\rrshop\User::sendOutNotifications(json_encode([
         "info"  => "statechange",
         "orderState" => 0,
         "customerName" => "Lommel Lümmel",
         "orderID" => "5afewsf",
         "orderPrice" => 100.00
-    ]));
+    ]));*/
+
+    /*$qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/edit/#order-5a46a34b32bb0', 'M');
+    $qrcode->disableBorder();
+    $qrcode->displayPNG();*/

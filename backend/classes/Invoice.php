@@ -10,7 +10,7 @@
 
     class Invoice {
         private $items, $pdf;
-        private $orderID, $customer;
+        private $orderID, $customer, $note;
 
         /**
          * Invoice constructor.
@@ -19,11 +19,12 @@
          * @param int $orderID
          * @param Customer $customer
          */
-        public function __construct($items, $orderID, $customer) {
+        public function __construct($items, $orderID, $customer, $note) {
             $this->items = json_decode(utf8_encode($items),true);
             //var_dump($this->items);
             $this->orderID = $orderID;
             $this->customer = $customer;
+            $this->note = $note;
             $this->pdf = new \PDF_Code128();
         }
 
@@ -31,7 +32,7 @@
             $this->pdf->AddPage();
             $this->pdf->AcceptPageBreak();
             $this->pdf->Image("../../../img/Shop-Logo.png",60,10,60);
-            $qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/edit/#order-'.$this->orderID, 'H');
+            $qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/edit/#order-'.$this->orderID, 'M');
             $qrcode->disableBorder();
             $qrcode->displayFPDF($this->pdf, 10, 10, 50);
             $this->pdf->Code128(10, 60, $this->orderID, 50, 10);
@@ -66,6 +67,9 @@
             $this->pdf->setX(160);
             $this->pdf->Cell(20,8,"Gesamt",1,0,"R",true);
             $this->pdf->Cell(20,8,$totalPrice." EUR",1,1,"R",true);
+            $this->pdf->Ln(16);
+            $this->pdf->setX(10);
+            $this->pdf->Cell(190,16,"Notiz: ".$this->note, 1,1);
             return $totalPrice;
         }
 

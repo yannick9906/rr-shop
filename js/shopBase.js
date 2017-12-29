@@ -25,13 +25,13 @@ function hoodieDetail() {
 }
 
 function stickerDetail() {
-    $("#shopHome").hide();
+    /*$("#shopHome").hide();
     $("#shopDetailSticker").show();
     $("#backbutton").show();
     refreshPreviewHoodie();
     slider3 = $('#slider3');
     slider3.carousel({fullWidth: true, indicators: true});
-    slider3.css('height', $('#slider3 .carousel-item img').height()+"px");
+    slider3.css('height', $('#slider3 .carousel-item img').height()+"px");*/
 }
 
 function shirtDetail() {
@@ -59,30 +59,38 @@ function shoppingCart() {
 }
 
 function shopHome() {
-    if(Cookies.get("accesscode") === "4f3f8169c06c52139d9f432be783c80a") {
-        $("#shopHome").show();
-        $("#shoppingcartbtn").show();
-        $("#shopCode").hide();
-    } else {
-        $("#shopHome").hide();
-        $("#shoppingcartbtn").hide();
-        $("#shopCode").show();
-    }
-    $("#shopDetailShirt").hide();
-    $("#shopDetailSticker").hide();
-    $("#shopDetailHoodie").hide();
-    $("#shopping-cart").hide();
-    $("#buyerInfo").hide();
-    $("#orderInfo").hide();
-    $("#backbutton").hide();
-    window.scrollTo(0,0);
-    updateCartAmount();
-    resetBuy()
+    $.post("backend/api/accesscodecheck.php",{accesscode: Cookies.get("accesscode")}, (data) => {
+        let json = JSON.parse(data);
+
+        $("#shopDetailShirt").hide();
+        $("#shopDetailSticker").hide();
+        $("#shopDetailHoodie").hide();
+        $("#shopping-cart").hide();
+        $("#buyerInfo").hide();
+        $("#orderInfo").hide();
+        $("#backbutton").hide();
+        window.scrollTo(0, 0);
+        updateCartAmount();
+        resetBuy()
+        if (json.success == "true") {
+            $("#shopHome").show();
+            $("#shoppingcartbtn").show();
+            $("#shopCode").hide();
+            hashChangeCallback();
+        } else {
+            $("#shopHome").hide();
+            $("#shoppingcartbtn").hide();
+            $("#shopCode").show();
+        }
+    });
 }
 
 function hashChange() {
     shopHome();
-    updateCartAmount();
+    //shopClosed();
+}
+
+function hashChangeCallback() {
     if(window.location.hash) {
         var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
         if (hash === "hoodie") hoodieDetail();
@@ -92,7 +100,6 @@ function hashChange() {
         if (hash === "buyerInfo") buy();
         if (hash.startsWith("order")) orderInfo(hash);
     }
-    shopClosed();
 }
 
 function updateBreadCrump() {
@@ -104,30 +111,33 @@ function updateBreadCrump() {
 }
 
 function shopClosed() {
-    if (Cookies.get("beta") === "d7a0e8bbb6f212c2089021e908e55a00") {
-        $("#shoppingcartbtn").show();
-        $("#shopClosed").hide();
-        shopHome();
-        if(window.location.hash) {
-            var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-            if (hash === "hoodie") hoodieDetail();
-            if (hash === "shirt") shirtDetail();
-            if (hash === "sticker") stickerDetail();
-            if (hash === "shopping-cart") shoppingCart();
-            if (hash === "buyerInfo") buy();
-            if (hash.startsWith("order")) orderInfo(hash);
+    $.post("backend/api/accesscodecheck.php",{accesscode: Cookies.get("beta")}, (data) => {
+        let json = JSON.parse(data);
+        if (json.success) {
+            $("#shoppingcartbtn").show();
+            $("#shopClosed").hide();
+            shopHome();
+            if(window.location.hash) {
+                var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+                if (hash === "hoodie") hoodieDetail();
+                if (hash === "shirt") shirtDetail();
+                if (hash === "sticker") stickerDetail();
+                if (hash === "shopping-cart") shoppingCart();
+                if (hash === "buyerInfo") buy();
+                if (hash.startsWith("order")) orderInfo(hash);
+            }
+        } else {
+            shopHome();
+            $("#shopHome").hide();
+            $("#shoppingcartbtn").hide();
         }
-    } else {
-        shopHome();
-        $("#shopHome").hide();
-        $("#shoppingcartbtn").hide();
-    }
+    });
 }
 
 function checkCode(e) {
     let code = $("#betacode").val();
     Cookies.set("beta", md5(code), {expires: 31});
-    shopClosed();
+    //shopClosed();
 }
 
 function checkAccessCode() {

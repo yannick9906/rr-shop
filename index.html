@@ -39,27 +39,6 @@
     </nav>
 </div>
 <div class="container" style="height: 50px;"></div>
-<div class="container" id="shopClosed">
-    <div class="card-panel row">
-        <div class="col s12">
-            <h4 class="col s12 black-text rrSpace hide-on-small-only">Der Shop ist geschlossen</h4>
-            <h4 class="col s12 black-text rr hide-on-med-and-up">Der Shop ist geschlossen</h4>
-            <br/><p>Und das bleibt auch so bis er fertig ist.</p>
-            <p>Tut mir leid. Vorerst darf ihn <b>nicht jeder</b> sehen. Beta-Zugang wird ist mit Code möglich.</p>
-            <form class="col s12">
-                <div class="row">
-                    <div class="input-field col s8 m4">
-                        <input id="betacode" type="password">
-                        <label for="betacode">Beta-Code</label>
-                    </div>
-                    <a class="btn waves-effect waves-light black" onclick="checkCode()">
-                        <i class="mddi mddi-send right"></i>
-                    </a>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <div class="container" id="shopCode">
     <div class="card-panel row">
         <div class="col s12">
@@ -70,6 +49,8 @@
                 <p class="bolden">Dieser Shop ist nur f&uuml;r Gruppenmitglieder.</p>
                 <p>Demnach wird ein Zugangscode benötigt um diesen Shop zu benutzen.<br/>
                 Um einen Code zu erhalten spreche bitte eine Person aus unserem Admin-Team an.</p>
+                <p>Dieser 'Shop' wird nur zur Organisation der Bestellungen benutzt. Es wird keine Ware verkauft.</p>
+                <p>Mit der Eingabe des Zugangscodes erklärst du dich damit einverstanden.</p>
                 <form>
                     <div class="row">
                         <div class="input-field col s12">
@@ -97,7 +78,7 @@
 </div>
 <div class="container row" id="shopHome" style="display: none;">
     <div class="col s12 m4">
-        <div class="card">
+        <div class="card" onclick="location.hash = '#hoodie'">
             <div class="card-image">
                 <picture>
                     <source srcset="img/hoodie/Hoodie-Back-8-25.jpg" media="(max-width: 600px)">
@@ -119,7 +100,7 @@
         </div>
     </div>
     <div class="col s12 m4">
-        <div class="card">
+        <div class="card" onclick="location.hash = '#shirt'">
             <div class="card-image">
                 <img src="img/shirt/Shirt-Back-Mainz.jpg">
                 <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">RheinhessenRiders Shirt</span>
@@ -148,7 +129,7 @@
                     erhaltet ihr 20PS mehr!</p>
             </div>
             <div class="card-action">
-                <a href="#sticker" onclick="stickerDetail()" class="green-text text-darken-2">ab 1€/Stk - Details</a>
+                <a href="#sticker" onclick="stickerDetail()" class="orange-text text-darken-2">bald erhältlich</a>
             </div>
         </div>
     </div>
@@ -260,7 +241,7 @@
                         </select>
                         <label>Stadt</label>
                     </div>
-                    <div class="input-field col s4">
+                    <div class="input-field col s6">
                         <select id="hoodieAmount" onchange="hoodieRefreshPrice()">
                             <option value="1" selected>1 Stk.</option>
                             <option value="2">2 Stk.</option>
@@ -270,7 +251,7 @@
                         </select>
                         <label>Anzahl</label>
                     </div>
-                    <div class="input-field col s4">
+                    <!--<div class="input-field col s4">
                         <select id="hoodieColor">
                             <option value="" disabled selected>Farbe wählen</option>
                             <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz">Schwarz</option>
@@ -282,9 +263,9 @@
                             <option data-icon="img/color/00FFFF-1.png" class="left circle" value="cyan">Cyan</option>
                             <option data-icon="img/color/FF00FF-1.png" class="left circle" value="magenta">Magenta</option>
                         </select>
-                        <label>Größe</label>
-                    </div>
-                    <div class="input-field col s4">
+                        <label>Farbe</label>
+                    </div>-->
+                    <div class="input-field col s6">
                         <select id="hoodieSize">
                             <option value="" disabled selected>Größe wählen</option>
                             <option value="s">S</option>
@@ -389,15 +370,16 @@
                 <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Mainz-s1.jpg"></a>
                 <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Mainz-2.jpg"></a>
                 <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Mainz.jpg"></a>
-                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Alzey.jpg"></a>
+                <!--<a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Alzey.jpg"></a>
                 <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Worms.jpg"></a>
                 <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Frankfurt.jpg"></a>
-                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Wiesbaden.jpg"></a>
+                <a class="carousel-item" href="#sticker"><img src="img/sticker/Sticker-Wiesbaden.jpg"></a>-->
             </div>
             <p>Du möchtest dein Motorrad, Auto, die Shisha oder was auch immer optisch aufwerten?
                 Mit den Stickern hast du die Möglichkeit auch ohne den Merch Flagge zu zeigen -
                 Er passt perfekt auf alles außer Roller und Fahrräder, und für den Spitzenpreis
                 erhaltet ihr 20PS mehr!</p>
+            <p class="bolden">Größe 5cm x 5cm</p>
         </div>
         <div class="col s12 m6 row">
             <div class="col s12 row black">
@@ -408,16 +390,6 @@
             </div>
             <div class="col s12">
                 <form class="row">
-                    <div class="input-field col s6">
-                        <select id="cityselSticker" onchange="refreshPreviewSticker()">
-                            <option value="mz" selected>Mainz</option>
-                            <option disabled value="wi">Wiesbaden</option>
-                            <option disabled value="ffm">Frankfurt</option>
-                            <option disabled value="az">Alzey</option>
-                            <option disabled value="wo">Worms</option>
-                        </select>
-                        <label>Stadt</label>
-                    </div>
                     <div class="input-field col s3">
                         <select id="stickerAmount" onchange="stickerRefreshPrice()">
                             <option value="1" selected>1 Stk.</option>
@@ -425,24 +397,24 @@
                             <option value="3">3 Stk.</option>
                             <option value="4">4 Stk.</option>
                             <option value="5">5 Stk.</option>
-                            <option disabled value="10">10 Stk.</option>
-                            <option disabled value="15">15 Stk.</option>
-                            <option disabled value="20">20 Stk.</option>
-                            <option disabled value="25">25 Stk.</option>
-                            <option disabled value="50">50 Stk.</option>
-                            <option disabled value="100">100 Stk.</option>
+                            <option value="10">10 Stk.</option>
+                            <option value="15">15 Stk.</option>
+                            <option value="20">20 Stk.</option>
+                            <option value="25">25 Stk.</option>
+                            <option value="50">50 Stk.</option>
+                            <option value="100">100 Stk.</option>
                         </select>
                         <label>Anzahl</label>
                     </div>
                     <div class="input-field col s3">
-                        <select id="stickerSize">
-                            <option value="4" selected>4x4cm</option>
-                            <option disabled value="5">5x5cm</option>
-                            <option disabled value="10">10x10cm</option>
-                            <option disabled value="15">15x15cm</option>
-                            <option disabled value="20">20x20cm</option>
+                        <select id="stickerType">
+                            <option value="" selected></option>
+                            <option value="5">5x5cm</option>
+                            <option value="10">10x10cm</option>
+                            <option value="15">15x15cm</option>
+                            <option value="20">20x20cm</option>
                         </select>
-                        <label>Größe</label>
+                        <label>Stickertyp</label>
                     </div>
                     <h4 class="col s5 offset-s4 bolden right-align rr" id="sticker_price"> ab 1 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="stickerAdd()"><i class="mddi mddi-basket-fill"></i></a>
@@ -469,17 +441,21 @@
     <div class="card-panel row">
         <h4 class="col s12 black-text rrSpace">Kasse</h4>
         <form class="col s12 row" id="innerBuyerInfo">
-            <div class="input-field col s6">
+            <div class="input-field col s12 l6">
                 <input id="first_name" type="text">
                 <label for="first_name">Vorname</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 l6">
                 <input id="last_name" type="text">
                 <label for="last_name">Nachname</label>
             </div>
             <div class="input-field col s12">
                 <input id="email" type="email">
                 <label for="email">Email</label>
+            </div>
+            <div class="input-field col s12">
+                <textarea id="note" class="materialize-textarea"></textarea>
+                <label for="note">Notizen</label>
             </div>
             <div class="col s12 m6">
                 <h6 class="bolden">Bezahlmethode</h6>
@@ -495,26 +471,27 @@
                     <input name="payment" type="radio" id="paypal" value="2" />
                     <label for="paypal">PayPal</label>
                 </p>
-                <p>
+                <!--<p>
                     <input name="payment" type="radio" id="directdebit" disabled="disabled" value="3" />
                     <label for="directdebit">Lastschrift</label>
-                </p>
+                </p>-->
                 <p><br/></p>
             </div>
             <div class="col s12 m6">
                 <h6 class="bolden">Abholpräferenz</h6>
                 <p>
                     <input name="destination" type="radio" id="mz" value="0"/>
-                    <label for="mz">Mainz-Lerchenberg (Yannick Félix)</label>
+                    <label for="mz">Nord: Mainz-Lerchenberg (Yannick Félix)</label>
                 </p>
                 <p>
                     <input name="destination" type="radio" id="fries" value="1" />
-                    <label for="fries">Friesenheim (Philipp Lommel)</label>
+                    <label for="fries">Süd: Frettenheim (Philipp Lommel)</label>
                 </p>
-                <p>
+                <!--<p>
                     <input name="destination" type="radio" id="delivery" value="2" disabled />
                     <label for="fries">Lieferung nach Hause. (+10 Euro; bis zu 7 Tage später)</label>
-                </p>
+                </p>-->
+                <p><br/></p>
             </div>
             <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
         </form>
@@ -621,7 +598,7 @@
         }
         window.onhashchange = hashChange;
         updateBreadCrump();
-        shopClosed();
+        //shopClosed();
         document.querySelector("#accesscode").addEventListener('keypress', (e) => {
             var key = e.which || e.keyCode;
             if(key === 13) {

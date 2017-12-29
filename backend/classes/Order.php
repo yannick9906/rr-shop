@@ -13,7 +13,7 @@
 
     class Order implements \JsonSerializable {
         private $customer, $items;
-        private $orderID, $shipment, $payment, $state, $estDate;
+        private $orderID, $shipment, $payment, $state, $estDate, $note;
         private $pdo;
 
         /**
@@ -27,7 +27,7 @@
          * @param $state
          * @param $estDate
          */
-        public function __construct($orderID, $customer, $items, $shipment, $payment, $state, $estDate) {
+        public function __construct($orderID, $customer, $items, $shipment, $payment, $state, $estDate, $note) {
             $this->orderID = $orderID;
             $this->customer = Customer::fromCustomerID(intval($customer));
             $this->items = $items;
@@ -35,6 +35,7 @@
             $this->payment = intval($payment);
             $this->state =intval($state);
             $this->estDate = $estDate;
+            $this->note = $note;
             $this->pdo = new PDO_MYSQL();
         }
 
@@ -45,7 +46,7 @@
         public static function fromOrderID($orderID) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
-            return new Order($orderID, $res->customer, $res->items, $res->shipping, $res->payment, $res->state, $res->estDate);
+            return new Order($orderID, $res->customer, $res->items, $res->shipping, $res->payment, $res->state, $res->estDate, $res->note);
         }
 
         /**
@@ -53,10 +54,11 @@
          * @param string   $items
          * @param int      $payment
          * @param int      $shipment
+         * @param string   $note
          * @return Order
          * @throws \PHPMailer\PHPMailer\Exception
          */
-        public static function createOrder($customer, $items, $payment, $shipment) {
+        public static function createOrder($customer, $items, $payment, $shipment, $note) {
             $pdo = new PDO_MYSQL();
             $template = new \Template();
             $mail = new PHPMailer(true);
@@ -68,23 +70,41 @@
                 "shipping" => intval($shipment),
                 "payment" => intval($payment),
                 "items" => $items,
+                "note" => $note,
                 "estDate" => "31.12."
             ]);
             $res = $pdo->query("SELECT orderID FROM db_302476_3.rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
 
             //Send Email
             $template->assign("orderID", $res->orderID);
-            $invoice = new Invoice($items, $res->orderID, $customer);
+            switch ($payment) {
+                case 0:
+                    $template->assign("displayBar", "");
+                    $template->assign("displayPaypal", "display: none;");
+                    $template->assign("displayUberweisung", "display: none;");
+                    break;
+                case 1:
+                    $template->assign("displayBar", "display: none;");
+                    $template->assign("displayPaypal", "");
+                    $template->assign("displayUberweisung", "display: none;");
+                    break;
+                case 2:
+                    $template->assign("displayBar", "display: none;");
+                    $template->assign("displayPaypal", "display: none;");
+                    $template->assign("displayUberweisung", "");
+                    break;
+            }
+            $invoice = new Invoice($items, $res->orderID, $customer, $note);
             $totalPrice = $invoice->preparePDF();
             $invoice->getPDFAttachment();
 
-            User::sendOutNotifications(json_encode([
+            /*User::sendOutNotifications(json_encode([
                 "info"  => "statechange",
                 "orderState" => 0,
                 "customerName" => $customer->getFirstname()." ".$customer->getLastname(),
                 "orderID" => $res->orderID,
                 "orderPrice" => $totalPrice
-            ]));
+            ]));*/
 
             $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
             $mail->addAddress($customer->getEmail(),$customer->getFirstname()." ".$customer->getLastname());

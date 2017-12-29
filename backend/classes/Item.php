@@ -13,7 +13,7 @@
     class Item {
         private $Names = [1=>"RheinhessenRiders Hoodie",2=>"RheinhessenRiders Shirt",3=>"RheinhessenRiders Sticker"];
         private $Prices = [1=>30,2=>17,3=>1];
-        private $Options = ["frontName"=>"Name auf der Front", "city"=>"Stadt", "sizeO"=>"Größe", "color"=>"Farbe"];
+        private $Options = ["frontName"=>"Name auf der Front", "city"=>"Stadt", "size"=>"Größe", "color"=>"Farbe"];
         private $name, $amount, $itemData,$options,$price;
 
         /**

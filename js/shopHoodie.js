@@ -30,8 +30,8 @@ function hoodieAdd() {
             itemData: {
                 frontName: $("#front_name").val(),
                 city: $("#citysel").val(),
-                size: $("#hoodieSize").val(),
-                color: $("#hoodieColor").val()
+                size: $("#hoodieSize").val()
+                //color: $("#hoodieColor").val()
             }
         }
         Lockr.sadd("items", item);

@@ -25,7 +25,6 @@
     require_once "../../vendor/phpmailer/phpmailer/src/OAuth.php";
     require_once "../../vendor/phpmailer/phpmailer/src/POP3.php";
     require_once "../../vendor/phpmailer/phpmailer/src/SMTP.php";
-    require_once "../../vendor/autoload.php";
     require_once "../../classes/User.php";
 
     $accesscode = $_COOKIE['accesscode'];
@@ -41,9 +40,10 @@
     $payment = $_POST["payment"];
     $shipment = $_POST["shipment"];
     $items = $_POST["items"];
+    $note = $_POST["note"];
 
     $customer = \rrshop\Customer::checkEMail($email);
     if(!$customer) $customer = \rrshop\Customer::createNew($firstname, $lastname, $email);
-    $order = \rrshop\Order::createOrder($customer, $items, $payment, $shipment);
+    $order = \rrshop\Order::createOrder($customer, $items, $payment, $shipment, $note);
 
     echo json_encode(["success" => true, "order" => $order]);
