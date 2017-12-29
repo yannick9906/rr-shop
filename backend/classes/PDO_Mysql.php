@@ -71,7 +71,7 @@
          * Makes a INSERT query
          *
          * @param string $table Tablename
-         * @param array $fields Fields to insert ["fieldname" => "data"]
+         * @param array $fields Fields to insert ["fieldname" => "dataO"]
          * @return mixed
          */
         public function queryInsert($table, $fields) {
@@ -92,9 +92,9 @@
          * Makes a UPDATE query
          *
          * @param string $table  Tablename
-         * @param array  $fields Fields to insert ["fieldname" => "data"]
+         * @param array  $fields Fields to insert ["fieldname" => "dataO"]
          * @param string $where  Custom where clause
-         * @param array  $wherefields Fields for where clause ["fieldname" => "data"]
+         * @param array  $wherefields Fields for where clause ["fieldname" => "dataO"]
          * @return mixed
          */
         public function queryUpdate($table, $fields, $where, $wherefields) {

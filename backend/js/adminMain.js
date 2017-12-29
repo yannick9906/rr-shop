@@ -13,7 +13,7 @@ function resetDash() {
     $("#nav-logout").removeClass("active");
     $("#nav-order-scan").removeClass("active");
     $("#nav-orders").removeClass("active");
-    $("#nav-customers").removeClass("active");
+    $("#nav-customer").removeClass("active");
     $("#nav-users").removeClass("active");
 
     //Panel reset:
@@ -26,10 +26,10 @@ function checkHash() {
         let hash = window.location.hash.substring(1);
         //Startpanel...
         if(hash.startsWith("order-")) return;
-        if(hash === "account") return;
+        if(hash === "account") startAccount();
         if(hash === "scan") return;
-        if(hash === "orders") return;
-        if(hash === "customers") return;
+        if(hash === "orders") startOrders();
+        if(hash === "customer") return;
         if(hash === "users") startUsers();
     }
 }

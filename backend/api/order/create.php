@@ -25,6 +25,14 @@
     require_once "../../vendor/phpmailer/phpmailer/src/OAuth.php";
     require_once "../../vendor/phpmailer/phpmailer/src/POP3.php";
     require_once "../../vendor/phpmailer/phpmailer/src/SMTP.php";
+    require_once "../../vendor/autoload.php";
+    require_once "../../classes/User.php";
+
+    $accesscode = $_COOKIE['accesscode'];
+    if($accesscode !== "4f3f8169c06c52139d9f432be783c80a") {
+        echo json_encode(["success" => false, "error" => "wrong accesscode"]);
+        exit;
+    }
 
     $firstname = utf8_decode($_POST["firstname"]);
     $lastname = utf8_decode($_POST["lastname"]);

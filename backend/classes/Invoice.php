@@ -66,6 +66,7 @@
             $this->pdf->setX(160);
             $this->pdf->Cell(20,8,"Gesamt",1,0,"R",true);
             $this->pdf->Cell(20,8,$totalPrice." EUR",1,1,"R",true);
+            return $totalPrice;
         }
 
         public function getPDFAttachment() {

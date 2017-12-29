@@ -622,6 +622,13 @@
         window.onhashchange = hashChange;
         updateBreadCrump();
         shopClosed();
+        document.querySelector("#accesscode").addEventListener('keypress', (e) => {
+            var key = e.which || e.keyCode;
+            if(key === 13) {
+                e.preventDefault();
+                checkAccessCode();
+            }
+        });
     });
 </script>
 </html>

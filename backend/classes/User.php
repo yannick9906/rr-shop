@@ -8,6 +8,10 @@
 
     namespace rrshop;
 
+    use Minishlink\WebPush\WebPush;
+
+    require_once 'passwords.php';
+
     class User implements \JsonSerializable {
         private $uID;
         private $username;
@@ -35,7 +39,7 @@
         }
 
         /**
-         * creates a new instance from a specific uID using data from db
+         * creates a new instance from a specific uID using dataO from db
          *
          * @param int $uID
          * @return User
@@ -90,7 +94,7 @@
          * @param string $search
          * @param string $sort
          *
-         * @return array Normal dict array with data
+         * @return array Normal dict array with dataO
          */
         public static function getList($page = 1, $pagesize = 75, $search = "", $sort = "") {
             $USORTING = [
@@ -134,12 +138,7 @@
             $stmt = $pdo->queryPagedList("rrshop_user", $startElem, $endElem, ["username"], $search, "", "uID >= 0");
             $hits = [];
             while($row = $stmt->fetchObject()) {
-                array_push($hits, new User(
-                        $row->uID,
-                        $row->username,
-                        $row->passHash,
-                        $row->email)
-                );
+                array_push($hits, User::fromUID($row->uID));
             }
             return $hits;
         }
@@ -207,7 +206,7 @@
         }
 
         /**
-         * Checks a users session and logs him in, also printing some debug data if requested
+         * Checks a users session and logs him in, also printing some debug dataO if requested
          *
          * @param bool $check
          * @return bool|User
@@ -299,10 +298,10 @@
         }
 
         /**
-         * Specify data which should be serialized to JSON
+         * Specify dataO which should be serialized to JSON
          *
          * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
-         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * @return mixed dataO which can be serialized by <b>json_encode</b>,
          *        which is a value of any type other than a resource.
          * @since 5.4.0
          */
@@ -320,7 +319,39 @@
             //Util::sendPushNotification($endpoint);
         }
 
+        public function disabledPush() {
+            $this->endpoints = [];
+        }
+
         public function getEndpoints() {
             return $this->endpoints;
+        }
+
+        /**
+         * @param $payload string
+         */
+        public function sendPushNotification($payload) {
+            foreach ($this->endpoints as $endpoint) {
+                try {
+                    $webPush = new WebPush(getAuth());
+                    $defaultOptions = [
+                        'TTL'       => 300, // defaults to 4 weeks
+                        'urgency'   => 'normal', // protocol defaults to "normal"
+                        'topic'     => 'new_event', // not defined by default,
+                        'batchSize' => 200, // defaults to 1000
+                    ];
+                    $webPush->setDefaultOptions($defaultOptions);
+                    // or for one notification
+                    $webPush->sendNotification($endpoint->endpoint, $payload, $endpoint->keys->p256dh, $endpoint->keys->auth, true, ['TTL' => 5000]);
+                } catch (\ErrorException $e) {
+
+                }
+            }
+        }
+
+        public static function sendOutNotifications($payload) {
+            foreach (User::getListObjects() as $user) {
+                $user->sendPushNotification($payload);
+            }
         }
     }

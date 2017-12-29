@@ -2,8 +2,8 @@
     /**
      * Created by PhpStorm.
      * User: yanni
-     * Date: 29.09.2016
-     * Time: 19:53
+     * Date: 04.10.2016
+     * Time: 22:05
      */
 
     ini_set("display_errors", "on");
@@ -15,5 +15,8 @@
     $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
-    $users = \rrshop\User::getList($_GET["page"], intval($_GET["pagesize"]), utf8_decode($_GET["search"]), $_GET["sortO"]);
-    echo json_encode($users);
+    $userToEdit = \rrshop\User::fromUID(intval($_GET["id"]));
+    if($userToEdit->getUID() != null)
+        echo json_encode($userToEdit);
+    else
+        echo json_encode(["error" => "ID unknown"]);

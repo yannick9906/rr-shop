@@ -18,7 +18,7 @@
         private $l_delim = '{',
             $r_delim = '}';
         /**
-         * Set template property in template file
+         * Set templateO property in templateO file
          * @access public
          * @param string $key property name
          * @param string $value property value
@@ -28,7 +28,7 @@
         }
 
         /**
-         * Parce template file
+         * Parce templateO file
          *
          * @access public
          * @param string $template_file
@@ -68,7 +68,7 @@
          * Parsing content for loop varliable
          * @access private
          * @param string $variable loop name
-         * @param string $data loop data
+         * @param string $data loop dataO
          * @param string $string content to replace
          * @return string replaced content
          */

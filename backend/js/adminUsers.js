@@ -3,8 +3,8 @@ function startUsers() {
     $("#listSearchString").html("In Benutzern suchen...");
     $("#listSearchIcon").addClass("mddi-account-search");
     $("#listHeader").html("<th data-field=\"id\" width=\"50px\">ID</th>\n" +
-                        "<th data-field=\"name\" width=\"40%\">Benutzername</th>\n" +
-                        "<th data-field=\"email\" width=\"40%\">Email</th>");
+        "<th data-field=\"name\" width=\"40%\">Benutzername</th>\n" +
+        "<th data-field=\"email\" width=\"40%\">Email</th>");
     $("#createNewBtnIcon").addClass("mddi-account-plus");
     $("#createNewTitle").html("Benutzer erstellen");
     $("#editTitle").html("Benutzer bearbeiten");
@@ -20,6 +20,22 @@ function startUsers() {
 
     //Show
     $("#listPanel").show();
+    $('select').material_select('destroy');
+    $("select").material_select();
+
+    $(document).ready(function() {
+        updateCaller();
+        window.setTimeout("updateCaller()", 2500);
+        $("#filter").keyup(function () {
+            delay(function(){
+                searchString = $("#filter").val();
+                data = "";
+                reqPage = 1;
+                updateData();
+                updatePages();
+            }, 500 );
+        });
+    });
 }
 
 let sortName = "#sort";
@@ -254,17 +270,3 @@ var delay = (function(){
         timer = setTimeout(callback, ms);
     };
 })();
-
-$(document).ready(function() {
-    updateCaller();
-    window.setTimeout("updateCaller()", 2500);
-    $("#filter").keyup(function () {
-        delay(function(){
-            searchString = $("#filter").val();
-            data = "";
-            reqPage = 1;
-            updateData();
-            updatePages();
-        }, 500 );
-    });
-});

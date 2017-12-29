@@ -72,15 +72,19 @@
             ]);
             $res = $pdo->query("SELECT orderID FROM db_302476_3.rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
 
-            //Todo Send Pushs
-            $webPush = new WebPush(getAuth());
-            //$webPush->sendNotification($endpoint, $payload, $userPublicKey, $userAuthToken));
-
             //Send Email
             $template->assign("orderID", $res->orderID);
             $invoice = new Invoice($items, $res->orderID, $customer);
-            $invoice->preparePDF();
+            $totalPrice = $invoice->preparePDF();
             $invoice->getPDFAttachment();
+
+            User::sendOutNotifications(json_encode([
+                "info"  => "statechange",
+                "orderState" => 0,
+                "customerName" => $customer->getFirstname()." ".$customer->getLastname(),
+                "orderID" => $res->orderID,
+                "orderPrice" => $totalPrice
+            ]));
 
             $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
             $mail->addAddress($customer->getEmail(),$customer->getFirstname()." ".$customer->getLastname());
@@ -100,12 +104,72 @@
             return self::fromOrderID($res->orderID);
         }
 
+        /**
+         * Returns all entries matching the search and the page
+         *
+         * @param int    $page
+         * @param int    $pagesize
+         * @param string $search
+         * @param string $sort
+         *
+         * @return array Normal dict array with dataO
+         */
+        public static function getList($page = 1, $pagesize = 75, $search = "", $sort = "") {
+            $USORTING = [
+                "timeAsc"  => "ORDER BY timestamp ASC",
+                "idAsc"    => "ORDER BY orderID ASC",
+                "timeDesc" => "ORDER BY timestamp DESC",
+                "idDesc"   => "ORDER BY orderID DESC",
+                "" => ""
+            ];
+
+            $pdo = new PDO_MYSQL();
+            $startElem = ($page-1) * $pagesize;
+            $endElem = $pagesize;
+            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], "");
+            $hits = self::getListMeta($page, $pagesize, $search);
+            while($row = $stmt->fetchObject()) {
+                array_push($hits["orders"], [
+                    "orderID" => $row->orderID,
+                    "timestamp" => $row->timestamp,
+                    "customer" => Customer::fromCustomerID($row->customer),
+                    "state" => $row->state,
+                    "payment" => $row->payment,
+                    "shipping" => $row->shipping,
+                    "check" => md5($row->orderID+$row->timestamp+$row->customer)
+                ]);
+            }
+            return $hits;
+        }
 
         /**
-         * Specify data which should be serialized to JSON
+         * Returns the array stub for the getList() methods
+         *
+         * @param int $page
+         * @param int $pagesize
+         * @param string $search
+         * @return array
+         */
+        public static function getListMeta($page, $pagesize, $search) {
+            $pdo = new PDO_MYSQL();
+            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%'))", [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders");
+            $size = $res->size;
+            $maxpage = ceil($size / $pagesize);
+            return [
+                "size" => $size,
+                "maxPage" => $maxpage,
+                "page" => $page,
+                "orders" => []
+            ];
+        }
+
+
+        /**
+         * Specify dataO which should be serialized to JSON
          *
          * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
-         * @return mixed data which can be serialized by <b>json_encode</b>,
+         * @return mixed dataO which can be serialized by <b>json_encode</b>,
          * which is a value of any type other than a resource.
          * @since 5.4.0
          */

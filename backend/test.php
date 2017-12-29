@@ -12,11 +12,11 @@
 
     /*require_once "classes/Template.php";
 
-    $template = new Template();
-    $template->assign("orderID", "5a14719dbcdaa");
-    echo $template->parse("email.html");*/
+    $templateO = new Template();
+    $templateO->assign("orderID", "5a14719dbcdaa");
+    echo $templateO->parse("email.html");*/
 
-    require_once "classes/PDO_Mysql.php";
+    /*require_once "classes/PDO_Mysql.php";
     require_once "classes/Invoice.php";
     require_once "classes/Customer.php";
     require_once "classes/Item.php";
@@ -25,6 +25,29 @@
     require_once "lib/fpdf.php";
     require_once "lib/qrcode.class.php";
 
-    $i = new \rrshop\Invoice('[{"itemType":1,"amount":1,"itemData":{"frontName":"Furst Gruppenzwerg","city":"mz","size":"s"}}]',uniqid(),\rrshop\Customer::fromCustomerID(1));
+    $i = new \rrshop\Invoice('[{"itemType":1,"amount":1,"itemData":{"frontName":"Furst Gruppenzwerg","city":"mz","sizeO":"s"}}]',uniqid(),\rrshop\Customer::fromCustomerID(1));
     $i->preparePDF();
-    $i->showPDF();
+    $i->showPDF();*/
+
+    require_once "classes/PDO_Mysql.php";
+    require_once "classes/User.php";
+    require_once "vendor/autoload.php";
+
+    $user = \rrshop\User::checkSession();
+    $pdo = new \rrshop\PDO_Mysql();
+
+    /*$user->sendPushNotification($payload = json_encode([
+        "info"  => "statechange",
+        "orderState" => 0,
+        "customerName" => "Lommel Lümmel",
+        "orderID" => "5afewsf",
+        "orderPrice" => 100.00
+    ]));*/
+
+    \rrshop\User::sendOutNotifications(json_encode([
+        "info"  => "statechange",
+        "orderState" => 0,
+        "customerName" => "Lommel Lümmel",
+        "orderID" => "5afewsf",
+        "orderPrice" => 100.00
+    ]));

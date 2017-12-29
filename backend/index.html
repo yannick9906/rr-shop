@@ -85,7 +85,7 @@
                         <li id="nav-users"><a href="#users"><i class="mddi mddi-account-multiple"></i>Benutzer</a></li>
                         <li><div class="divider"></div></li>
                     </ul>
-                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mddi mddi-menu small"></i></a>
                 </div>
             </nav>
         </div>
@@ -117,27 +117,27 @@
                     <tbody id="users">
                     <tr>
                         <td><span class="placeholder-big light" style="width: 30px;"></span></td>
-                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></td>
+                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></span></td>
                         <td><span class="placeholder-small light" style="width: 100%;"></span></td>
                     </tr>
                     <tr>
                         <td><span class="placeholder-big light" style="width: 30px;"></span></td>
-                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></td>
+                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></span></td>
                         <td><span class="placeholder-small light" style="width: 100%;"></span></td>
                     </tr>
                     <tr>
                         <td><span class="placeholder-big light" style="width: 30px;"></span></td>
-                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></td>
+                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></span></td>
                         <td><span class="placeholder-small light" style="width: 100%;"></span></td>
                     </tr>
                     <tr>
                         <td><span class="placeholder-big light" style="width: 30px;"></span></td>
-                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></td>
+                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></span></td>
                         <td><span class="placeholder-small light" style="width: 100%;"></span></td>
                     </tr>
                     <tr>
                         <td><span class="placeholder-big light" style="width: 30px;"></span></td>
-                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></td>
+                        <td><span class="placeholder-small" style="width: 30%;"></span><span class="placeholder-small light" style="width: 20%;"></span></td>
                         <td><span class="placeholder-small light" style="width: 100%;"></span></td>
                     </tr>
                     </tbody>
@@ -181,6 +181,56 @@
                 </div>
             </div>
         </main>
+        <main  id="account" style="display: none;">
+            <div class="container">
+                <div class="card-panel">
+                    <div class="row">
+                        <div class="col s12 l6 row">
+                            <div class="col s12 black-text bolden">Grundeinstellungen</div>
+                            <div class="input-field col s12">
+                                <input id="acc-username" type="text" disabled>
+                                <label for="acc-username">Benutzername</label>
+                            </div>
+                            <div class="input-field col s10">
+                                <input id="acc-email" type="email">
+                                <label for="acc-email">E-Mail</label>
+                            </div>
+                            <div class="col s2">
+                                <a class="waves-effect waves-light btn black right" style="margin-top: 1rem;" id="accSubmitEmail"><i class="mddi mddi-refresh"></i></a>
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="acc-pass1" type="password">
+                                <label for="acc-pass1">Passwort</label>
+                            </div>
+                            <div class="input-field col s10">
+                                <input id="acc-pass2" type="password">
+                                <label for="acc-pass2">Passwort wiederholen</label>
+                            </div>
+                            <div class="col s2" >
+                                <a class="waves-effect waves-light btn black right" style="margin-top: 1rem;" id="accSubmitPass"><i class="mddi mddi-refresh"></i></a>
+                            </div>
+                        </div>
+                        <div class="col s12 l6 row">
+                            <div class="col s12 black-text bolden">Optionen</div>
+                            <div class="col s12 switch" style="line-height: 3rem;">
+                                <label>
+                                    <input type="checkbox">
+                                    <span class="lever"></span>
+                                </label>
+                                E-Mail-Notifications
+                            </div>
+                            <div class="col 12 switch" style="line-height: 3rem;">
+                                <label>
+                                    <input type="checkbox" id="acc-pushswitch">
+                                    <span class="lever"></span>
+                                </label>
+                                <span id="acc-pushswitchlabel">Push-Notifications</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -192,8 +242,16 @@
 <script type="text/javascript" src="js/adminLogin.js"></script>
 <script type="text/javascript" src="js/adminMain.js"></script>
 <script type="text/javascript" src="js/adminUsers.js"></script>
+<script type="text/javascript" src="js/adminOrders.js"></script>
+<script type="text/javascript" src="js/adminAccount.js"></script>
 <script>
     $(document).ready(() => {
+        $('.button-collapse').sideNav({
+            menuWidth: 300, // Default is 300
+            edge: 'right', // Choose the horizontal origin
+            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
+            draggable: true
+        });
         $(".dropdown-button").dropdown();
         $("select").material_select();
     });
