@@ -9,7 +9,8 @@ function orderInfo(id) {
         let stateText = setStateProgress(data.state);
         $("#info_orderID").html(data.orderID);
         $("#info_state").html(stateText);
-        $("#info_shippingDate").html("Bedruckung in Kalenderwoche "+data.nextClose+".");
+        if(data.state === 0) $("#info_shippingDate").html("Bedruckung in Kalenderwoche "+data.nextClose+" bei Zahlungseingang bis diesen Sonntag 19:00 CET.");
+        else $("#info_shippingDate").html("Bedruckung in Kalenderwoche "+data.nextClose+".");
         $("#info_customer").html(data.customername);
         $("#info_payment").html(paymentType[data.payment]);
     });
@@ -20,22 +21,22 @@ function setStateProgress(state) {
         $("#orderProgress").css("width","1%");
         $("#orderApproved").removeClass("grey-text");
         $("#orderApproved").removeClass("text-lighten-2");
-        return "Bestellung aufgenommen";
+        return "Bestellung aufgenommen.";
     } else if (state === 1) {
         $("#orderProgress").css("width","50%");
         $("#orderApproved").removeClass("grey-text");
         $("#orderApproved").removeClass("text-lighten-2");
         $("#orderPayed").removeClass("grey-text");
         $("#orderPayed").removeClass("text-lighten-2");
-        return "Bestlung bezahlt";
+        return "Bestlung bezahlt.";
     } else {
         $("#orderProgress").css("width","100%");
         $("#orderApproved").removeClass("grey-text");
         $("#orderApproved").removeClass("text-lighten-2");
         $("#orderPayed").removeClass("grey-text");
         $("#orderPayed").removeClass("text-lighten-2");
-        $("#orderShipped").removeClass("grey-text");
-        $("#orderShipped").removeClass("text-lighten-2");
-        return "Bestellung abholbereit";
+        $("#orderPrinting").removeClass("grey-text");
+        $("#orderPrinting").removeClass("text-lighten-2");
+        return "Bestellung wird bedruckt und versendet.";
     }
 }
