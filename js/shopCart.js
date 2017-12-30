@@ -53,14 +53,13 @@ function displayCart() {
                 itemID:i,
                 itemRef:"hoodie",
                 itemName:"RheinhessenRiders Hoodie",
-                itemPrice: 30*items[i].amount,
+                itemPrice: 28*items[i].amount,
                 itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
                 '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
                 '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
-                '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
                 '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
             }));
-            totalPrice += 30*items[i].amount;
+            totalPrice += 28*items[i].amount;
         } else if(items[i].itemType === 2) {
             target.append(cartItemTemplate({
                 imageSrc:"img/shirt/Shirt-Back-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
@@ -86,7 +85,7 @@ function displayCart() {
             }));
             totalPrice += 1*items[i].amount;
         }
-        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€");
+        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
     }
     if(items.length === 0) {
         target.html(`

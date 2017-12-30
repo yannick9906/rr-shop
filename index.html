@@ -95,7 +95,7 @@
                     dass hier ein echter RR-Member am Start ist!</p>
             </div>
             <div class="card-action">
-                <a href="#hoodie" onclick="hoodieDetail()" class="green-text text-darken-2">ab 30€/Stk - Details</a>
+                <a href="#hoodie" onclick="hoodieDetail()" class="green-text text-darken-2">ab 28€/Stk - Details</a>
             </div>
         </div>
     </div>
@@ -209,6 +209,7 @@
                 hält euch der RheinhessenRiders Hoodie immer warm!
                 Exklusiv mit deinem Namen und der Stadt wird jeder sofort erkennen,
                 dass hier ein echter RR-Member am Start ist!</p>
+            <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
         </div>
         <div class="col s12 m6 row">
             <div class="col s12 row black">
@@ -276,7 +277,7 @@
                         </select>
                         <label>Größe</label>
                     </div>
-                    <h4 class="col s5 offset-s4 bolden right-align rr" id="hoodie_price"> 30 €</h4>
+                    <h4 class="col s5 offset-s4 bolden right-align rr" id="hoodie_price"> 28 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="hoodieAdd()"><i class="mddi mddi-basket-fill"></i></a>
                 </form>
             </div>
@@ -300,6 +301,7 @@
             zeigen zu wem du gehörst? Dann ist das RheinhessenRiders Shirt perfekt für
             dich. Ebenfalls mit deinem Namen, Stadt und natürlich den Logos wird jeder
             dich erkennen!</p>
+            <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
         </div>
         <div class="col s12 m6 row">
             <div class="col s12 row black">
@@ -477,8 +479,8 @@
                 </p>-->
                 <p><br/></p>
             </div>
-            <div class="col s12 m6">
-                <h6 class="bolden">Abholpräferenz</h6>
+            <div class="col s12 m6 row">
+                <!--<h6 class="bolden">Abholpräferenz</h6>
                 <p>
                     <input name="destination" type="radio" id="mz" value="0"/>
                     <label for="mz">Nord: Mainz-Lerchenberg (Yannick Félix)</label>
@@ -487,10 +489,23 @@
                     <input name="destination" type="radio" id="fries" value="1" />
                     <label for="fries">Süd: Frettenheim (Philipp Lommel)</label>
                 </p>
-                <!--<p>
+                <p>
                     <input name="destination" type="radio" id="delivery" value="2" disabled />
                     <label for="fries">Lieferung nach Hause. (+10 Euro; bis zu 7 Tage später)</label>
                 </p>-->
+                <h6 class="bolden s12">Lieferung an: </h6>
+                <div class="input-field col s12">
+                    <input id="address-street" type="text">
+                    <label for="address-street">Straße Hausnummer</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="address-zip" type="text">
+                    <label for="address-zip">Postleitzahl</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="address-city" type="text">
+                    <label for="address-city">Stadt</label>
+                </div>
                 <p><br/></p>
             </div>
             <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
@@ -561,8 +576,7 @@
             <div class="col s6 l3 bolden">Kundenname: </div><div class="col s6 l3" id="info_customer">Laden ...</div><br/>
             <div class="col s6 l3 bolden">Status: </div><div class="col s6 l3 green-text" id="info_state">Laden ...</div><br/>
             <div class="col s6 l3 bolden">Bezahlmethode: </div><div class="col s6 l3" id="info_payment">Laden ...</div><br/>
-            <div class="col s6 l3 bolden">Abholbereit: </div><div class="col s6 l6" id="info_shippingDate">Laden ...</div><br/>
-            <div class="col s6 l3 bolden">Abholort: </div><div class="col s6 l3" id="info_shippingPlace">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">Versand: </div><div class="col s6 l6" id="info_shippingDate">Laden ...</div><br/>
         </div>
     </div>
 </div>

@@ -9,9 +9,8 @@ function orderInfo(id) {
         let stateText = setStateProgress(data.state);
         $("#info_orderID").html(data.orderID);
         $("#info_state").html(stateText);
-        $("#info_shippingDate").html("Bedruckung am "+data.nextClose+" Bereit ca 1 Woche später.");
+        $("#info_shippingDate").html("Bedruckung in Kalenderwoche "+data.nextClose+".");
         $("#info_customer").html(data.customername);
-        $("#info_shippingPlace").html(shipmentType[data.shipping]);
         $("#info_payment").html(paymentType[data.payment]);
     });
 }

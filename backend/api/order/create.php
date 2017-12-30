@@ -28,7 +28,7 @@
     require_once "../../classes/User.php";
 
     $accesscode = $_COOKIE['accesscode'];
-    if($accesscode !== "4f3f8169c06c52139d9f432be783c80a") {
+    if(!($accesscode == "4f3f8169c06c52139d9f432be783c80a" or $accesscode == "d7a0e8bbb6f212c2089021e908e55a00")) {
         echo json_encode(["success" => false, "error" => "wrong accesscode"]);
         exit;
     }
@@ -38,12 +38,14 @@
     $email = utf8_decode($_POST["email"]);
 
     $payment = $_POST["payment"];
-    $shipment = $_POST["shipment"];
+    $addressStreet = $_POST["addressStreet"];
+    $addressCity = $_POST["addressCity"];
+    $addressZip = $_POST["addressZip"];
     $items = $_POST["items"];
     $note = $_POST["note"];
 
     $customer = \rrshop\Customer::checkEMail($email);
-    if(!$customer) $customer = \rrshop\Customer::createNew($firstname, $lastname, $email);
-    $order = \rrshop\Order::createOrder($customer, $items, $payment, $shipment, $note);
+    if(!$customer) $customer = \rrshop\Customer::createNew($firstname, $lastname, $email, $addressCity, $addressStreet, $addressZip);
+    $order = \rrshop\Order::createOrder($customer, $items, $payment, $note);
 
     echo json_encode(["success" => true, "order" => $order]);

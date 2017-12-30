@@ -13,7 +13,7 @@
 
     class Order implements \JsonSerializable {
         private $customer, $items;
-        private $orderID, $shipment, $payment, $state, $estDate, $note;
+        private $orderID, $payment, $state, $estDate, $note;
         private $pdo;
 
         /**
@@ -22,16 +22,15 @@
          * @param $orderID
          * @param $customer
          * @param $items
-         * @param $shipment
          * @param $payment
          * @param $state
          * @param $estDate
+         * @param $note
          */
-        public function __construct($orderID, $customer, $items, $shipment, $payment, $state, $estDate, $note) {
+        public function __construct($orderID, $customer, $items, $payment, $state, $estDate, $note) {
             $this->orderID = $orderID;
             $this->customer = Customer::fromCustomerID(intval($customer));
             $this->items = $items;
-            $this->shipment = intval($shipment);
             $this->payment = intval($payment);
             $this->state =intval($state);
             $this->estDate = $estDate;
@@ -46,19 +45,18 @@
         public static function fromOrderID($orderID) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
-            return new Order($orderID, $res->customer, $res->items, $res->shipping, $res->payment, $res->state, $res->estDate, $res->note);
+            return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note);
         }
 
         /**
          * @param Customer $customer
          * @param string   $items
          * @param int      $payment
-         * @param int      $shipment
          * @param string   $note
          * @return Order
          * @throws \PHPMailer\PHPMailer\Exception
          */
-        public static function createOrder($customer, $items, $payment, $shipment, $note) {
+        public static function createOrder($customer, $items, $payment, $note) {
             $pdo = new PDO_MYSQL();
             $template = new \Template();
             $mail = new PHPMailer(true);
@@ -67,12 +65,10 @@
             $pdo->queryInsert("rrshop_orders", [
                 "orderID" => uniqid(),
                 "customer" => $customer->getCustomerID(),
-                "shipping" => intval($shipment),
                 "payment" => intval($payment),
                 "items" => $items,
-                "note" => $note,
-                "estDate" => "31.12."
-            ]);
+                "note" => $note
+            ], ", estDate = WEEK(ADDDATE(CURDATE(), INTERVAL 7 DAY),1)");
             $res = $pdo->query("SELECT orderID FROM db_302476_3.rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
 
             //Send Email
@@ -98,13 +94,13 @@
             $totalPrice = $invoice->preparePDF();
             $invoice->getPDFAttachment();
 
-            /*User::sendOutNotifications(json_encode([
+            User::sendOutNotifications(json_encode([
                 "info"  => "statechange",
                 "orderState" => 0,
                 "customerName" => $customer->getFirstname()." ".$customer->getLastname(),
                 "orderID" => $res->orderID,
                 "orderPrice" => $totalPrice
-            ]));*/
+            ]));
 
             $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
             $mail->addAddress($customer->getEmail(),$customer->getFirstname()." ".$customer->getLastname());
@@ -155,7 +151,6 @@
                     "customer" => Customer::fromCustomerID($row->customer),
                     "state" => $row->state,
                     "payment" => $row->payment,
-                    "shipping" => $row->shipping,
                     "check" => md5($row->orderID+$row->timestamp+$row->customer)
                 ]);
             }
@@ -199,8 +194,8 @@
                 "state" => $this->state,
                 "nextClose" => $this->estDate,
                 "payment" => $this->payment,
-                "shipping" => $this->shipment,
                 "customername" => $this->customer->getFirstname()." ".$this->customer->getLastname(),
+                "customer" => $this->customer,
                 "items" => json_decode($this->items)
             ];
         }

@@ -19,7 +19,7 @@ function refreshPreviewHoodie() {
 
 function hoodieRefreshPrice() {
     let amount = $("#hoodieAmount").val();
-    $("#hoodie_price").html(amount*30+" €")
+    $("#hoodie_price").html(amount*28+" €")
 }
 
 function hoodieAdd() {

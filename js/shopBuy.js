@@ -39,18 +39,27 @@ function buy() {
 }
 
 function buyNow() {
+    let item = {
+        itemType: 4,
+        amount: 1,
+        itemData: {}
+    }
+    Lockr.sadd("items", item);
+
     let orderData = {
         firstname: $("#first_name").val(),
         lastname: $("#last_name").val(),
         email: $("#email").val(),
         payment: $('input[name=payment]:checked').val(),
-        shipment: $('input[name=destination]:checked').val(),
         items: JSON.stringify(Lockr.smembers("items")),
-        note: $("#note").val()
+        note: $("#note").val(),
+        addressStreet: $("#address-street").val(),
+        addressZip: $("#address-zip").val(),
+        addressCity: $("#address-city").val()
     }
     console.log(orderData);
 
-    if(orderData.firstname != '' && orderData.lastname != '' && orderData.email != '' && orderData.payment != undefined && orderData.shipment != undefined) {
+    if(orderData.firstname != '' && orderData.lastname != '' && orderData.email != '' && orderData.payment != undefined && orderData.addressCity != '' && orderData.addressStreet != '' && orderData.addressZip != '') {
 
         $("#innerBuyerInfo").fadeOut(250);
         $("#buyerLoading").fadeIn(250, () => {
@@ -71,7 +80,7 @@ function buyNow() {
                                         itemID: i,
                                         itemRef: "hoodie",
                                         itemName: "RheinhessenRiders Hoodie",
-                                        itemPrice: 30 * items[i].amount,
+                                        itemPrice: 28 * items[i].amount,
                                         itemData: '<p><span class="bolden">Name auf der Front: </span>' + items[i].itemData.frontName + '</p>' +
                                         '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
                                         '<p><span class="bolden">Größe: </span>' + items[i].itemData.size.toUpperCase() + '</p>' +
@@ -98,6 +107,15 @@ function buyNow() {
                                         itemPrice: 1 * items[i].amount,
                                         itemData: '<p><span class="bolden">Größe: </span>' + items[i].itemData.size + '</p>' +
                                         '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
+                                    }));
+                                } else if (items[i].itemType === 4) {
+                                    target.append(cartItemBoughtTemplate({
+                                        imageSrc: "img/backgroundRR.jpg",
+                                        itemID: i,
+                                        itemRef: "",
+                                        itemName: "Versandkosten",
+                                        itemPrice: 5 * items[i].amount,
+                                        itemData: ''
                                     }));
                                 }
                             }

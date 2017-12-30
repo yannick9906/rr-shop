@@ -11,6 +11,7 @@
 
     class Customer implements \JsonSerializable {
         private $firstname, $lastname, $email;
+        private $addressCity, $addressStreet, $addressZip;
         private $customerID;
         private $PDO;
 
@@ -22,10 +23,13 @@
          * @param $email
          * @param $customerID
          */
-        public function __construct($customerID, $firstname, $lastname, $email) {
+        public function __construct($customerID, $firstname, $lastname, $email, $addressCity, $addressStreet, $addressZip) {
             $this->firstname = utf8_encode($firstname);
             $this->lastname = utf8_encode($lastname);
             $this->email = utf8_encode($email);
+            $this->addressZip = $addressZip;
+            $this->addressCity = utf8_encode($addressCity);
+            $this->addressStreet = utf8_encode($addressStreet);
             $this->customerID = $customerID;
             $this->PDO = new PDO_MYSQL();
         }
@@ -37,8 +41,8 @@
         public static function fromCustomerID($customerID) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_customers WHERE customerID = :cid", [":cid" => $customerID]);
-            if($customerID == $res->customerID) return new Customer($customerID, $res->firstname, $res->lastname, $res->email);
-            else return new Customer(-1, "Kunde", "nicht gefunden", "null@null.null");
+            if($customerID == $res->customerID) return new Customer($customerID, $res->firstname, $res->lastname, $res->email, $res->addressCity, $res->addressStreet, $res->addressZip);
+            else return new Customer(-1, "Kunde", "nicht gefunden", "null@null.null", "null", "null 00", "00000");
         }
 
         /**
@@ -48,7 +52,7 @@
         public static function checkEMail($customerEmail) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_customers WHERE email = :email", [":email" => $customerEmail]);
-            if($customerEmail == $res->email) return new Customer($res->customerID, $res->firstname, $res->lastname, $customerEmail);
+            if($customerEmail == $res->email) return new Customer($res->customerID, $res->firstname, $res->lastname, $customerEmail, $res->addressCity, $res->addressStreet, $res->addressZip);
             else return false;
         }
 
@@ -56,14 +60,20 @@
          * @param $firstname
          * @param $lastname
          * @param $email
+         * @param $addressCity
+         * @param $addressStreet
+         * @param $addressZip
          * @return bool|Customer
          */
-        public static function createNew($firstname, $lastname, $email) {
+        public static function createNew($firstname, $lastname, $email, $addressCity, $addressStreet, $addressZip) {
             $pdo = new PDO_MYSQL();
             $pdo->queryInsert("rrshop_customers", [
                 "firstname" => $firstname,
                 "lastname" => $lastname,
-                "email" => $email
+                "email" => $email,
+                "addressStreet" => $addressStreet,
+                "addressCity" => $addressCity,
+                "addressZip" => $addressZip
             ]);
 
             return self::checkEMail($email);
@@ -98,6 +108,27 @@
         }
 
         /**
+         * @return string
+         */
+        public function getAddressCity() {
+            return $this->addressCity;
+        }
+
+        /**
+         * @return string
+         */
+        public function getAddressStreet() {
+            return $this->addressStreet;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getAddressZip() {
+            return $this->addressZip;
+        }
+
+        /**
          * Specify data which should be serialized to JSON
          *
          * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php
@@ -109,7 +140,10 @@
             return [
                 "firstname" => $this->firstname,
                 "lastname" => $this->lastname,
-                "email" => $this->email
+                "email" => $this->email,
+                "addressStreet" => $this->addressStreet,
+                "addressZip" => $this->addressZip,
+                "addressCity" => $this->addressCity
             ];
 
         }

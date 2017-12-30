@@ -15,7 +15,11 @@
     $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
-    $userToEdit = \rrshop\User::fromUID(intval($_GET["id"]));
+    if(intval($_GET["id"]) == -1)
+        $userToEdit = $user;
+    else
+        $userToEdit = \rrshop\User::fromUID(intval($_GET["id"]));
+
     if($userToEdit->getUID() != null)
         echo json_encode($userToEdit);
     else

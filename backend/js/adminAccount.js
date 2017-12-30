@@ -5,6 +5,35 @@ const pushSwitchLabel = $("#acc-pushswitchlabel");
 let isSubscribed = false;
 let swRegistration = null;
 
+
+function startAccount() {
+    $.getJSON("api/user/details.php")
+    $("#account").show();
+    pushSwitch.on("click", () => {
+        pushSwitch.disabled = true;
+        if (isSubscribed) {
+            // TODO: Unsubscribe user
+        } else {
+            subscribeUser();
+        }
+    });
+
+    swRegistration.pushManager.getSubscription()
+        .then(function(subscription) {
+            isSubscribed = !(subscription === null);
+
+            if (isSubscribed) {
+                console.log('User IS subscribed.');
+                pushSwitch.prop("checked", true);
+            } else {
+                updateSubscriptionOnServer(subscription);
+                console.log('User is NOT subscribed.');
+            }
+
+            updateBtn();
+        });
+}
+
 function urlB64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -35,33 +64,6 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 } else {
     console.warn('Push messaging is not supported');
     pushSwitchLabel.html('Push Not Supported');
-}
-
-function startAccount() {
-    $("#account").show();
-    pushSwitch.on("click", () => {
-        pushSwitch.disabled = true;
-        if (isSubscribed) {
-            // TODO: Unsubscribe user
-        } else {
-            subscribeUser();
-        }
-    });
-
-    swRegistration.pushManager.getSubscription()
-        .then(function(subscription) {
-            isSubscribed = !(subscription === null);
-
-            if (isSubscribed) {
-                console.log('User IS subscribed.');
-                pushSwitch.prop("checked", true);
-            } else {
-                updateSubscriptionOnServer(subscription);
-                console.log('User is NOT subscribed.');
-            }
-
-            updateBtn();
-        });
 }
 
 function subscribeUser() {

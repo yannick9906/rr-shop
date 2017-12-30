@@ -15,9 +15,10 @@
         /**
          * Invoice constructor.
          *
-         * @param string $items
-         * @param int $orderID
+         * @param string   $items
+         * @param int      $orderID
          * @param Customer $customer
+         * @param string   $note
          */
         public function __construct($items, $orderID, $customer, $note) {
             $this->items = json_decode(utf8_encode($items),true);
@@ -41,7 +42,8 @@
             $this->pdf->SetFont("","",11);
             $this->pdf->SetXY(140,20);
             $name = utf8_decode($this->customer->getFirstname())." ".utf8_decode($this->customer->getLastname());
-            $this->pdf->MultiCell(60,5,$name."\n".$this->customer->getEmail(),0,"R");
+            $address = utf8_decode($this->customer->getAddressStreet())."\n".utf8_decode($this->customer->getAddressZip())." ".utf8_decode($this->customer->getAddressCity());
+            $this->pdf->MultiCell(60,5,$name."\n".$address."\n".$this->customer->getEmail(),0,"R");
 
             $this->pdf->SetFont("","b",10);
             $this->pdf->setXY(10,95);
@@ -69,7 +71,7 @@
             $this->pdf->Cell(20,8,$totalPrice." EUR",1,1,"R",true);
             $this->pdf->Ln(16);
             $this->pdf->setX(10);
-            $this->pdf->Cell(190,16,"Notiz: ".$this->note, 1,1);
+            $this->pdf->MultiCell(0,6,"Notiz: ".wordwrap(utf8_decode($this->note)), 1,1);
             return $totalPrice;
         }
 

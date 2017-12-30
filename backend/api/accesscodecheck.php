@@ -8,7 +8,7 @@
 
     $code = $_POST["accesscode"];
 
-    if($code === "4f3f8169c06c52139d9f432be783c80a" or $code === "d7a0e8bbb6f212c2089021e908e55a00") {
+    if($code == "4f3f8169c06c52139d9f432be783c80a" or $code == "d7a0e8bbb6f212c2089021e908e55a00") {
         echo json_encode(["success" => "true"]);
         exit();
     }

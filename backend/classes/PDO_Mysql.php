@@ -67,14 +67,16 @@
             //var_dump($stmt->errorInfo());
             return $stmt;
         }
+
         /**
          * Makes a INSERT query
          *
-         * @param string $table Tablename
-         * @param array $fields Fields to insert ["fieldname" => "dataO"]
+         * @param string $table  Tablename
+         * @param array  $fields Fields to insert ["fieldname" => "data"]
+         * @param string $custom
          * @return mixed
          */
-        public function queryInsert($table, $fields) {
+        public function queryInsert($table, $fields, $custom='') {
             $db = $this->connect();
             end($fields); $lastField = key($fields);
             $bindString = ' ';
@@ -82,7 +84,7 @@
                 $bindString .= $field . '=:' . $field;
                 $bindString .= ($field === $lastField ? ' ' : ',');
             }
-            $stmt = $db->prepare("insert into `" . $table . "` set " . $bindString);
+            $stmt = $db->prepare("insert into `" . $table . "` set " . $bindString . $custom);
             $this->bindValues($stmt, $fields);
             $stmt->execute();
             //var_dump($stmt->errorInfo());
@@ -92,9 +94,9 @@
          * Makes a UPDATE query
          *
          * @param string $table  Tablename
-         * @param array  $fields Fields to insert ["fieldname" => "dataO"]
+         * @param array  $fields Fields to insert ["fieldname" => "data"]
          * @param string $where  Custom where clause
-         * @param array  $wherefields Fields for where clause ["fieldname" => "dataO"]
+         * @param array  $wherefields Fields for where clause ["fieldname" => "data"]
          * @return mixed
          */
         public function queryUpdate($table, $fields, $where, $wherefields) {
