@@ -80,6 +80,67 @@
         }
 
         /**
+         * Returns all entries matching the search and the page
+         *
+         * @param int    $page
+         * @param int    $pagesize
+         * @param string $search
+         * @param string $sort
+         *
+         * @return array Normal dict array with dataO
+         */
+        public static function getList($page = 1, $pagesize = 75, $search = "", $sort = "") {
+            $USORTING = [
+                "nameAsc"  => "ORDER BY lastname ASC",
+                "idAsc"    => "ORDER BY customerID ASC",
+                "nameDesc" => "ORDER BY lastname DESC",
+                "idDesc"   => "ORDER BY customerID DESC",
+                "" => ""
+            ];
+
+            $pdo = new PDO_MYSQL();
+            $startElem = ($page-1) * $pagesize;
+            $endElem = $pagesize;
+            $stmt = $pdo->queryPagedList("rrshop_customers", $startElem, $endElem, ["customerID", "firstname","lastname"], $search, $USORTING[$sort], "");
+            $hits = self::getListMeta($page, $pagesize, $search);
+            while($row = $stmt->fetchObject()) {
+                array_push($hits["customers"], [
+                    "customerID" => $row->customerID,
+                    "firstname" => utf8_encode($row->firstname),
+                    "lastname" => utf8_encode($row->lastname),
+                    "email" => utf8_encode($row->email),
+                    "addressStreet" => utf8_encode($row->addressStreet),
+                    "addressZip" => $row->addressZip,
+                    "addressCity" => utf8_encode($row->addressCity),
+                    "check" => md5($row->customerID+$row->firstname+$row->lastname+$row->email+$row->addressZip)
+                ]);
+            }
+            return $hits;
+        }
+
+        /**
+         * Returns the array stub for the getList() methods
+         *
+         * @param int $page
+         * @param int $pagesize
+         * @param string $search
+         * @return array
+         */
+        public static function getListMeta($page, $pagesize, $search) {
+            $pdo = new PDO_MYSQL();
+            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_customers where lower(concat(firstname,lastname,customerID)) like lower(concat('%',:search,'%'))", [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_customers");
+            $size = $res->size;
+            $maxpage = ceil($size / $pagesize);
+            return [
+                "size" => $size,
+                "maxPage" => $maxpage,
+                "page" => $page,
+                "customers" => []
+            ];
+        }
+
+        /**
          * @return int
          */
         public function getCustomerID() {

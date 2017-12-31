@@ -2,10 +2,10 @@ function startOrders() {
     //Setup
     $("#listSearchString").html("In Bestellungen suchen...");
     $("#listSearchIcon").addClass("mddi-magnify");
-    $("#listHeader").html("<th dataO-field=\"id\" width=\"50px\">ID</th>\n" +
-                        "<th dataO-field=\"name\" width=\"40%\">Status</th>\n" +
-                        "<th dataO-field=\"name\" width=\"20%\">Bezahlmethode</th>\n" +
-                        "<th dataO-field=\"name\" width=\"20%\">Bedruckung</th>\n");
+    $("#listHeader").html("<th data-field=\"id\" width=\"50px\">ID</th>\n" +
+                        "<th data-field=\"name\" width=\"40%\">Status</th>\n" +
+                        "<th data-field=\"name\" width=\"20%\">Bezahlmethode</th>\n" +
+                        "<th data-field=\"name\" width=\"20%\">Bedruckung</th>\n");
     $("#createNewBtnIcon").addClass("mddi-book-plus");
     $("#createNewTitle").html("Bestellung erstellen");
     $("#editTitle").html("Bestellung bearbeiten");
@@ -13,11 +13,7 @@ function startOrders() {
     $("#editFields").html(editFieldsO);
     $("#sort").html(sortsO);
 
-    $("#createNewBtn").on('click',newOrderO);
-    $("#createNewSubmitBtn").on('click',submitNewOrder);
-    $("#createNewCancelBtn").on('click',backToListO);
-    $("#editSubmitBtn").on('click',submitEditOrder);
-    $("#editCancelBtn").on('click',backToListO);
+    $("#createNewBtn").hide();
 
     //Show
     $("#listPanel").show();
@@ -42,6 +38,7 @@ function resetOrders() {
     dataO = "";
     $("#createNewBtnIcon").removeClass("mddi-book-plus");
     $("#listSearchIcon").removeClass("mddi-magnify");
+    $("#createNewBtn").show();
 }
 
 const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"];
@@ -151,7 +148,7 @@ function updatePagesO() {
 }
 
 function updateDataO() {
-    console.log("Update Orders");
+    //console.log("Update Orders");
     let sort = $(sortNameO).val();
     let postdata = {
         page: reqPageO,
@@ -195,84 +192,3 @@ function updateCallerO() {
 }
 
 ///////////////////////////////////////
-function backToListO() {
-    $("#editForm").fadeOut(200, function() {
-        $("#listContainer").fadeIn(200);
-    });
-    $("#createNewForm").fadeOut(200);
-    currEditO = -1;
-}
-
-function newOrderO() {
-    $("#new-username").removeClass("invalid");
-    $("#new-username").val("");
-    $("#new-realname").val("");
-    $("#new-password").val("");
-    $("#new-email").val("");
-    $("#listContainer").fadeOut(200, function() {
-        $("#createNewForm").fadeIn(200);
-    });
-}
-
-function submitNewOrder() {
-    dataO = {
-        username: $("#new-username").val(),
-        realname: $("#new-realname").val(),
-        passhash: md5($("#new-password").val()),
-        email: $("#new-email").val()
-    };
-    $.post("api/order/create.php", dataO, function(response) {
-        let json = JSON.parse(response);
-        if(json.success == "1") {
-            M.toast({html: "Benutzer erstellt", duration: 2000, classes: "green"});
-            backToListO();
-        } else {
-            if(json.error == "missing fields") {
-                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
-            } else if(json.error == "username exists") {
-                M.toast({html: "Der Benutzername existiert bereits", duration: 2000, classes: "red"});
-                $("#new-username").addClass("invalid");
-            }
-        }
-    });
-}
-
-function editOrder(id) {
-    currEditO = id;
-    $.getJSON("api/order/details.php?id="+id,null, function(json) {
-        $("#edit-username").val(json.username);
-        $("#edit-realname").val(json.realname);
-        $("#edit-password").val("");
-        $("#edit-email").val(json.email);
-        M.updateTextFields();
-        $("#listContainer").fadeOut(200, function() {
-            $("#editForm").fadeIn(200);
-        });
-    })
-}
-
-function submitEditOrder() {
-    let password = $("#edit-password").val();
-    let passhash = "NOUPDATE";
-    if(password != "") {
-        passhash = md5(password)
-    };
-
-    dataO = {
-        realname: $("#edit-realname").val(),
-        passhash: passhash,
-        email: $("#edit-email").val()
-    };
-
-    $.post("api/order/update.php?id="+currEditO, dataO, function(response) {
-        let json = JSON.parse(response);
-        if(json.success == "1") {
-            M.toast({html: "Benutzer aktualisiert", duration: 2000, classes: "green"});
-            backToListO();
-        } else {
-            if(json.error == "missing fields") {
-                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
-            }
-        }
-    });
-}

@@ -26,6 +26,7 @@ function resetDash() {
     $("#listPanel").hide();
     resetOrders();
     resetUsers();
+    resetCustomers();
     $("#account").hide();
 }
 
@@ -38,7 +39,7 @@ function checkHash() {
         if(hash === "account") startAccount();
         if(hash === "scan") return;
         if(hash === "orders") startOrders();
-        if(hash === "customer") return;
+        if(hash === "customers") startCustomers();
         if(hash === "users") startUsers();
     }
 }

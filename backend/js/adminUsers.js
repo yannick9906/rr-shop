@@ -67,17 +67,17 @@ let template = Handlebars.compile(listElemTmplt);
 let newFields = `
 <div class="row">
     <div class="input-field col s6">
-        <input id="new-username" type="text">
+        <input id="new-username" type="text" data-length="50">
         <label for="new-username">Benutzername</label>
     </div>
 </div>
 <div class="row">
     <div class="input-field col s6">
-        <input id="new-password" type="password" class="validate">
+        <input id="new-password" type="password">
         <label for="new-password">Passwort</label>
     </div>
     <div class="input-field col s6">
-        <input id="new-email" type="email" class="validate">
+        <input id="new-email" type="email" data-length="256">
         <label for="new-email">Email</label>
     </div>
 </div>
@@ -85,17 +85,17 @@ let newFields = `
 let editFields = `
 <div class="row">
     <div class="input-field col s6">
-        <input id="edit-username" type="text" disabled>
+        <input id="edit-username" type="text" disabled data-length="50">
         <label for="edit-username">Benutzername</label>
     </div>
 </div>
 <div class="row">
     <div class="input-field col s6">
-        <input id="edit-password" type="password" class="validate">
+        <input id="edit-password" type="password">
         <label for="edit-password">Passwort</label>
     </div>
     <div class="input-field col s6">
-        <input id="edit-email" type="email" class="validate">
+        <input id="edit-email" type="email" data-length="256">
         <label for="edit-email">Email</label>
     </div>
 </div>
@@ -145,7 +145,7 @@ function updatePages() {
 }
 
 function updateData() {
-    console.log("Update Users");
+    //console.log("Update Users");
     let sort = $(sortName).val();
     let postdata = {
         page: reqPage,
