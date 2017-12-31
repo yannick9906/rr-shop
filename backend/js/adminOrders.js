@@ -43,7 +43,7 @@ function resetOrders() {
 
 const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"];
 const shipmentType = ["Mainz-Lerchenberg (Yannick Félix)","Friesenheim (Philipp Lommel)", "Lieferung"];
-const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='green-text'>Bestellung bezahlt</span>", "<span class='green-text'>Bestellung abholbereit</span>"]
+const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='green-text'>Bestellung bezahlt</span>", "<span class='green-text'>Bestellung wird bedruckt</span>","<span class='red-text'>Bestellung storniert.</span>"];
 
 let sortNameO = "#sort";
 let listNameO = "#listItems"
@@ -59,7 +59,7 @@ let sortsO = `
 <option value="timeDesc">Datum abstg.</option>
 `
 let listElemTmpltO = `
-    <tr id="row-{{i}}" style="display: none;" onclick="editOrder({{orderID}})" class="clickable">
+    <tr id="row-{{i}}" style="display: none;" onclick="location.hash = 'order-{{orderID}}'" class="clickable">
         <td>{{orderID}}</td>
         <td>{{customerName}} hat am {{timestamp}} bestellt.<br/>Status: {{{state}}}</td>
         <td>{{payment}}</td>

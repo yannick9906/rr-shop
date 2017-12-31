@@ -29,7 +29,7 @@ function setStateProgress(state) {
         $("#orderPayed").removeClass("grey-text");
         $("#orderPayed").removeClass("text-lighten-2");
         return "Bestlung bezahlt.";
-    } else {
+    } else if(state === 2) {
         $("#orderProgress").css("width","100%");
         $("#orderApproved").removeClass("grey-text");
         $("#orderApproved").removeClass("text-lighten-2");
@@ -38,5 +38,10 @@ function setStateProgress(state) {
         $("#orderPrinting").removeClass("grey-text");
         $("#orderPrinting").removeClass("text-lighten-2");
         return "Bestellung wird bedruckt und versendet.";
+    } else {
+        $("#orderProgress").css("width","100%");
+        $("#orderProgress").addClass("red");
+        $("#orderProgress").removeClass("black");
+        return "<span class='red-text'>Bestellung storniert.</span>";
     }
 }

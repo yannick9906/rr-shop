@@ -179,6 +179,84 @@
             ];
         }
 
+        /**
+         * Saves the Changes made to this object to the db
+         */
+        public function saveChanges() {
+            $this->pdo->queryUpdate("rrshop_orders",
+                ["state" => $this->state,
+                 "items" => $this->items,
+                 "payment" => $this->payment,
+                 "note" => $this->note,
+                 "estDate" => $this->estDate],
+                "orderID = :oid",
+                ["oid" => $this->orderID]
+            );
+        }
+
+        /**
+         * @return bool|Customer
+         */
+        public function getCustomer() {
+            return $this->customer;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getItems() {
+            return $this->items;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getOrderID() {
+            return $this->orderID;
+        }
+
+        /**
+         * @return int
+         */
+        public function getPayment() {
+            return $this->payment;
+        }
+
+        /**
+         * @return int
+         */
+        public function getState() {
+            return $this->state;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getEstDate() {
+            return $this->estDate;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getNote() {
+            return $this->note;
+        }
+
+        /**
+         * @param int $state
+         */
+        public function setState($state) {
+            $this->state = $state;
+        }
+
+        /**
+         * @param mixed $estDate
+         */
+        public function setEstDate($estDate) {
+            $this->estDate = $estDate;
+        }
+
 
         /**
          * Specify dataO which should be serialized to JSON
@@ -196,6 +274,7 @@
                 "payment" => $this->payment,
                 "customername" => $this->customer->getFirstname()." ".$this->customer->getLastname(),
                 "customer" => $this->customer,
+                "note" => $this->note,
                 "items" => json_decode($this->items)
             ];
         }

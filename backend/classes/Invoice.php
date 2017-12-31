@@ -33,7 +33,7 @@
             $this->pdf->AddPage();
             $this->pdf->AcceptPageBreak();
             $this->pdf->Image("../../../img/Shop-Logo.png",60,10,60);
-            $qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/edit/#order-'.$this->orderID, 'M');
+            $qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/#order-'.$this->orderID, 'M');
             $qrcode->disableBorder();
             $qrcode->displayFPDF($this->pdf, 10, 10, 50);
             $this->pdf->Code128(10, 60, $this->orderID, 50, 10);
