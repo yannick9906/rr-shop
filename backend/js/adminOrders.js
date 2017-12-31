@@ -9,9 +9,9 @@ function startOrders() {
     $("#createNewBtnIcon").addClass("mddi-book-plus");
     $("#createNewTitle").html("Bestellung erstellen");
     $("#editTitle").html("Bestellung bearbeiten");
-    $("#newFieldsO").html(newFields);
-    $("#editFieldsO").html(editFieldsO);
-    $("#sortO").html(sortsO);
+    $("#newFields").html(newFields);
+    $("#editFields").html(editFieldsO);
+    $("#sort").html(sortsO);
 
     $("#createNewBtn").on('click',newOrderO);
     $("#createNewSubmitBtn").on('click',submitNewOrder);
@@ -24,10 +24,10 @@ function startOrders() {
     $("#nav-orders").addClass("active");
     $("select").select();
 
-    updateCallerO();
-    window.setTimeout("updateCallerO()", 2500);
+    updatesO = true;
+    updateCallerO()
     $("#filter").keyup(function () {
-        delayO(function(){
+        delay(function(){
             searchStringO = $("#filter").val();
             dataO = "";
             reqPageO = 1;
@@ -37,12 +37,19 @@ function startOrders() {
     });
 }
 
+function resetOrders() {
+    updatesO = false;
+    dataO = "";
+    $("#createNewBtnIcon").removeClass("mddi-book-plus");
+    $("#listSearchIcon").removeClass("mddi-magnify");
+}
+
 const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"];
 const shipmentType = ["Mainz-Lerchenberg (Yannick Félix)","Friesenheim (Philipp Lommel)", "Lieferung"];
 const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='green-text'>Bestellung bezahlt</span>", "<span class='green-text'>Bestellung abholbereit</span>"]
 
-let sortNameO = "#sortO";
-let listNameO = "#users"
+let sortNameO = "#sort";
+let listNameO = "#listItems"
 let linkListO = "api/order/getList.php";
 let jsonFieldO = "orders"
 let pagesizeO = 12;
@@ -109,6 +116,7 @@ let sizeO = 0;
 let sortO = "idAsc";
 let dataO = "";
 let currEditO = -1;
+let updatesO = false;
 ///////////////////////////////////////////////////////////////////////
 
 function setPageO(apage) {
@@ -143,6 +151,7 @@ function updatePagesO() {
 }
 
 function updateDataO() {
+    console.log("Update Orders");
     let sort = $(sortNameO).val();
     let postdata = {
         page: reqPageO,
@@ -178,9 +187,11 @@ function animateO(i) {
 }
 
 function updateCallerO() {
-    updateDataO();
-    updatePagesO();
-    window.setTimeout("updateCallerO()", 1000);
+    if(updatesO) {
+        updateDataO();
+        updatePagesO();
+        window.setTimeout("updateCallerO()", 1000);
+    }
 }
 
 ///////////////////////////////////////
@@ -265,12 +276,3 @@ function submitEditOrder() {
         }
     });
 }
-///////////////////////////////////////
-
-var delayO = (function(){
-    let timer = 0;
-    return function(callback, ms){
-        clearTimeout (timer);
-        timer = setTimeout(callback, ms);
-    };
-})();

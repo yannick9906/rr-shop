@@ -23,23 +23,28 @@ function startUsers() {
     $("#nav-users").addClass("active");
     $("select").select();
 
-    $(document).ready(function() {
-        updateCaller();
-        window.setTimeout("updateCaller()", 2500);
-        $("#filter").keyup(function () {
-            delay(function(){
-                searchString = $("#filter").val();
-                data = "";
-                reqPage = 1;
-                updateData();
-                updatePages();
-            }, 500 );
-        });
+    updatesU = true;
+    updateCaller();
+    $("#filter").keyup(function () {
+        delay(function(){
+            searchString = $("#filter").val();
+            data = "";
+            reqPage = 1;
+            updateData();
+            updatePages();
+        }, 500 );
     });
 }
 
+function resetUsers() {
+    updatesU = false;
+    data = "";
+    $("#listSearchIcon").removeClass("mddi-account-search");
+    $("#createNewBtnIcon").removeClass("mddi-account-plus");
+}
+
 let sortName = "#sort";
-let listName = "#users"
+let listName = "#listItems"
 let linkList = "api/user/getList.php";
 let jsonField = "users"
 let pagesize = 12;
@@ -105,6 +110,7 @@ let size = 0;
 let sort = "idAsc";
 let data = "";
 let currEdit = -1;
+let updatesU = false;
 ///////////////////////////////////////////////////////////////////////
 
 function setPage(apage) {
@@ -139,6 +145,7 @@ function updatePages() {
 }
 
 function updateData() {
+    console.log("Update Users");
     let sort = $(sortName).val();
     let postdata = {
         page: reqPage,
@@ -174,9 +181,11 @@ function animate(i) {
 }
 
 function updateCaller() {
-    updateData();
-    updatePages();
-    window.setTimeout("updateCaller()", 1000);
+    if(updatesU) {
+        updateData();
+        updatePages();
+        window.setTimeout("updateCaller()", 1000);
+    }
 }
 
 ///////////////////////////////////////

@@ -24,6 +24,8 @@ function resetDash() {
 
     //Panel reset:
     $("#listPanel").hide();
+    resetOrders();
+    resetUsers();
     $("#account").hide();
 }
 
