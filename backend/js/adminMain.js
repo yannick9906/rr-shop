@@ -4,12 +4,14 @@ $(document).ready(() => {
 });
 
 function startDash() {
+    console.log("dash");
     $.getJSON("api/user/details.php?id=-1",null, (json) => {
         $("#infoUserChar").html(json.username.substr(0,1).toUpperCase())
         $("#infoUsername").html(json.username);
         $("#infoEmail").html(json.email);
     });
-    $("#mainPanel").show();
+    $("#mainPanel").fadeIn();
+    $("#welcomePanel").show();
 
 }
 
@@ -23,6 +25,7 @@ function resetDash() {
     $("#nav-users").removeClass("active");
 
     //Panel reset:
+    $("#welcomePanel").hide();
     $("#listPanel").hide();
     resetOrders();
     resetUsers();

@@ -36,7 +36,7 @@ function doLogin() {
                         $("#loading").fadeOut(250, () => {
                             $("#success").fadeIn(250, () => {
                                 $("#loginPanel").fadeOut(500, () =>  {
-                                    $("#mainPanel").fadeIn(500);
+                                    startDash();
                                 })
                             })
                         });
