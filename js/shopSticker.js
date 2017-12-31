@@ -23,9 +23,9 @@ function stickerAdd() {
             }
         }
         Lockr.sadd("items", item);
-        Materialize.toast("Zum Einkaufswagen hinzugefügt", 1000, "green");
+        M.toast({html: "Zum Einkaufswagen hinzugefügt", duration: 1000, classes:"green"});
     } else {
-        Materialize.toast("Bitte alle Felder ausfüllen!",2000,"red");
+        M.toast({html: "Bitte alle Felder ausfüllen!", duration: 2000, classes:"red"});
     }
     updateCartAmount();*/
 }

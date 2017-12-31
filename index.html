@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Rheinhessen Riders Shop</title>
 
-    <link type="text/css" rel="stylesheet" href="lib/materialize/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="lib/materialize10/css/materialize.css" media="screen,projection"/>
     <link rel="stylesheet" href="lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
     <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
 
@@ -20,8 +20,8 @@
 <body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;" onresize="updateBreadCrump();">
 <div class="navbar-fixed">
     <nav>
-        <div class="nav-wrapper black" style="padding-left: 10px;">
-            <a class="button-collapse" id="backbutton" onclick="window.history.go(-1)"><i class="material-icons mddi mddi-arrow-left"></i></a>
+        <div class="nav-wrapper black">
+            <a class="sidenav-trigger" id="backbutton" onclick="window.history.go(-1)"><i class="material-icons mddi mddi-arrow-left"></i></a>
             <a href="#home" class="brand-logo hide-on-med-and-down rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
             <a href="#home" class="brand-logo hide-on-large-only hide-on-small-only rr" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
             <a href="#home" class="brand-logo hide-on-med-and-up rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RR Shop</a>
@@ -30,12 +30,6 @@
                 <li><a href="#shopping-cart" id="shoppingcartbtn"><i class="material-icons mddi mddi-shopping"></i></a></li>
             </ul>
         </div>
-        <!--<div class="nav-content black">
-            <ul class="tabs tabs-transparent row">
-                <li class="tab col s6 m3 l2"><a class="active" href="#home">Shop</a></li>
-                <li class="tab col s6 m3 l2"><a href="#test2">Fundgrube</a></li>
-            </ul>
-        </div>-->
     </nav>
 </div>
 <div class="container" style="height: 50px;"></div>
@@ -462,16 +456,22 @@
             <div class="col s12 m6">
                 <h6 class="bolden">Bezahlmethode</h6>
                 <p>
-                    <input name="payment" type="radio" id="cash" value="0" />
-                    <label for="cash">Bar</label>
+                    <label>
+                        <input name="payment" type="radio" value="cash" />
+                        <span>Bar</span>
+                    </label>
                 </p>
                 <p>
-                    <input name="payment" type="radio" id="transfer" value="1" />
-                    <label for="transfer">Überweisung</label>
+                    <label>
+                        <input name="payment" type="radio" value="transfer" />
+                        <span>Überweisung</span>
+                    </label>
                 </p>
                 <p>
-                    <input name="payment" type="radio" id="paypal" value="2" />
-                    <label for="paypal">PayPal</label>
+                    <label>
+                        <input name="payment" type="radio" value="paypal" />
+                        <span>PayPal</span>
+                    </label>
                 </p>
                 <!--<p>
                     <input name="payment" type="radio" id="directdebit" disabled="disabled" value="3" />
@@ -583,7 +583,7 @@
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
-<script type="text/javascript" src="lib/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="lib/materialize10/js/materialize.min.js"></script>
 <script type="text/javascript" src="lib/handlebars.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="lib/md5.js"></script>
@@ -599,7 +599,7 @@
     $(document).ready(() => {
         $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});
         $(".dropdown-button").dropdown();
-        $("select").material_select();
+        $("select").select();
         shopHome();
         if(window.location.hash) {
             var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character

@@ -22,6 +22,7 @@ function hoodieDetail() {
     let random = Math.floor(Math.random()*names.length);
     previewFront.html("<span>"+names[random]+"</span>");
     previewFront.textfill({maxFontPixels:100, minFontPixels:10});
+    $("select").select();
 }
 
 function stickerDetail() {
