@@ -444,19 +444,19 @@
         <h4 class="col s12 black-text rrSpace">Kasse</h4>
         <form class="col s12 row" id="innerBuyerInfo">
             <div class="input-field col s12 l6">
-                <input id="first_name" type="text">
+                <input id="first_name" type="text" data-length="128">
                 <label for="first_name">Vorname</label>
             </div>
             <div class="input-field col s12 l6">
-                <input id="last_name" type="text">
+                <input id="last_name" type="text" data-length="128">
                 <label for="last_name">Nachname</label>
             </div>
             <div class="input-field col s12">
-                <input id="email" type="email">
+                <input id="email" type="email" data-length="256">
                 <label for="email">Email</label>
             </div>
             <div class="input-field col s12">
-                <textarea id="note" class="materialize-textarea"></textarea>
+                <textarea id="note" class="materialize-textarea" data-length="1073741823"></textarea>
                 <label for="note">Notizen</label>
             </div>
             <div class="col s12 m6">
@@ -495,15 +495,15 @@
                 </p>-->
                 <h6 class="bolden s12">Lieferung an: </h6>
                 <div class="input-field col s12">
-                    <input id="address-street" type="text">
+                    <input id="address-street" type="text" data-length="256">
                     <label for="address-street">Straße Hausnummer</label>
                 </div>
                 <div class="input-field col s6">
-                    <input id="address-zip" type="text">
+                    <input id="address-zip" type="text" data-length="5">
                     <label for="address-zip">Postleitzahl</label>
                 </div>
                 <div class="input-field col s6">
-                    <input id="address-city" type="text">
+                    <input id="address-city" type="text" data-length="128">
                     <label for="address-city">Stadt</label>
                 </div>
                 <p><br/></p>

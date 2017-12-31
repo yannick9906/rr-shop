@@ -20,7 +20,7 @@ function startCustomers() {
     //Show
     $("#listPanel").show();
     $("#nav-customers").addClass("active");
-    $('input').characterCounter();
+    $('input[data-length]').characterCounter();
     $("select").select();
 
     updatesC = true;

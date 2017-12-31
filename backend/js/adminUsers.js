@@ -21,7 +21,7 @@ function startUsers() {
     //Show
     $("#listPanel").show();
     $("#nav-users").addClass("active");
-    $('input').characterCounter();
+    $('input[data-length]').characterCounter();
     $("select").select();
 
     updatesU = true;

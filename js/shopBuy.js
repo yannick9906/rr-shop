@@ -36,6 +36,9 @@ function buy() {
     $("#breadBuy").show();
     $("#backbutton").show();
     $("#buyerInfo").show();
+
+    $('input[data-length]').characterCounter();
+    $('textarea[data-length]').characterCounter();
 }
 
 function buyNow() {
