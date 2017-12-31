@@ -151,6 +151,7 @@
                     "customer" => Customer::fromCustomerID($row->customer),
                     "state" => $row->state,
                     "payment" => $row->payment,
+                    "estDate" => $row->estDate,
                     "check" => md5($row->orderID+$row->timestamp+$row->customer)
                 ]);
             }

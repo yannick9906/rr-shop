@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>RRShop - Admin Panel</title>
 
-    <link type="text/css" rel="stylesheet" href="../lib/materialize/css/materialize.css" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="lib/materialize10/css/materialize.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="../lib/mdi/css/materialdesignicons.min.css" media="all" />
     <link type="text/css" rel="stylesheet" href="../css/style.css" media="all" />
 
@@ -39,16 +39,18 @@
                         <i class="mddi mddi-send"></i>
                     </button>
                 </div>
-                <div id="loading" style="display: none;" class="center col s12">
+                <div id="loading" style="display: none;" class="col s12 center">
                     <div class="preloader-wrapper big active">
                         <div class="spinner-layer spinner-blue-only">
                             <div class="circle-clipper left">
                                 <div class="circle"></div>
-                            </div><div class="gap-patch">
-                            <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -65,27 +67,31 @@
                 <div class="nav-wrapper">
                     <a href="#!" class="brand-logo hide-on-med-and-down" style="padding-left: 310px;">RRShop Admin Panel</a>
                     <a href="#!" class="brand-logo hide-on-large-only">RRSHOP</a>
-                    <ul id="slide-out" class="side-nav fixed">
-                        <li><div class="userView">
-                            <img class="background" src="../img/backgroundRR.jpg" height="100%">
-                            <a href="#!"><div class="circle red center white-text" style="font-size: 40px; line-height: 65px;">Y</div></a>
-                            <a href="#!"><span class="white-text name" style="text-shadow: 1px 1px 5px black;">yannick</span></a>
-                            <a href="#!"><span class="white-text email" style="text-shadow: 1px 1px 5px black;">yannick.felix1999@gmail.com</span></a>
-                        </div></li>
+                    <ul id="slide-out" class="sidenav sidenav-fixed" style="z-index: 9999;">
+                        <li>
+                            <div class="user-view">
+                                <div class="background">
+                                    <img src="../img/backgroundRR.jpg" height="100%">
+                                </div>
+                                <a href="#!"><div id="infoUserChar" class="circle red center white-text" style="font-size: 40px; line-height: 65px;">L</div></a>
+                                <a href="#!"><span id="infoUsername" class="white-text name" style="text-shadow: 1px 1px 5px black;">Laden ...</span></a>
+                                <a href="#!"><span id="infoEmail" class="white-text email" style="text-shadow: 1px 1px 5px black;">Laden ...</span></a>
+                            </div>
+                        </li>
                         <li id="nav-account"><a href="#account"><i class="mddi mddi-account-circle"></i>Account</a></li>
                         <li id="nav-logout"><a onclick="doLogout();"><i class="mddi mddi-logout-variant"></i>Logout</a></li>
                         <li><div class="divider"></div></li>
-                        <li class="subheader"><a class="subheader indigo-text bolden">Main</a></li>
+                        <li class="subheader"><a class="subheader black-text bolden">Main</a></li>
                         <li id="nav-order-scan" class="active"><a href="#scan"><i class="mddi mddi-qrcode-scan"></i>Bestellungsscanner</a></li>
                         <li id="nav-orders"><a href="#orders"><i class="mddi mddi-star-circle"></i>Bestellungen</a></li>
                         <li id="nav-customers"><a href="#customers"><i class="mddi mddi-account-multiple"></i>Kunden</a></li>
                         <li><div class="divider"></div></li>
-                        <li><a class="subheader indigo-text bolden">Administration</a></li>
+                        <li><a class="subheader black-text bolden">Administration</a></li>
                         <!--<li id="nav-database"><a href="../adminer/"><i class="mddi mddi-database"></i>Datenbank</a></li>-->
                         <li id="nav-users"><a href="#users"><i class="mddi mddi-account-multiple"></i>Benutzer</a></li>
                         <li><div class="divider"></div></li>
                     </ul>
-                    <a href="#" data-activates="slide-out" class="button-collapse"><i class="mddi mddi-menu small"></i></a>
+                    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="mddi mddi-menu small"></i></a>
                 </div>
             </nav>
         </div>
@@ -196,7 +202,7 @@
                                 <label for="acc-email">E-Mail</label>
                             </div>
                             <div class="col s2">
-                                <a class="waves-effect waves-light btn black right" style="margin-top: 1rem;" id="accSubmitEmail"><i class="mddi mddi-refresh"></i></a>
+                                <a class="waves-effect waves-light btn black right" style="margin-top: 1rem;" id="accSubmitEmail" onclick="updateEmailAdress()"><i class="mddi mddi-refresh"></i></a>
                             </div>
                             <div class="input-field col s12">
                                 <input id="acc-pass1" type="password">
@@ -207,24 +213,24 @@
                                 <label for="acc-pass2">Passwort wiederholen</label>
                             </div>
                             <div class="col s2" >
-                                <a class="waves-effect waves-light btn black right" style="margin-top: 1rem;" id="accSubmitPass"><i class="mddi mddi-refresh"></i></a>
+                                <a class="waves-effect waves-light btn black right" style="margin-top: 1rem;" id="accSubmitPass" onclick="updatePassword()"><i class="mddi mddi-refresh"></i></a>
                             </div>
                         </div>
                         <div class="col s12 l6 row">
                             <div class="col s12 black-text bolden">Optionen</div>
                             <div class="col s12 switch" style="line-height: 3rem;">
                                 <label>
-                                    <input type="checkbox">
+                                    <input type="checkbox" id="acc-emailswitch" onclick="updateEmailNotify()">
                                     <span class="lever"></span>
                                 </label>
-                                E-Mail-Notifications
+                                E-Mail-Benarichtigungen
                             </div>
                             <div class="col 12 switch" style="line-height: 3rem;">
                                 <label>
                                     <input type="checkbox" id="acc-pushswitch">
                                     <span class="lever"></span>
                                 </label>
-                                <span id="acc-pushswitchlabel">Push-Notifications</span>
+                                <span id="acc-pushswitchlabel">Push-Benarichtigungen</span>
                             </div>
                         </div>
                     </div>
@@ -235,7 +241,7 @@
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="../lib/jquery.textfill.min.js"></script>
-<script type="text/javascript" src="../lib/materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="lib/materialize10/js/materialize.min.js"></script>
 <script type="text/javascript" src="../lib/handlebars.min.js"></script>
 <script type="text/javascript" src="../lib/lockr.js"></script>
 <script type="text/javascript" src="../lib/md5.js"></script>
@@ -246,14 +252,9 @@
 <script type="text/javascript" src="js/adminAccount.js"></script>
 <script>
     $(document).ready(() => {
-        $('.button-collapse').sideNav({
-            menuWidth: 300, // Default is 300
-            edge: 'right', // Choose the horizontal origin
-            closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-            draggable: true
-        });
+        $('.sidenav').sidenav();
         $(".dropdown-button").dropdown();
-        $("select").material_select();
+        //$("select").material_select();
     });
 </script>
 </html>

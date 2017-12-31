@@ -20,8 +20,8 @@ function startUsers() {
 
     //Show
     $("#listPanel").show();
-    $('select').material_select('destroy');
-    $("select").material_select();
+    $("#nav-users").addClass("active");
+    $("select").select();
 
     $(document).ready(function() {
         updateCaller();
@@ -209,13 +209,13 @@ function submitNewUser() {
     $.post("api/user/create.php", data, function(response) {
         let json = JSON.parse(response);
         if(json.success == "1") {
-            Materialize.toast("Benutzer erstellt", 2000, "green");
+            M.toast({html: "Benutzer erstellt", duration: 2000, classes: "green"});
             backToList();
         } else {
             if(json.error == "missing fields") {
-                Materialize.toast("Bitte alle Felder ausfüllen", 2000, "red");
+                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
             } else if(json.error == "username exists") {
-                Materialize.toast("Der Benutzername existiert bereits", 2000, "red");
+                M.toast({html: "Der Benutzername existiert bereits", duration: 2000, classes: "red"});
                 $("#new-username").addClass("invalid");
             }
         }
@@ -229,7 +229,7 @@ function editUser(id) {
         $("#edit-realname").val(json.realname);
         $("#edit-password").val("");
         $("#edit-email").val(json.email);
-        Materialize.updateTextFields();
+        M.updateTextFields();
         $("#listContainer").fadeOut(200, function() {
             $("#editForm").fadeIn(200);
         });
@@ -252,11 +252,11 @@ function submitEditUser() {
     $.post("api/user/update.php?id="+currEdit, data, function(response) {
         let json = JSON.parse(response);
         if(json.success == "1") {
-            Materialize.toast("Benutzer aktualisiert", 2000, "green");
+            M.toast({html: "Benutzer aktualisiert", duration: 2000, classes: "green"});
             backToList();
         } else {
             if(json.error == "missing fields") {
-                Materialize.toast("Bitte alle Felder ausfüllen", 2000, "red");
+                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
             }
         }
     });

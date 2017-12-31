@@ -16,7 +16,7 @@
         private $uID;
         private $username;
         private $passwdHash;
-        private $email;
+        private $email, $emailNotify;
         private $endpoints;
         private $pdo;
 
@@ -27,13 +27,15 @@
          * @param string $username
          * @param string $passwdHash
          * @param string $email
+         * @param int    $emailNotify
          * @param string $endpoints
          */
-        public function __construct($uID, $username, $passwdHash, $email, $endpoints) {
+        public function __construct($uID, $username, $passwdHash, $email, $emailNotify, $endpoints) {
             $this->uID = $uID;
             $this->username = utf8_encode($username);
             $this->passwdHash = $passwdHash;
             $this->email = utf8_encode($email);
+            $this->emailNotify = intval($emailNotify);
             $this->endpoints = json_decode($endpoints);
             $this->pdo = new PDO_Mysql();
         }
@@ -47,7 +49,7 @@
         public static function fromUID($uID) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE uID = :uid", [":uid" => $uID]);
-            return new User($res->uID, $res->username, $res->passhash, $res->email, $res->endpoint);
+            return new User($res->uID, $res->username, $res->passhash, $res->email, $res->emailNotify, $res->endpoint);
         }
 
         /**
@@ -59,7 +61,7 @@
         public static function fromUName($uName) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE username = :uname", [":uname" => $uName]);
-            return new User($res->uID, $res->username, $res->passhash, $res->email, $res->endpoint);
+            return new User($res->uID, $res->username, $res->passhash, $res->email, $res->emailNotify, $res->endpoint);
         }
 
         /**
@@ -182,6 +184,7 @@
                 ["username" => utf8_decode($this->username),
                  "passhash" => $this->passwdHash,
                  "email" => utf8_decode($this->email),
+                 "emailNotify" => intval($this->emailNotify),
                  "endpoint" => json_encode($this->endpoints)],
                 "uID = :uid",
                 ["uid" => $this->uID]
@@ -201,6 +204,7 @@
                 ["username" => utf8_decode($username),
                  "passhash" => $passwdhash,
                  "endpoints" => "[]",
+                 "emailNotify" => 0,
                  "email" => utf8_decode($email)]
             );
         }
@@ -250,42 +254,56 @@
          * @return string
          */
         public function getUName() {
-            return $this->uName;
+            return $this->username;
         }
 
         /**
          * @param string $uName
          */
         public function setUName($uName) {
-            $this->uName = $uName;
+            $this->username = $uName;
         }
 
         /**
          * @return string
          */
         public function getUPassHash() {
-            return $this->uPassHash;
+            return $this->passwdHash;
         }
 
         /**
          * @param string $uPassHash
          */
         public function setUPassHash($uPassHash) {
-            $this->uPassHash = $uPassHash;
+            $this->passwdHash = $uPassHash;
         }
 
         /**
          * @return string
          */
         public function getUEmail() {
-            return $this->uEmail;
+            return $this->email;
         }
 
         /**
          * @param string $uEmail
          */
         public function setUEmail($uEmail) {
-            $this->uEmail = $uEmail;
+            $this->email = $uEmail;
+        }
+
+        /**
+         * @return int
+         */
+        public function getEmailNotify() {
+            return $this->emailNotify;
+        }
+
+        /**
+         * @param int $emailNotify
+         */
+        public function setEmailNotify($emailNotify) {
+            $this->emailNotify = $emailNotify;
         }
 
 
@@ -309,7 +327,8 @@
             return [
                 "uID" => $this->uID,
                 "username" => $this->username,
-                "email" => $this->email
+                "email" => $this->email,
+                "emailNotify" => $this->emailNotify
             ];
         }
 

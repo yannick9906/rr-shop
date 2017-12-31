@@ -18,6 +18,8 @@ $(document).ready(function() {
 
 function startLogin() {
     $("#loginPanel").show();
+    $("#success").hide();
+    $("#loginFields").show();
 }
 
 function doLogin() {
@@ -39,7 +41,7 @@ function doLogin() {
                             })
                         });
                     } else {
-                        Materialize.toast("Kennwort falsch", 2000, "red");
+                        M.toast({html: "Kennwort falsch", duration: 2000, classes: "red"});
                         passwordField.removeClass("valid");
                         passwordField.addClass("invalid");
                         $("#loading").fadeOut(500, () => {
@@ -48,7 +50,7 @@ function doLogin() {
                     }
                 })
             } else {
-                Materialize.toast("Benutzername falsch", 2000, "red");
+                M.toast({html: "Benutzername falsch", duration: 2000, classes: "red"});
                 usernameField.removeClass("valid");
                 usernameField.addClass("invalid");
                 $("#loading").fadeOut(500, function() {
@@ -60,5 +62,13 @@ function doLogin() {
 }
 
 function doLogout() {
-
+    $.getJSON("api/user/tryLogin.php", {logout: 1}, (json) => {
+        if(json.success) {
+            M.toast({html: "Logout erfolgreich.", duration: 500});
+            $("#mainPanel").hide();
+            startLogin();
+        } else {
+            M.toast({html: "Es ist ein Fehler aufgetreten.", duration:2000, classes: "red"});
+        }
+    });
 }

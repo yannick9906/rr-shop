@@ -5,7 +5,7 @@ function startOrders() {
     $("#listHeader").html("<th dataO-field=\"id\" width=\"50px\">ID</th>\n" +
                         "<th dataO-field=\"name\" width=\"40%\">Status</th>\n" +
                         "<th dataO-field=\"name\" width=\"20%\">Bezahlmethode</th>\n" +
-                        "<th dataO-field=\"email\" width=\"20%\">Abholpräferenz</th>");
+                        "<th dataO-field=\"name\" width=\"20%\">Bedruckung</th>\n");
     $("#createNewBtnIcon").addClass("mddi-book-plus");
     $("#createNewTitle").html("Bestellung erstellen");
     $("#editTitle").html("Bestellung bearbeiten");
@@ -21,8 +21,8 @@ function startOrders() {
 
     //Show
     $("#listPanel").show();
-    $(".dropdown-button").dropdown();
-    $("select").material_select();
+    $("#nav-orders").addClass("active");
+    $("select").select();
 
     updateCallerO();
     window.setTimeout("updateCallerO()", 2500);
@@ -59,7 +59,7 @@ let listElemTmpltO = `
         <td>{{orderID}}</td>
         <td>{{customerName}} hat am {{timestamp}} bestellt.<br/>Status: {{{state}}}</td>
         <td>{{payment}}</td>
-        <td>{{shipping}}</td>
+        <td>in KW{{kw}}</td>
     </tr>
     `;
 let templateO = Handlebars.compile(listElemTmpltO);
@@ -160,7 +160,7 @@ function updateDataO() {
             $(listNameO).html("");
             for(let i = 0; i < list.length; i++) {
                 let e = list[i];
-                $(listNameO).append(templateO({i: i,orderID: e.orderID, customerName: e.customer.firstname+" "+e.customer.lastname, payment: paymentType[e.payment], shipping: shipmentType[e.shipping], state: stateType[e.state], timestamp: e.timestamp}))
+                $(listNameO).append(templateO({i: i,kw: e.estDate, orderID: e.orderID, customerName: e.customer.firstname+" "+e.customer.lastname, payment: paymentType[e.payment], state: stateType[e.state], timestamp: e.timestamp}))
                 sizeO = i;
             }
             dataO = JSON.stringify(list);
@@ -213,13 +213,13 @@ function submitNewOrder() {
     $.post("api/order/create.php", dataO, function(response) {
         let json = JSON.parse(response);
         if(json.success == "1") {
-            Materialize.toast("Benutzer erstellt", 2000, "green");
+            M.toast({html: "Benutzer erstellt", duration: 2000, classes: "green"});
             backToListO();
         } else {
             if(json.error == "missing fields") {
-                Materialize.toast("Bitte alle Felder ausfüllen", 2000, "red");
+                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
             } else if(json.error == "username exists") {
-                Materialize.toast("Der Benutzername existiert bereits", 2000, "red");
+                M.toast({html: "Der Benutzername existiert bereits", duration: 2000, classes: "red"});
                 $("#new-username").addClass("invalid");
             }
         }
@@ -233,7 +233,7 @@ function editOrder(id) {
         $("#edit-realname").val(json.realname);
         $("#edit-password").val("");
         $("#edit-email").val(json.email);
-        Materialize.updateTextFields();
+        M.updateTextFields();
         $("#listContainer").fadeOut(200, function() {
             $("#editForm").fadeIn(200);
         });
@@ -256,11 +256,11 @@ function submitEditOrder() {
     $.post("api/order/update.php?id="+currEditO, dataO, function(response) {
         let json = JSON.parse(response);
         if(json.success == "1") {
-            Materialize.toast("Benutzer aktualisiert", 2000, "green");
+            M.toast({html: "Benutzer aktualisiert", duration: 2000, classes: "green"});
             backToListO();
         } else {
             if(json.error == "missing fields") {
-                Materialize.toast("Bitte alle Felder ausfüllen", 2000, "red");
+                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
             }
         }
     });

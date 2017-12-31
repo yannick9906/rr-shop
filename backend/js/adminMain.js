@@ -4,7 +4,13 @@ $(document).ready(() => {
 });
 
 function startDash() {
+    $.getJSON("api/user/details.php?id=-1",null, (json) => {
+        $("#infoUserChar").html(json.username.substr(0,1).toUpperCase())
+        $("#infoUsername").html(json.username);
+        $("#infoEmail").html(json.email);
+    });
     $("#mainPanel").show();
+
 }
 
 function resetDash() {
@@ -18,6 +24,7 @@ function resetDash() {
 
     //Panel reset:
     $("#listPanel").hide();
+    $("#account").hide();
 }
 
 function checkHash() {

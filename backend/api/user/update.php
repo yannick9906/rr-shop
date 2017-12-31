@@ -15,13 +15,19 @@
     $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
-    $userToEdit = \rrshop\User::fromUID(intval($_GET["id"]));
-    $passhash = $_POST["passhash"];
-    $email = $_POST["email"];
+    if(intval($_POST["id"]) == -1)
+        $userToEdit = $user;
+    else
+        $userToEdit = \rrshop\User::fromUID(intval($_POST["id"]));
 
-    if($passhash != "" && $email) {
-        $userToEdit->setUEmail($email);
-        if($passhash != "NOUPDATE") $userToEdit->setUPassHash($passhash);
-        $userToEdit->saveChanges();
-        echo json_encode(["success" => "1"]);
-    } else echo json_encode(["success" => "0", "error" => "missing fields"]);
+    if($userToEdit->getUName() == '' or $userToEdit->getUName() == null) {
+        echo json_encode(["success" => "false", "error" => "user not found"]);
+        exit();
+    }
+
+    if(isset($_POST["passhash"])) $userToEdit->setUPassHash($_POST["passhash"]);
+    if(isset($_POST["email"])) $userToEdit->setUEmail($_POST["email"]);
+    if(isset($_POST["emailNotify"])) $userToEdit->setEmailNotify($_POST["emailNotify"] ? 0:1);
+
+    $userToEdit->saveChanges();
+    echo json_encode(["success" => true]);

@@ -14,12 +14,19 @@
     $username = $_GET["username"];
     $passhash = $_GET["passhash"];
 
+    if($_GET["logout"] == 1) {
+        session_start();
+        session_destroy();
+        echo json_encode(["success" => true]);
+        exit();
+    }
+
     $user = \rrshop\User::fromUName($username);
     if($user->comparePassHash($passhash)) {
         session_start();
         $_SESSION["username"] = $username;
         $_SESSION["uID"] = $user->getUID();
-        echo json_encode(["success" => 1]);
+        echo json_encode(["success" => true]);
     } else {
-        echo json_encode(["success" => 0]);
+        echo json_encode(["success" => false, "error" => "wrong passhash"]);
     }

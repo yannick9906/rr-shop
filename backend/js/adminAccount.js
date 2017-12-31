@@ -2,13 +2,28 @@ const applicationServerPublicKey = 'BJZ30iSUhLT5YjckHLSsNL7Hob59SUcziRoEJM8Phuft
 const pushSwitch = $("#acc-pushswitch");
 const pushSwitchLabel = $("#acc-pushswitchlabel");
 
+const emailSwitch = $("#acc-emailswitch")
+
+const fieldUsername = $("#acc-username");
+const fieldEmail = $("#acc-email");
+const fieldPass1 = $("#acc-pass1");
+const fieldPass2 = $("#acc-pass2");
+
 let isSubscribed = false;
 let swRegistration = null;
-
+let isEmailNotify = false;
 
 function startAccount() {
-    $.getJSON("api/user/details.php")
+    $.getJSON("api/user/details.php?id=-1",null, (json) => {
+        fieldUsername.val(json.username);
+        fieldEmail.val(json.email);
+        emailSwitch.prop("checked", json.emailNotify == 1);
+        isEmailNotify = json.emailNotify == 1;
+        M.updateTextFields();
+    });
+
     $("#account").show();
+    $("#nav-account").addClass("active");
     pushSwitch.on("click", () => {
         pushSwitch.disabled = true;
         if (isSubscribed) {
@@ -32,6 +47,36 @@ function startAccount() {
 
             updateBtn();
         });
+}
+
+function updateEmailNotify() {
+    isEmailNotify = !isEmailNotify
+    $.post("api/user/update.php", {id: -1, emailNotify: isEmailNotify}, (data) => {
+        let json = JSON.parse(data);
+        if(json.success == true) M.toast({html: "E-Mail-Benarichtigungen eingestellt.", duration: 1000, classes: "green"});
+        else M.toast({html: "Fehler: "+json.error, duration: 5000, classes: "red"});
+    });
+}
+
+function updateEmailAdress() {
+    $.post("api/user/update.php", {id: -1, email: fieldEmail.val()}, (data) => {
+        let json = JSON.parse(data);
+        console.log(json);
+        if(json.success == true) M.toast({html: "E-Mail-Adresse geändert", duration: 1000, classes: "green"});
+        else M.toast({html: "Fehler: "+json.error, duration: 5000, classes: "red"});
+    });
+}
+
+function updatePassword() {
+    if(fieldPass1.val() == fieldPass2.val()) {
+        $.post("api/user/update.php", {id: -1, passhash: md5(fieldPass1.val())}, (data) => {
+            let json = JSON.parse(data);
+            if(json.success == true) M.toast({html: "Kennwort geändert", duration: 1000, classes: "green"});
+            else M.toast({html: "Fehler: "+json.error, duration: 5000, classes: "red"});
+        });
+    } else {
+        M.toast({html: "Kennwörter stimmen nicht überein.", duration: 1000, classes: "red"});
+    }
 }
 
 function urlB64ToUint8Array(base64String) {
