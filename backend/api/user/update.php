@@ -27,7 +27,7 @@
 
     if(isset($_POST["passhash"])) $userToEdit->setUPassHash($_POST["passhash"]);
     if(isset($_POST["email"])) $userToEdit->setUEmail($_POST["email"]);
-    if(isset($_POST["emailNotify"])) $userToEdit->setEmailNotify($_POST["emailNotify"] ? 0:1);
+    if(isset($_POST["emailNotify"])) $userToEdit->setEmailNotify($_POST["emailNotify"]=="true");
 
     $userToEdit->saveChanges();
     echo json_encode(["success" => true]);

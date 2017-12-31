@@ -24,7 +24,7 @@ self.addEventListener('push', function(event) {
         } else if(notifAbout.orderState == 1) {
             title = "Bezahlt: Bestellung #"+notifAbout.orderID+" von "+notifAbout.customerName+".";
             options.body = "#"+notifAbout.orderID+" für "+notifAbout.orderPrice+" €. Tippe hier für weitere Infos.";
-        } else if(notifAbout.orderState == 5) {
+        } else if(notifAbout.orderState == 2) {
             title = "Abholbereit: Bestellung #"+notifAbout.orderID+" von "+notifyAbout.customerName+".";
             options.body = "#"+notifAbout.orderID+" für "+notifAbout.orderPrice+" €. Tippe hier für weitere Infos.";
         }

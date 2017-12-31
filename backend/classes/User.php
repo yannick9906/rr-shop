@@ -9,6 +9,7 @@
     namespace rrshop;
 
     use Minishlink\WebPush\WebPush;
+    use PHPMailer\PHPMailer\PHPMailer;
 
     require_once 'passwords.php';
 
@@ -300,10 +301,10 @@
         }
 
         /**
-         * @param int $emailNotify
+         * @param bool $emailNotify
          */
         public function setEmailNotify($emailNotify) {
-            $this->emailNotify = $emailNotify;
+            $this->emailNotify = $emailNotify ? 1:0;
         }
 
 
@@ -371,6 +372,34 @@
         public static function sendOutNotifications($payload) {
             foreach (User::getListObjects() as $user) {
                 $user->sendPushNotification($payload);
+                //print_r($user);
+                if($user->getEmailNotify() == 1) {
+                    $mail = new PHPMailer(true);
+                    $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
+                    $mail->addAddress($user->getUEmail(),$user->getUName());
+
+                    $json = json_decode($payload);
+                    if($json->info == "statechange") {
+                        if($json->orderState == 0) {
+                            $mail->Subject = utf8_decode($json->customerName." hat gerade eine Bestellung aufgegeben.");
+                            $mail->Body = utf8_decode("#".$json->orderID." f&uuml;r ".$json->orderPrice." EUR. Link f&uuml;r weitere Infos: https://shop.rheinhessenriders.tk/backend/#order-".$json->orderID);
+                        } else if($json->orderState == 1) {
+                            $mail->Subject = utf8_decode("Bezahlt: Bestellung #".$json->orderID." von ".$json->customerName.".");
+                            $mail->Body = utf8_decode("#".$json->orderID." f&uuml;r ".$json->orderPrice." EUR. Link f&uuml;r weitere Infos: https://shop.rheinhessenriders.tk/backend/#order-".$json->orderID);
+                        } else if($json->orderState == 2) {
+                            $mail->Subject = utf8_decode("Abholbereit: Bestellung #".$json->orderID." von "+$json->customerName.".");
+                            $mail->Body = utf8_decode("#".$json->orderID." f&uuml;r ".$json->orderPrice." EUR. Link f&uuml;r weitere Infos: https://shop.rheinhessenriders.tk/backend/#order-".$json->orderID);
+                        }
+                    } else if($json->info == "custom") {
+                        $mail->Subject = $json->title;
+                        $mail->Body = $json->body;
+                    }
+
+                    //Todo add plain text version
+                    $mail->AltBody = $mail->Body;
+
+                    $mail->send();
+                }
             }
         }
     }

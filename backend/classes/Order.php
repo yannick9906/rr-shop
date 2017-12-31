@@ -8,7 +8,6 @@
 
     namespace rrshop;
 
-    use Minishlink\WebPush\WebPush;
     use PHPMailer\PHPMailer\PHPMailer;
 
     class Order implements \JsonSerializable {

@@ -50,7 +50,7 @@ function startAccount() {
 }
 
 function updateEmailNotify() {
-    isEmailNotify = !isEmailNotify
+    isEmailNotify = !isEmailNotify;
     $.post("api/user/update.php", {id: -1, emailNotify: isEmailNotify}, (data) => {
         let json = JSON.parse(data);
         if(json.success == true) M.toast({html: "E-Mail-Benarichtigungen eingestellt.", duration: 1000, classes: "green"});

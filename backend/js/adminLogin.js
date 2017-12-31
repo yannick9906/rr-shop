@@ -64,6 +64,7 @@ function doLogin() {
 function doLogout() {
     $.getJSON("api/user/tryLogin.php", {logout: 1}, (json) => {
         if(json.success) {
+            location.hash = "";
             M.toast({html: "Logout erfolgreich.", duration: 500});
             $("#mainPanel").hide();
             startLogin();

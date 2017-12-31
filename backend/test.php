@@ -51,13 +51,13 @@
         "orderPrice" => 100.00
     ]));*/
 
-    /*\rrshop\User::sendOutNotifications(json_encode([
+    \rrshop\User::sendOutNotifications(json_encode([
         "info"  => "statechange",
         "orderState" => 0,
         "customerName" => "Lommel Lümmel",
         "orderID" => "5afewsf",
         "orderPrice" => 100.00
-    ]));*/
+    ]));
 
     /*$qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/edit/#order-5a46a34b32bb0', 'M');
     $qrcode->disableBorder();

@@ -16,6 +16,7 @@ function startDash() {
 }
 
 function resetDash() {
+
     //Menubar reset:
     $("#nav-account").removeClass("active");
     $("#nav-logout").removeClass("active");
