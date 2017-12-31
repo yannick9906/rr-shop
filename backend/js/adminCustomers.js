@@ -20,6 +20,7 @@ function startCustomers() {
     //Show
     $("#listPanel").show();
     $("#nav-customers").addClass("active");
+    $('input').characterCounter();
     $("select").select();
 
     updatesC = true;
@@ -194,11 +195,13 @@ function backToListC() {
 
 function editCustomer(id) {
     currEditC = id;
-    $.getJSON("api/order/details.php?id="+id,null, function(json) {
-        $("#edit-username").val(json.username);
-        $("#edit-realname").val(json.realname);
-        $("#edit-password").val("");
+    $.getJSON("api/customer/details.php?id="+id,null, (json) => {
+        $("#edit-firstname").val(json.firstname);
+        $("#edit-lastname").val(json.lastname);
         $("#edit-email").val(json.email);
+        $("#edit-addressCity").val(json.addressCity);
+        $("#edit-addressStreet").val(json.addressStreet);
+        $("#edit-addressZip").val(json.addressZip);
         M.updateTextFields();
         $("#listContainer").fadeOut(200, function() {
             $("#editForm").fadeIn(200);
@@ -207,27 +210,23 @@ function editCustomer(id) {
 }
 
 function submitEditCustomer() {
-    let password = $("#edit-password").val();
-    let passhash = "NOUPDATE";
-    if(password != "") {
-        passhash = md5(password)
-    };
-
     data = {
-        realname: $("#edit-realname").val(),
-        passhash: passhash,
-        email: $("#edit-email").val()
+        id: currEditC,
+        firstname: $("#edit-firstname").val(),
+        lastname: $("#edit-lastname").val(),
+        email: $("#edit-email").val(),
+        addressStreet: $("#edit-addressStreet").val(),
+        addressZip: $("#edit-addressZip").val(),
+        addressCity: $("#edit-addressCity").val()
     };
 
-    $.post("api/order/update.php?id="+currEditC, data, function(response) {
+    $.post("api/customer/update.php", data, function(response) {
         let json = JSON.parse(response);
-        if(json.success == "1") {
-            M.toast({html: "Benutzer aktualisiert", duration: 2000, classes: "green"});
+        if(json.success) {
+            M.toast({html: "Kunde aktualisiert", duration: 2000, classes: "green"});
             backToListC();
         } else {
-            if(json.error == "missing fields") {
-                M.toast({html: "Bitte alle Felder ausfüllen", duration: 2000, classes: "red"});
-            }
+            M.toast({html: "Fehler: "+json.error, duration: 2000, classes: "red"});
         }
     });
 }

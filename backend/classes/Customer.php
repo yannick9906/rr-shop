@@ -13,7 +13,7 @@
         private $firstname, $lastname, $email;
         private $addressCity, $addressStreet, $addressZip;
         private $customerID;
-        private $PDO;
+        private $pdo;
 
         /**
          * Customer constructor.
@@ -31,7 +31,7 @@
             $this->addressCity = utf8_encode($addressCity);
             $this->addressStreet = utf8_encode($addressStreet);
             $this->customerID = $customerID;
-            $this->PDO = new PDO_MYSQL();
+            $this->pdo = new PDO_MYSQL();
         }
 
         /**
@@ -141,6 +141,22 @@
         }
 
         /**
+         * Saves the Changes made to this object to the db
+         */
+        public function saveChanges() {
+            $this->pdo->queryUpdate("rrshop_customers",
+                ["firstname" => utf8_decode($this->firstname),
+                 "lastname" => utf8_decode($this->lastname),
+                 "email" => utf8_decode($this->email),
+                 "addressCity" => utf8_decode($this->addressCity),
+                 "addressZip" => utf8_decode($this->addressZip),
+                 "addressStreet" => utf8_decode($this->addressStreet)],
+                "customerID = :cid",
+                ["cid" => $this->customerID]
+            );
+        }
+
+        /**
          * @return int
          */
         public function getCustomerID() {
@@ -187,6 +203,48 @@
          */
         public function getAddressZip() {
             return $this->addressZip;
+        }
+
+        /**
+         * @param string $firstname
+         */
+        public function setFirstname($firstname) {
+            $this->firstname = $firstname;
+        }
+
+        /**
+         * @param string $lastname
+         */
+        public function setLastname($lastname) {
+            $this->lastname = $lastname;
+        }
+
+        /**
+         * @param string $email
+         */
+        public function setEmail($email) {
+            $this->email = $email;
+        }
+
+        /**
+         * @param string $addressCity
+         */
+        public function setAddressCity($addressCity) {
+            $this->addressCity = $addressCity;
+        }
+
+        /**
+         * @param string $addressStreet
+         */
+        public function setAddressStreet($addressStreet) {
+            $this->addressStreet = $addressStreet;
+        }
+
+        /**
+         * @param mixed $addressZip
+         */
+        public function setAddressZip($addressZip) {
+            $this->addressZip = $addressZip;
         }
 
         /**
