@@ -146,7 +146,7 @@ function actionStornoOk() {
     $("#info-action-storno").html("...");
     $.post("api/order/update.php",{orderID: orderID, state: 3}, (data) => {
         let json = JSON.parse(data);
-        if(json.success) M.toast({html: "Bestellung bezahlt.", duration: 1000, classes:"green"});
+        if(json.success) M.toast({html: "Bestellung storniert.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
         refreshInfo();
         $("#info-action-storno").html("Bestellung storno");
@@ -168,7 +168,7 @@ function actionPrinted() {
     $("#info-action-printed").html("...");
     $.post("api/order/update.php",{orderID: orderID, state: 2}, (data) => {
         let json = JSON.parse(data);
-        if(json.success) M.toast({html: "Bestellung bezahlt.", duration: 1000, classes:"green"});
+        if(json.success) M.toast({html: "Bestellung im Druck.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
         refreshInfo();
         $("#info-action-printed").html("Bestellung im druck");
