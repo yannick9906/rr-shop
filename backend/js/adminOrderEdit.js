@@ -124,6 +124,9 @@ function resetInfo() {
     $("#info-state").html("...");
     $("#info-note").html("...");
     $("#info-price").html("...");
+    $("#info-action-payed").removeClass("disabled");
+    $("#info-action-printed").removeClass("disabled");
+    $("#info-action-storno").removeClass("disabled");
 }
 
 

@@ -80,13 +80,13 @@
                     break;
                 case 1:
                     $template->assign("displayBar", "display: none;");
-                    $template->assign("displayPaypal", "");
-                    $template->assign("displayUberweisung", "display: none;");
+                    $template->assign("displayPaypal", "display: none;");
+                    $template->assign("displayUberweisung", "");
                     break;
                 case 2:
                     $template->assign("displayBar", "display: none;");
-                    $template->assign("displayPaypal", "display: none;");
-                    $template->assign("displayUberweisung", "");
+                    $template->assign("displayPaypal", "");
+                    $template->assign("displayUberweisung", "display: none;");
                     break;
             }
             $invoice = new Invoice($items, $res->orderID, $customer, $note);
