@@ -11,6 +11,7 @@
     class Invoice {
         private $items, $pdf;
         private $orderID, $customer, $note;
+        private $timestamp;
 
         /**
          * Invoice constructor.
@@ -19,26 +20,28 @@
          * @param int      $orderID
          * @param Customer $customer
          * @param string   $note
+         * @param          $timestamp
          */
-        public function __construct($items, $orderID, $customer, $note) {
+        public function __construct($items, $orderID, $customer, $note, $timestamp) {
             $this->items = json_decode(utf8_encode($items),true);
             //var_dump($this->items);
             $this->orderID = $orderID;
             $this->customer = $customer;
             $this->note = $note;
+            $this->timestamp = $timestamp;
             $this->pdf = new \PDF_Code128();
         }
 
         public function preparePDF() {
             $this->pdf->AddPage();
             $this->pdf->AcceptPageBreak();
-            $this->pdf->Image("../../../img/Shop-Logo.png",60,10,60);
+            $this->pdf->Image("/home/webpages/lima-city/ybook/store.rheinhessenriders/img/Shop-Logo.png",60,10,60);
             $qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/#order-'.$this->orderID, 'M');
             $qrcode->disableBorder();
             $qrcode->displayFPDF($this->pdf, 10, 10, 50);
             $this->pdf->Code128(10, 60, $this->orderID, 50, 10);
             $this->pdf->SetFont('Arial','B',14);
-            $this->pdf->Text(10,80,"Rechnungsnummer: ".$this->orderID);
+            $this->pdf->Text(10,80,"Rechnungsnummer: ".$this->orderID." - ".date("d. m. Y",$this->timestamp));
             $this->pdf->SetFont("","",11);
             $this->pdf->SetXY(140,20);
             $name = utf8_decode($this->customer->getFirstname())." ".utf8_decode($this->customer->getLastname());
@@ -77,6 +80,11 @@
 
         public function getPDFAttachment() {
             $this->pdf->Output("F", $this->orderID."-rechnung.pdf",false);
+        }
+
+        public function getPDFFile() {
+            echo "/home/webpages/lima-city/ybook/store.rheinhessenriders/backend/invoices/".$this->orderID."-rechnung.pdf<br/>";
+            $this->pdf->Output("F", "/home/webpages/lima-city/ybook/store.rheinhessenriders/backend/invoices/".$this->orderID."-rechnung.pdf",false);
         }
 
         public function showPDF() {

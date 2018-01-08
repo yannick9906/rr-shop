@@ -2,6 +2,17 @@ const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"]
 const shipmentType = ["Mainz-Lerchenberg (Yannick Félix)","Friesenheim (Philipp Lommel)"]
 
 function orderInfo(id) {
+    document.title = "Bestellinfo - RheinhessenRiders Shop";
+    _paq.push(['setReferrerUrl', currentUrl]);
+    currentUrl = '' + window.location.hash.substr(1);
+    _paq.push(['setCustomUrl', currentUrl]);
+    _paq.push(['setDocumentTitle', document.title]);
+
+    // remove all previously assigned custom variables, requires Piwik 3.0.2
+    _paq.push(['deleteCustomVariables', 'page']);
+    _paq.push(['setGenerationTimeMs', 0]);
+    _paq.push(['trackPageView']);
+
     $("#shopHome").hide();
     $("#orderInfo").show();
 

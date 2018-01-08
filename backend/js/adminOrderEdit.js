@@ -30,7 +30,7 @@ function startOrderEdit(hash) {
     orderID = hash.substr(6);
     $("#orderEdit").show();
     $("#info-action-storno-yes").hide();
-    $("#info-action-storno-no").hide();
+    $("#nav-orders").addClass("active");
     $("#oe-header").html("Bestellung #" + orderID + " bearbeiten");
     refreshInfo();
 }

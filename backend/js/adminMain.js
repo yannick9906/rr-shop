@@ -32,6 +32,7 @@ function resetDash() {
     resetUsers();
     resetCustomers();
     resetInfo();
+    resetScan();
     $("#account").hide();
     $("#orderEdit").hide();
 }
@@ -43,7 +44,7 @@ function checkHash() {
         //Startpanel...
         if(hash.startsWith("order-")) startOrderEdit(hash);
         if(hash === "account") startAccount();
-        if(hash === "scan") return;
+        if(hash === "scan") startScan();
         if(hash === "orders") startOrders();
         if(hash === "customers") startCustomers();
         if(hash === "users") startUsers();

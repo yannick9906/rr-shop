@@ -17,6 +17,20 @@
     <meta name="theme-color" content="#000000" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//stats.rheinhessenriders.tk/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<!-- End Piwik Code -->
 <body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;" onresize="updateBreadCrump();">
 <div class="navbar-fixed">
     <nav>
@@ -89,7 +103,7 @@
                     dass hier ein echter RR-Member am Start ist!</p>
             </div>
             <div class="card-action">
-                <a href="#hoodie" onclick="hoodieDetail()" class="green-text text-darken-2">ab 28€/Stk - Details</a>
+                <a href="#hoodie" class="green-text text-darken-2">ab 28€/Stk - Details</a>
             </div>
         </div>
     </div>
@@ -106,7 +120,7 @@
                     dich erkennen!</p>
             </div>
             <div class="card-action">
-                <a href="#shirt" onclick="shirtDetail()" class="green-text text-darken-2">ab 19€/Stk - Details</a>
+                <a href="#shirt" class="green-text text-darken-2">ab 19€/Stk - Details</a>
             </div>
         </div>
     </div>
@@ -123,7 +137,7 @@
                     erhaltet ihr 20PS mehr!</p>
             </div>
             <div class="card-action">
-                <a href="#sticker" onclick="stickerDetail()" class="orange-text text-darken-2">bald erhältlich</a>
+                <a href="#sticker" class="orange-text text-darken-2">bald erhältlich</a>
             </div>
         </div>
     </div>

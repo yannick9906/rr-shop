@@ -85,8 +85,8 @@ function displayCart() {
             }));
             totalPrice += 1*items[i].amount;
         }
-        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
     }
+    $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
     if(items.length === 0) {
         target.html(`
 <div style="height: 50px; "></div>
@@ -126,4 +126,40 @@ function clearCart() {
 
 function updateCartAmount() {
     $("#cartAmount").html(Lockr.smembers("items").length)
+    let items = Lockr.smembers("items");
+    let total = 0;
+
+    for(let i = 0; i < items.length; i++) {
+        if(items[i].itemType === 1) {
+            _paq.push(['addEcommerceItem',
+                "1", // (required) SKU: Product unique identifier
+                "RheinhessenRiders Hoodie", // (optional) Product name
+                "Clothing", // (optional) Product category, string or array of up to 5 categories
+                28, // (recommended) Product price
+                items[i].amount // (optional, default to 1) Product quantity
+            ]);
+            total += 28;
+        } else if(items[i].itemType === 2) {
+            _paq.push(['addEcommerceItem',
+                "2", // (required) SKU: Product unique identifier
+                "RheinhessenRiders Shirt", // (optional) Product name
+                "Clothing", // (optional) Product category, string or array of up to 5 categories
+                19, // (recommended) Product price
+                items[i].amount // (optional, default to 1) Product quantity
+            ]);
+            total += 19;
+        } else if(items[i].itemType === 3) {
+            _paq.push(['addEcommerceItem',
+                "3", // (required) SKU: Product unique identifier
+                "RheinhessenRiders Sticker", // (optional) Product name
+                "Accessories", // (optional) Product category, string or array of up to 5 categories
+                1, // (recommended) Product price
+                items[i].amount // (optional, default to 1) Product quantity
+            ]);
+            total += 1;
+        }
+    }
+    _paq.push(['trackEcommerceCartUpdate',
+        total]); // (required) Cart amount
+    _paq.push(['trackPageView']);
 }

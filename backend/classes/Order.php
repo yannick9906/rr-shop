@@ -11,7 +11,7 @@
     use PHPMailer\PHPMailer\PHPMailer;
 
     class Order implements \JsonSerializable {
-        private $customer, $items;
+        private $customer, $items, $timestamp;
         private $orderID, $payment, $state, $estDate, $note;
         private $pdo;
 
@@ -26,7 +26,7 @@
          * @param $estDate
          * @param $note
          */
-        public function __construct($orderID, $customer, $items, $payment, $state, $estDate, $note) {
+        public function __construct($orderID, $customer, $items, $payment, $state, $estDate, $note, $timestamp) {
             $this->orderID = $orderID;
             $this->customer = Customer::fromCustomerID(intval($customer));
             $this->items = $items;
@@ -34,6 +34,7 @@
             $this->state =intval($state);
             $this->estDate = $estDate;
             $this->note = $note;
+            $this->timestamp = strtotime($timestamp);
             $this->pdo = new PDO_MYSQL();
         }
 
@@ -44,7 +45,7 @@
         public static function fromOrderID($orderID) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
-            return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note);
+            return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
         }
 
         /**
@@ -89,7 +90,7 @@
                     $template->assign("displayUberweisung", "display: none;");
                     break;
             }
-            $invoice = new Invoice($items, $res->orderID, $customer, $note);
+            $invoice = new Invoice($items, $res->orderID, $customer, $note, time());
             $totalPrice = $invoice->preparePDF();
             $invoice->getPDFAttachment();
 
@@ -141,7 +142,7 @@
             $pdo = new PDO_MYSQL();
             $startElem = ($page-1) * $pagesize;
             $endElem = $pagesize;
-            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], "");
+            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], "state != 3");
             $hits = self::getListMeta($page, $pagesize, $search);
             while($row = $stmt->fetchObject()) {
                 array_push($hits["orders"], [
@@ -177,6 +178,37 @@
                 "page" => $page,
                 "orders" => []
             ];
+        }
+
+        /**
+         * Returns all entries matching the search and the page
+         *
+         * @param int    $page
+         * @param int    $pagesize
+         * @param string $search
+         * @param string $sort
+         *
+         * @param string $where
+         * @return Order[]
+         */
+        public static function getListObjects($page = 1, $pagesize = 75, $search = "", $sort = "", $where = "state != 3") {
+            $USORTING = [
+                "timeAsc"  => "ORDER BY timestamp ASC",
+                "idAsc"    => "ORDER BY orderID ASC",
+                "timeDesc" => "ORDER BY timestamp DESC",
+                "idDesc"   => "ORDER BY orderID DESC",
+                "" => ""
+            ];
+
+            $pdo = new PDO_MYSQL();
+            $startElem = ($page-1) * $pagesize;
+            $endElem = $pagesize;
+            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], $where);
+            $hits = [];
+            while($row = $stmt->fetchObject()) {
+                array_push($hits, Order::fromOrderID($row->orderID));
+            }
+            return $hits;
         }
 
         /**
@@ -257,6 +289,12 @@
             $this->estDate = $estDate;
         }
 
+        /**
+         * @return mixed
+         */
+        public function getTimestamp() {
+            return $this->timestamp;
+        }
 
         /**
          * Specify dataO which should be serialized to JSON

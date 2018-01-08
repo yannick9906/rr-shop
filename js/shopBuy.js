@@ -31,6 +31,17 @@ let cartItemBoughtTemplate = Handlebars.compile(`
 
 
 function buy() {
+    document.title = "Kasse - RheinhessenRiders Shop";
+    _paq.push(['setReferrerUrl', currentUrl]);
+    currentUrl = '' + window.location.hash;
+    _paq.push(['setCustomUrl', currentUrl]);
+    _paq.push(['setDocumentTitle', document.title]);
+
+    // remove all previously assigned custom variables, requires Piwik 3.0.2
+    _paq.push(['deleteCustomVariables', 'page']);
+    _paq.push(['setGenerationTimeMs', 0]);
+    _paq.push(['trackPageView']);
+
     $("#shopHome").hide();
     $("#breadCart").show();
     $("#breadBuy").show();
@@ -76,6 +87,7 @@ function buyNow() {
                             let target = $("#cart-list-bought");
                             let items = JSON.parse(data).order.items;
                             console.log(items);
+                            let price = 0;
                             for (let i = 0; i < items.length; i++) {
                                 if (items[i].itemType === 1) {
                                     target.append(cartItemBoughtTemplate({
@@ -89,6 +101,14 @@ function buyNow() {
                                         '<p><span class="bolden">Größe: </span>' + items[i].itemData.size.toUpperCase() + '</p>' +
                                         '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
                                     }));
+                                    _paq.push(['addEcommerceItem',
+                                        "1", // (required) SKU: Product unique identifier
+                                        "RheinhessenRiders Hoodie", // (optional) Product name
+                                        "Clothing", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
+                                        28, // (recommended) Product price
+                                        items[i].amount // (optional, default to 1) Product quantity
+                                    ]);
+                                    price += 28*items[i].amount;
                                 } else if (items[i].itemType === 2) {
                                     target.append(cartItemBoughtTemplate({
                                         imageSrc: "img/shirt/Shirt-Back-" + cityAbbrToLong(items[i].itemData.city) + ".jpg",
@@ -101,6 +121,14 @@ function buyNow() {
                                         '<p><span class="bolden">Größe: </span>' + items[i].itemData.size.toUpperCase() + '</p>' +
                                         '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
                                     }));
+                                    _paq.push(['addEcommerceItem',
+                                        "2", // (required) SKU: Product unique identifier
+                                        "RheinhessenRiders Shirt", // (optional) Product name
+                                        "Clothing", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
+                                        19, // (recommended) Product price
+                                        items[i].amount // (optional, default to 1) Product quantity
+                                    ]);
+                                    price += 19*items[i].amount;
                                 } else if (items[i].itemType === 3) {
                                     target.append(cartItemBoughtTemplate({
                                         imageSrc: "img/sticker/Sticker-" + cityAbbrToLong(items[i].itemData.city) + ".jpg",
@@ -111,6 +139,14 @@ function buyNow() {
                                         itemData: '<p><span class="bolden">Größe: </span>' + items[i].itemData.size + '</p>' +
                                         '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
                                     }));
+                                    _paq.push(['addEcommerceItem',
+                                        "3", // (required) SKU: Product unique identifier
+                                        "RheinhessenRiders Sticker", // (optional) Product name
+                                        "Accessories", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
+                                        1, // (recommended) Product price
+                                        items[i].amount // (optional, default to 1) Product quantity
+                                    ]);
+                                    price += 1*items[i].amount;
                                 } else if (items[i].itemType === 4) {
                                     target.append(cartItemBoughtTemplate({
                                         imageSrc: "img/backgroundRR.jpg",
@@ -120,9 +156,20 @@ function buyNow() {
                                         itemPrice: 5 * items[i].amount,
                                         itemData: ''
                                     }));
+                                    price += 5*items[i].amount;
                                 }
                             }
                             clearCart();
+                            _paq.push(['trackEcommerceOrder',
+                                JSON.parse(data).order.orderID, // (required) Unique Order ID
+                                price, // (required) Order Revenue grand total (includes tax, shipping, and subtracted discount)
+                                price-5,
+                                0,
+                                5, // (optional) Shipping amount
+                                false // (optional) Discount offered (set to false for unspecified parameter)
+                            ]);
+// we recommend to leave the call to trackPageView() on the Order confirmation page
+                            _paq.push(['trackPageView']);
                         }, 500);
                     });
                 } else {
