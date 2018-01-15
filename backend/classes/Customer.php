@@ -68,12 +68,12 @@
         public static function createNew($firstname, $lastname, $email, $addressCity, $addressStreet, $addressZip) {
             $pdo = new PDO_MYSQL();
             $pdo->queryInsert("rrshop_customers", [
-                "firstname" => $firstname,
-                "lastname" => $lastname,
-                "email" => $email,
-                "addressStreet" => $addressStreet,
-                "addressCity" => $addressCity,
-                "addressZip" => $addressZip
+                "firstname" =>  utf8_decode($firstname),
+                "lastname" =>  utf8_decode($lastname),
+                "email" =>  utf8_decode($email),
+                "addressStreet" =>  utf8_decode($addressStreet),
+                "addressCity" =>  utf8_decode($addressCity),
+                "addressZip" =>  utf8_decode($addressZip)
             ]);
 
             return self::checkEMail($email);
