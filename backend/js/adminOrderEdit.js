@@ -109,6 +109,7 @@ function refreshInfo() {
                     itemPrice: 5 * items[i].amount,
                     itemData: ''
                 }));
+                totalPrice += 5*items[i].amount;
             }
         }
         $("#info-price").html(totalPrice+" €");
