@@ -56,6 +56,7 @@ function buyNow() {
     let item = {
         itemType: 4,
         amount: 1,
+        price: 5,
         itemData: {}
     }
     Lockr.sadd("items", item);
@@ -95,7 +96,7 @@ function buyNow() {
                                         itemID: i,
                                         itemRef: "hoodie",
                                         itemName: "RheinhessenRiders Hoodie",
-                                        itemPrice: 28 * items[i].amount,
+                                        itemPrice: items[i].price * items[i].amount,
                                         itemData: '<p><span class="bolden">Name auf der Front: </span>' + items[i].itemData.frontName + '</p>' +
                                         '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
                                         '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
@@ -109,17 +110,17 @@ function buyNow() {
                                         "1", // (required) SKU: Product unique identifier
                                         "RheinhessenRiders Hoodie", // (optional) Product name
                                         "Clothing", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
-                                        28, // (recommended) Product price
+                                        items[i].price, // (recommended) Product price
                                         items[i].amount // (optional, default to 1) Product quantity
                                     ]);
-                                    price += 28*items[i].amount;
+                                    price += items[i].price*items[i].amount;
                                 } else if (items[i].itemType === 2) {
                                     target.append(cartItemBoughtTemplate({
                                         imageSrc: "img/shirt/Shirt-Back-" + cityAbbrToLong(items[i].itemData.city) + ".jpg",
                                         itemID: i,
                                         itemRef: "shirt",
                                         itemName: "RheinhessenRiders Shirt",
-                                        itemPrice: 19 * items[i].amount,
+                                        itemPrice: items[i].price * items[i].amount,
                                         itemData: '<p><span class="bolden">Name auf der Front: </span>' + items[i].itemData.frontName + '</p>' +
                                         '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
                                         '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
@@ -133,7 +134,7 @@ function buyNow() {
                                         "2", // (required) SKU: Product unique identifier
                                         "RheinhessenRiders Shirt", // (optional) Product name
                                         "Clothing", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
-                                        19, // (recommended) Product price
+                                        items[i].price, // (recommended) Product price
                                         items[i].amount // (optional, default to 1) Product quantity
                                     ]);
                                     price += 19*items[i].amount;
@@ -161,10 +162,10 @@ function buyNow() {
                                         itemID: i,
                                         itemRef: "",
                                         itemName: "Versandkosten",
-                                        itemPrice: 5 * items[i].amount,
+                                        itemPrice: items[i].price * items[i].amount,
                                         itemData: ''
                                     }));
-                                    price += 5*items[i].amount;
+                                    price += items[i].price*items[i].amount;
                                 }
                             }
                             clearCart();

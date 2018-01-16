@@ -50,18 +50,21 @@
 
             $this->pdf->SetFont("","b",10);
             $this->pdf->setXY(10,95);
-            $this->pdf->Cell(60,8,"Artikelname",1,0);
-            $this->pdf->Cell(90,8,"Optionen",1,0);
+            $this->pdf->Cell(50,8,"Artikelname",1,0);
+            $this->pdf->Cell(100,8,"Optionen",1,0);
             $this->pdf->Cell(20,8,"Menge",1,0);
             $this->pdf->Cell(20,8,"Preis",1,1);
             $totalPrice = 0;
             foreach ($this->items as $item) {
-                $i = new Item($item['itemType'], $item['amount'], $item["itemData"]);
+                $i = new Item($item['itemType'], $item['amount'], $item["itemData"], $item["price"]);
                 $this->pdf->SetFont("","",10);
-                $this->pdf->Cell(60,8,$i->getName(),1,0);
-                $this->pdf->SetFont("","",8);
-                $this->pdf->Cell(90,8,utf8_decode($i->getOptions()),1,0);
-                $this->pdf->SetFont("","",10);
+                $this->pdf->Cell(50,8,$i->getName(),1,0);
+                $this->pdf->SetFont("Courier","",7);
+                $currentX = $this->pdf->GetX();
+                $currentY = $this->pdf->GetY();
+                $this->pdf->MultiCell(100,4,utf8_decode($i->getOptions()),1);
+                $this->pdf->SetXY($currentX+100, $currentY);
+                $this->pdf->SetFont("Arial","",10);
                 $this->pdf->Cell(20,8,$i->getAmount(),1,0,"R");
                 $this->pdf->SetFont("","b");
                 $this->pdf->Cell(20,8,$i->getTotalPrice()." EUR",1,1,"R");

@@ -23,14 +23,15 @@
          * @param $amount
          * @param $itemData
          */
-        public function __construct($type, $amount, $itemData) {
+        public function __construct($type, $amount, $itemData, $price) {
             $this->name = $this->Names[$type];
-            $this->price = $this->Prices[$type];
+            $this->price = $price;
             $this->amount = $amount;
             $this->itemData = $itemData;
             foreach($itemData as $option => $value) {
                 $this->options .= (sizeof($this->options)==0?"":"; ").$this->Options[$option].": ".strtoupper($value);
             }
+            if(strlen($this->options) < 64) $this->options.="\n.";
         }
 
         /**

@@ -21,9 +21,13 @@ function refreshPreviewHoodie() {
     previewFront.textfill({maxFontPixels:100, minFontPixels:10});
 
     previewHeart.attr('src', "img/preview/"+heart+".png");
+    if(heart==="sumo" && (name === "NAME" || name === "")) {
+        $("#front_name").val("Sumo ist Life");
+        refreshPreviewHoodie();
+    }
 
     previewColor.removeClass("black");
-    previewColor.removeClass("white");
+    previewColor.removeClass("indigo darken-4");
     previewColor.removeClass("black-text");
     previewColor.removeClass("white-text");
     previewColor.removeClass("red");
@@ -34,7 +38,7 @@ function refreshPreviewHoodie() {
     previewColor.removeClass("purple");
 
     if(color === "schwarz") previewColor.addClass("black");
-    if(color === "rot") previewColor.addClass("red");
+    if(color === "natoblau") previewColor.addClass("indigo darken-4");
     if(color === "gelb") previewColor.addClass("yellow");
     if(color === "gruen") previewColor.addClass("green");
     if(color === "blau") previewColor.addClass("blue");
@@ -42,11 +46,14 @@ function refreshPreviewHoodie() {
     if(color === "magenta") previewColor.addClass("purple");
     if(color === "weiss") {previewColor.addClass("white"); previewColor.addClass("black-text");}
     else previewColor.addClass("white-text");
+
 }
 
 function hoodieRefreshPrice() {
     let amount = $("#hoodieAmount").val();
-    $("#hoodie_price").html(amount*28+" €")
+    let RRtext = $("#hoodieRightArm").val();
+    if(RRtext === "JA") $("#hoodie_price").html(amount*30+" €")
+    else $("#hoodie_price").html(amount*28+" €")
 }
 
 function hoodieAdd() {
@@ -54,6 +61,7 @@ function hoodieAdd() {
         let item = {
             itemType: 1,
             amount: parseInt($("#hoodieAmount").val()),
+            price: $("#hoodieRightArm").val()==="JA" ? 30:28,
             itemData: {
                 frontName: $("#front_name").val(),
                 city: $("#citysel").val(),

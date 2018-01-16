@@ -56,7 +56,7 @@ let sortsO = `
 <option value="idAsc">ID aufstg.</option>
 <option value="idDesc">ID abstg.</option>
 <option value="timeAsc">Datum aufstg.</option>
-<option value="timeDesc">Datum abstg.</option>
+<option value="timeDesc" selected>Datum abstg.</option>
 `
 let listElemTmpltO = `
     <tr id="row-{{i}}" style="display: none;" onclick="location.hash = 'order-{{orderID}}'" class="clickable">

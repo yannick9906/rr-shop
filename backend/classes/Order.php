@@ -297,6 +297,29 @@
         }
 
         /**
+         * @param mixed $items
+         */
+        public function setItems($items) {
+            $this->items = json_encode($items);
+        }
+
+        /**
+         * @param int $payment
+         */
+        public function setPayment($payment) {
+            $this->payment = $payment;
+        }
+
+        /**
+         * @param mixed $note
+         */
+        public function setNote($note) {
+            $this->note = $note;
+        }
+
+
+
+        /**
          * Specify dataO which should be serialized to JSON
          *
          * @link  http://php.net/manual/en/jsonserializable.jsonserialize.php

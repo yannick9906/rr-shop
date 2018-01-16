@@ -218,6 +218,7 @@
                 Exklusiv mit deinem Namen und der Stadt wird jeder sofort erkennen,
                 dass hier ein echter RR-Member am Start ist!</p>
             <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
+            <p class="bolden black-text">die hier gezeigten Farben sind nur eine Vorschau. Die echte Farbe kann abweichen.</p>
         </div>
         <div class="col s12 m6 row">
             <div class="col s12 row black white-text" id="preview-color">
@@ -268,10 +269,10 @@
                         <label>RR Insta auf dem Rücken</label>
                     </div>
                     <div class="input-field col s6 l4">
-                        <select id="hoodieRightArm">
+                        <select id="hoodieRightArm" onchange="hoodieRefreshPrice()">
                             <option value="" disabled>RR Text auf dem Arm</option>
-                            <option value="JA" selected>Ja</option>
-                            <option value="NEIN">Nein</option>
+                            <option value="JA">Ja (+ 2€)</option>
+                            <option value="NEIN" selected>Nein</option>
                         </select>
                         <label>RR Text auf dem Arm</label>
                     </div>
@@ -279,13 +280,7 @@
                         <select id="hoodieColor" onchange="refreshPreviewHoodie()">
                             <option value="" disabled>Farbe wählen</option>
                             <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz" selected>Schwarz</option>
-                            <option data-icon="img/color/FFFFFF-1.png" class="left circle" value="weiss">Weiß</option>
-                            <option data-icon="img/color/FF0000-1.png" class="left circle" value="rot">Rot</option>
-                            <option data-icon="img/color/00FF00-1.png" class="left circle" value="gruen">Grün</option>
-                            <option data-icon="img/color/0000FF-1.png" class="left circle" value="blau">Blau</option>
-                            <option data-icon="img/color/FFFF00-1.png" class="left circle" value="gelb">Gelb</option>
-                            <option data-icon="img/color/00FFFF-1.png" class="left circle" value="cyan">Cyan</option>
-                            <option data-icon="img/color/FF00FF-1.png" class="left circle" value="magenta">Magenta</option>
+                            <option data-icon="img/color/000080-1.png" class="left circle" value="natoblau">Natoblau</option>
                         </select>
                         <label>Farbe</label>
                     </div>
@@ -367,7 +362,7 @@
                         </select>
                         <label>Stadt</label>
                     </div>
-                    <div class="input-field col s6 l4">
+                    <div class="input-field col s6 l6">
                         <select id="shirtHeart" onchange="refreshPreviewShirt()">
                             <option value="" disabled>Herzschlag wählen</option>
                             <option value="sport" selected>Sportler</option>
@@ -376,7 +371,7 @@
                         </select>
                         <label>Herzschlag</label>
                     </div>
-                    <div class="input-field col s6 l4">
+                    <div class="input-field col s6 l6">
                         <select id="shirtInsta" onchange="refreshPreviewShirt()">
                             <option value="" disabled>RR Insta auf dem Rücken</option>
                             <option value="JA" selected>Ja</option>
@@ -385,24 +380,10 @@
                         <label>RR Insta auf dem Rücken</label>
                     </div>
                     <div class="input-field col s6 l4">
-                        <select id="shirtRightArm">
-                            <option value="" disabled>RR Text auf dem Arm</option>
-                            <option value="JA" selected>Ja</option>
-                            <option value="NEIN">Nein</option>
-                        </select>
-                        <label>RR Text auf dem Arm</label>
-                    </div>
-                    <div class="input-field col s6 l4">
                         <select id="shirtColor" onchange="refreshPreviewShirt()">
                             <option value="" disabled>Farbe wählen</option>
                             <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz" selected>Schwarz</option>
-                            <option data-icon="img/color/FFFFFF-1.png" class="left circle" value="weiss">Weiß</option>
-                            <option data-icon="img/color/FF0000-1.png" class="left circle" value="rot">Rot</option>
-                            <option data-icon="img/color/00FF00-1.png" class="left circle" value="gruen">Grün</option>
-                            <option data-icon="img/color/0000FF-1.png" class="left circle" value="blau">Blau</option>
-                            <option data-icon="img/color/FFFF00-1.png" class="left circle" value="gelb">Gelb</option>
-                            <option data-icon="img/color/00FFFF-1.png" class="left circle" value="cyan">Cyan</option>
-                            <option data-icon="img/color/FF00FF-1.png" class="left circle" value="magenta">Magenta</option>
+                            <option data-icon="img/color/000080-1.png" class="left circle" value="natoblau">Natoblau</option>
                         </select>
                         <label>Farbe</label>
                     </div>
@@ -666,13 +647,13 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="lib/md5.js"></script>
 <script type="text/javascript" src="lib/lockr.js"></script>
-<script type="text/javascript" src="js/shopBase.js"></script>
-<script type="text/javascript" src="js/shopCart.js"></script>
-<script type="text/javascript" src="js/shopHoodie.js"></script>
-<script type="text/javascript" src="js/shopShirt.js"></script>
-<script type="text/javascript" src="js/shopSticker.js"></script>
-<script type="text/javascript" src="js/shopBuy.js"></script>
-<script type="text/javascript" src="js/shopInfo.js"></script>
+<script type="text/javascript" src="js/shopBase.js?rev2"></script>
+<script type="text/javascript" src="js/shopCart.js?rev2"></script>
+<script type="text/javascript" src="js/shopHoodie.js?rev2"></script>
+<script type="text/javascript" src="js/shopShirt.js?rev2"></script>
+<script type="text/javascript" src="js/shopSticker.js?rev2"></script>
+<script type="text/javascript" src="js/shopBuy.js?rev2"></script>
+<script type="text/javascript" src="js/shopInfo.js?rev2"></script>
 <script>
     $(document).ready(() => {
         $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});

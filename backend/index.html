@@ -81,17 +81,17 @@
                         <a href="#!"><span id="infoEmail" class="white-text email" style="text-shadow: 1px 1px 5px black;">Laden ...</span></a>
                     </div>
                 </li>
-                <li id="nav-account"><a href="#account" class="sidenav-close"><i class="mddi mddi-account-circle"></i>Account</a></li>
-                <li id="nav-logout"><a onclick="doLogout();" class="sidenav-close"><i class="mddi mddi-logout-variant"></i>Logout</a></li>
+                <li id="nav-account"><a href="#account" ><!--class="sidenav-close" >--><i class="mddi mddi-account-circle"></i>Account</a></li>
+                <li id="nav-logout"><a onclick="doLogout();" ><!--class="sidenav-close" >--><i class="mddi mddi-logout-variant"></i>Logout</a></li>
                 <li><div class="divider"></div></li>
                 <li class="subheader"><a class="subheader black-text bolden">Main</a></li>
-                <li id="nav-order-scan" class="active"><a href="#scan" class="sidenav-close"><i class="mddi mddi-qrcode-scan"></i>Bestellungsscanner</a></li>
-                <li id="nav-orders"><a href="#orders" class="sidenav-close"><i class="mddi mddi-star-circle"></i>Bestellungen</a></li>
-                <li id="nav-customers"><a href="#customers" class="sidenav-close"><i class="mddi mddi-account-multiple"></i>Kunden</a></li>
+                <li id="nav-order-scan" class="active"><a href="#scan" ><!--class="sidenav-close" >--><i class="mddi mddi-qrcode-scan"></i>Bestellungsscanner</a></li>
+                <li id="nav-orders"><a href="#orders"><!--class="sidenav-close" >--><i class="mddi mddi-star-circle"></i>Bestellungen</a></li>
+                <li id="nav-customers"><a href="#customers"><!--class="sidenav-close" >--><i class="mddi mddi-account-multiple"></i>Kunden</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="subheader black-text bolden">Administration</a></li>
                 <!--<li id="nav-database"><a href="../adminer/"><i class="mddi mddi-database"></i>Datenbank</a></li>-->
-                <li id="nav-users"><a href="#users" class="sidenav-close"><i class="mddi mddi-account-multiple"></i>Benutzer</a></li>
+                <li id="nav-users"><a href="#users" ><!--class="sidenav-close" >--><i class="mddi mddi-account-multiple"></i>Benutzer</a></li>
                 <li><div class="divider"></div></li>
             </ul>
         </div>
@@ -275,7 +275,8 @@
                         <div class="col s6 bolden">Bedruckung: </div><div class="col s6" id="info-printing">...</div>
                         <div class="col s6 bolden">Gesamtpreis: </div><div class="col s6" id="info-price">...</div>
                         <div class="col s6 bolden">Status: </div><div class="col s6" id="info-state">...</div>
-                        <div class="col s6 bolden">Notiz: </div><pre class="col s6" id="info-note" style="white-space: pre-wrap;">...</pre>
+                        <div class="col s6 bolden">Notiz: </div><div class="input-field col s6"><textarea id="info-note" class="materialize-textarea">...</textarea><label for="info-note">Notiz bearbeiten</label></div>
+                        <a style="margin-bottom: 1rem;" onclick="actionSave()" id="info-action-save" class="waves-effect waves-light btn green lighten-2 white-text col s12">Änderungen Speichern</a>
                         <div class="col s12"><br/><br/></div>
                         <a style="margin-bottom: 1rem;" onclick="actionPayed()" id="info-action-payed" class="waves-effect waves-light btn black white-text col s12">Bestellung bezahlt</a>
                         <a style="margin-bottom: 1rem;" onclick="actionPrinted()" id="info-action-printed" class="waves-effect waves-light btn black white-text col s12">Bestellung im Druck</a>
@@ -301,14 +302,14 @@
 <script type="text/javascript" src="../lib/handlebars.min.js"></script>
 <script type="text/javascript" src="../lib/lockr.js"></script>
 <script type="text/javascript" src="../lib/md5.js"></script>
-<script type="text/javascript" src="js/adminLogin.js"></script>
-<script type="text/javascript" src="js/adminMain.js"></script>
-<script type="text/javascript" src="js/adminUsers.js"></script>
-<script type="text/javascript" src="js/adminOrders.js"></script>
-<script type="text/javascript" src="js/adminAccount.js"></script>
-<script type="text/javascript" src="js/adminCustomers.js"></script>
-<script type="text/javascript" src="js/adminOrderEdit.js"></script>
-<script type="text/javascript" src="js/adminScanner.js"></script>
+<script type="text/javascript" src="js/adminLogin.js?rev2"></script>
+<script type="text/javascript" src="js/adminMain.js?rev2"></script>
+<script type="text/javascript" src="js/adminUsers.js?rev2"></script>
+<script type="text/javascript" src="js/adminOrders.js?rev2"></script>
+<script type="text/javascript" src="js/adminAccount.js?rev2"></script>
+<script type="text/javascript" src="js/adminCustomers.js?rev2"></script>
+<script type="text/javascript" src="js/adminOrderEdit.js?rev2"></script>
+<script type="text/javascript" src="js/adminScanner.js?rev2"></script>
 <script>
     $(document).ready(() => {
         $('.sidenav').sidenav();

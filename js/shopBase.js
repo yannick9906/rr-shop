@@ -6,7 +6,7 @@ let slider1, slider2, slider3;
 const names = [
     "Ranzlaube", "Gruppenzwerg", "Taschentuch", "Marcele", "Bollinator", "Nebelmaschine", "Der Ranz",
     "Ranz izz Life", "Pocketbike", "Da machste nix!", "1:30 oder 30:1 ?", "Gruppen-mechaniker", "Hoesqvarna?",
-    ""
+    "Sumo ist Life"
 ]
 
 function hoodieDetail() {

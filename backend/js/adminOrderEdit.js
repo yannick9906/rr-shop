@@ -30,6 +30,7 @@ function startOrderEdit(hash) {
     orderID = hash.substr(6);
     $("#orderEdit").show();
     $("#info-action-storno-yes").hide();
+    $("#info-action-storno-no").hide();
     $("#nav-orders").addClass("active");
     $("#oe-header").html("Bestellung #" + orderID + " bearbeiten");
     refreshInfo();
@@ -184,6 +185,17 @@ function actionPrinted() {
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
         refreshInfo();
         $("#info-action-printed").html("Bestellung im druck");
+    });
+}
+
+function actionSave() {
+    $("#info-action-save").html("...");
+    $.post("api/order/update.php",{orderID: orderID, note: $("#info-note").val()}, (data) => {
+        let json = JSON.parse(data);
+        if(json.success) M.toast({html: "Änderungen gespeichert.", duration: 1000, classes:"green"});
+        else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
+        refreshInfo();
+        $("#info-action-save").html("Änderungen speichern");
     });
 }
 

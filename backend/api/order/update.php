@@ -24,6 +24,8 @@
         exit();
     }
 
-    $orderToEdit->setState($_POST["state"]);
+    if(isset($_POST['state']))$orderToEdit->setState($_POST["state"]);
+    if(isset($_POST['note']))$orderToEdit->setNote($_POST["note"]);
+    if(isset($_POST['payment']))$orderToEdit->setPayment($_POST["payment"]);
     $orderToEdit->saveChanges();
     echo json_encode(["success" => true]);

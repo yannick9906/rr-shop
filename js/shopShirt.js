@@ -54,14 +54,14 @@ function shirtAdd() {
         let item = {
             itemType: 2,
             amount: parseInt($("#shirtAmount").val()),
+            price: 19,
             itemData: {
                 frontName: $("#front_name_shirt").val(),
                 city: $("#cityselShirt").val(),
                 size: $("#shirtSize").val(),
                 color: $("#shirtColor").val(),
                 heart: $("#shirtHeart").val(),
-                insta: $("#shirtInsta").val(),
-                rightarm: $("#shirtRightArm").val()
+                insta: $("#shirtInsta").val()
             }
         }
         Lockr.sadd("items", item);
