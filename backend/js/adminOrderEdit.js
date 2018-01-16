@@ -74,9 +74,9 @@ function refreshInfo() {
                     '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
                     '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
                     '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
-                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta.toUpperCase()+'</p>' +
+                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
                     '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
-                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm.toUpperCase()+'</p>' +
+                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
                     '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
                 }));
                 totalPrice += 28*items[i].amount;
@@ -91,9 +91,9 @@ function refreshInfo() {
                     '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
                     '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
                     '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
-                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta.toUpperCase()+'</p>' +
+                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
                     '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
-                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm.toUpperCase()+'</p>' +
+                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
                     '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
                 }));
                 totalPrice += 19*items[i].amount;
