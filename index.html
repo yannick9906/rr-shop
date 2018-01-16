@@ -220,26 +220,26 @@
             <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
         </div>
         <div class="col s12 m6 row">
-            <div class="col s12 row black">
+            <div class="col s12 row black white-text" id="preview-color">
                 <div class="col s6" style="line-height: normal;">
-                    <p class="bolden white-text">Vorderseite:</p>
-                    <img src="img/preview/bike.gif" width="100%"/>
-                    <div class="white-text center preview" id="preview-front">
+                    <p class="bolden ">Vorderseite:</p>
+                    <img id="preview-heart" src="img/preview/sport.png" width="100%"/>
+                    <div class="center preview" id="preview-front">
                         <span>NAME</span>
                     </div>
                 </div>
                 <div class="col s6">
-                    <p class="bolden white-text">Rückseite:</p>
+                    <p class="bolden">Rückseite:</p>
                     <img src="img/preview/RH%20Mainz.png" width="100%" id="preview-back"/>
                 </div>
             </div>
             <div class="col s12">
                 <form class="row">
-                    <div class="input-field col s12 m6">
+                    <div class="input-field col s12 l6">
                         <input id="front_name" type="text" onkeyup="refreshPreviewHoodie()" value="Name">
                         <label for="front_name">Name auf der Front</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s6 l6">
                         <select id="citysel" onchange="refreshPreviewHoodie()">
                             <option value="" disabled selected>Stadt auswählen</option>
                             <option value="mz">Mainz</option>
@@ -250,20 +250,35 @@
                         </select>
                         <label>Stadt</label>
                     </div>
-                    <div class="input-field col s6">
-                        <select id="hoodieAmount" onchange="hoodieRefreshPrice()">
-                            <option value="1" selected>1 Stk.</option>
-                            <option value="2">2 Stk.</option>
-                            <option value="3">3 Stk.</option>
-                            <option value="4">4 Stk.</option>
-                            <option value="5">5 Stk.</option>
+                    <div class="input-field col s6 l4">
+                        <select id="hoodieHeart" onchange="refreshPreviewHoodie()">
+                            <option value="" disabled>Herzschlag wählen</option>
+                            <option value="sport" selected>Sportler</option>
+                            <option value="sumo">Supermoto <3</option>
+                            <option value="naked">Naked</option>
                         </select>
-                        <label>Anzahl</label>
+                        <label>Herzschlag</label>
                     </div>
-                    <!--<div class="input-field col s4">
-                        <select id="hoodieColor">
-                            <option value="" disabled selected>Farbe wählen</option>
-                            <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz">Schwarz</option>
+                    <div class="input-field col s6 l4">
+                        <select id="hoodieInsta">
+                            <option value="" disabled>RR Insta auf dem Rücken</option>
+                            <option value="JA" selected>Ja</option>
+                            <option value="NEIN">Nein</option>
+                        </select>
+                        <label>RR Insta auf dem Rücken</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="hoodieRightArm">
+                            <option value="" disabled>RR Text auf dem Arm</option>
+                            <option value="JA" selected>Ja</option>
+                            <option value="NEIN">Nein</option>
+                        </select>
+                        <label>RR Text auf dem Arm</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="hoodieColor" onchange="refreshPreviewHoodie()">
+                            <option value="" disabled>Farbe wählen</option>
+                            <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz" selected>Schwarz</option>
                             <option data-icon="img/color/FFFFFF-1.png" class="left circle" value="weiss">Weiß</option>
                             <option data-icon="img/color/FF0000-1.png" class="left circle" value="rot">Rot</option>
                             <option data-icon="img/color/00FF00-1.png" class="left circle" value="gruen">Grün</option>
@@ -273,8 +288,8 @@
                             <option data-icon="img/color/FF00FF-1.png" class="left circle" value="magenta">Magenta</option>
                         </select>
                         <label>Farbe</label>
-                    </div>-->
-                    <div class="input-field col s6">
+                    </div>
+                    <div class="input-field col s6 l4">
                         <select id="hoodieSize">
                             <option value="" disabled selected>Größe wählen</option>
                             <option value="s">S</option>
@@ -284,6 +299,16 @@
                             <option value="xxl">XXL</option>
                         </select>
                         <label>Größe</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="hoodieAmount" onchange="hoodieRefreshPrice()">
+                            <option value="1" selected>1 Stk.</option>
+                            <option value="2">2 Stk.</option>
+                            <option value="3">3 Stk.</option>
+                            <option value="4">4 Stk.</option>
+                            <option value="5">5 Stk.</option>
+                        </select>
+                        <label>Anzahl</label>
                     </div>
                     <h4 class="col s5 offset-s4 bolden right-align rr" id="hoodie_price"> 28 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="hoodieAdd()"><i class="mddi mddi-basket-fill"></i></a>
@@ -312,26 +337,26 @@
             <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
         </div>
         <div class="col s12 m6 row">
-            <div class="col s12 row black">
+            <div class="col s12 row black white-text" id="preview-color-shirt">
                 <div class="col s6" style="line-height: normal;">
-                    <p class="bolden white-text">Vorderseite:</p>
-                    <img src="img/preview/bike.gif" width="100%"/>
+                    <p class="bolden">Vorderseite:</p>
+                    <img src="img/preview/sport.png" width="100%" id="preview-heart-shirt"/>
                     <div class="white-text center preview" id="preview-front-shirt">
                         <span>NAME</span>
                     </div>
                 </div>
                 <div class="col s6">
-                    <p class="bolden white-text">Rückseite:</p>
+                    <p class="bolden">Rückseite:</p>
                     <img src="img/preview/RH%20Mainz.png" width="100%" id="preview-back-shirt"/>
                 </div>
             </div>
             <div class="col s12">
                 <form class="row">
-                    <div class="input-field col s12 m6">
-                        <input id="front_name_shirt" type="text" onkeyup="refreshPreviewShirt()" value="Name">
+                    <div class="input-field col s12 l6">
+                        <input id="front_name_shirt" type="text" onkeyup="refreshPreviewHoodie()" value="Name">
                         <label for="front_name_shirt">Name auf der Front</label>
                     </div>
-                    <div class="input-field col s6 m6">
+                    <div class="input-field col s6 l6">
                         <select id="cityselShirt" onchange="refreshPreviewShirt()">
                             <option value="" disabled selected>Stadt auswählen</option>
                             <option value="mz">Mainz</option>
@@ -342,17 +367,46 @@
                         </select>
                         <label>Stadt</label>
                     </div>
-                    <div class="input-field col s6">
-                        <select id="shirtAmount" onchange="shirtRefreshPrice()">
-                            <option value="1" selected>1 Stk.</option>
-                            <option value="2">2 Stk.</option>
-                            <option value="3">3 Stk.</option>
-                            <option value="4">4 Stk.</option>
-                            <option value="5">5 Stk.</option>
+                    <div class="input-field col s6 l4">
+                        <select id="shirtHeart" onchange="refreshPreviewShirt()">
+                            <option value="" disabled>Herzschlag wählen</option>
+                            <option value="sport" selected>Sportler</option>
+                            <option value="sumo">Supermoto <3</option>
+                            <option value="naked">Naked</option>
                         </select>
-                        <label>Anzahl</label>
+                        <label>Herzschlag</label>
                     </div>
-                    <div class="input-field col s6">
+                    <div class="input-field col s6 l4">
+                        <select id="shirtInsta" onchange="refreshPreviewShirt()">
+                            <option value="" disabled>RR Insta auf dem Rücken</option>
+                            <option value="JA" selected>Ja</option>
+                            <option value="NEIN">Nein</option>
+                        </select>
+                        <label>RR Insta auf dem Rücken</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="shirtRightArm">
+                            <option value="" disabled>RR Text auf dem Arm</option>
+                            <option value="JA" selected>Ja</option>
+                            <option value="NEIN">Nein</option>
+                        </select>
+                        <label>RR Text auf dem Arm</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="shirtColor" onchange="refreshPreviewShirt()">
+                            <option value="" disabled>Farbe wählen</option>
+                            <option data-icon="img/color/000000-1.png" class="left circle" value="schwarz" selected>Schwarz</option>
+                            <option data-icon="img/color/FFFFFF-1.png" class="left circle" value="weiss">Weiß</option>
+                            <option data-icon="img/color/FF0000-1.png" class="left circle" value="rot">Rot</option>
+                            <option data-icon="img/color/00FF00-1.png" class="left circle" value="gruen">Grün</option>
+                            <option data-icon="img/color/0000FF-1.png" class="left circle" value="blau">Blau</option>
+                            <option data-icon="img/color/FFFF00-1.png" class="left circle" value="gelb">Gelb</option>
+                            <option data-icon="img/color/00FFFF-1.png" class="left circle" value="cyan">Cyan</option>
+                            <option data-icon="img/color/FF00FF-1.png" class="left circle" value="magenta">Magenta</option>
+                        </select>
+                        <label>Farbe</label>
+                    </div>
+                    <div class="input-field col s6 l4">
                         <select id="shirtSize">
                             <option value="" disabled selected>Größe wählen</option>
                             <option value="s">S</option>
@@ -362,6 +416,16 @@
                             <option value="xxl">XXL</option>
                         </select>
                         <label>Größe</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="shirtAmount" onchange="hoodieRefreshPrice()">
+                            <option value="1" selected>1 Stk.</option>
+                            <option value="2">2 Stk.</option>
+                            <option value="3">3 Stk.</option>
+                            <option value="4">4 Stk.</option>
+                            <option value="5">5 Stk.</option>
+                        </select>
+                        <label>Anzahl</label>
                     </div>
                     <h4 class="col s5 offset-s4 bolden right-align rr" id="shirt_price"> 19 €</h4>
                     <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="shirtAdd()"><i class="mddi mddi-basket-fill"></i></a>

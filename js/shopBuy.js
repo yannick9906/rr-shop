@@ -97,9 +97,13 @@ function buyNow() {
                                         itemName: "RheinhessenRiders Hoodie",
                                         itemPrice: 28 * items[i].amount,
                                         itemData: '<p><span class="bolden">Name auf der Front: </span>' + items[i].itemData.frontName + '</p>' +
-                                        '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
-                                        '<p><span class="bolden">Größe: </span>' + items[i].itemData.size.toUpperCase() + '</p>' +
-                                        '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
+                                        '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
+                                        '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
+                                        '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
+                                        '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta.toUpperCase()+'</p>' +
+                                        '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
+                                        '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm.toUpperCase()+'</p>' +
+                                        '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
                                     }));
                                     _paq.push(['addEcommerceItem',
                                         "1", // (required) SKU: Product unique identifier
@@ -117,9 +121,13 @@ function buyNow() {
                                         itemName: "RheinhessenRiders Shirt",
                                         itemPrice: 19 * items[i].amount,
                                         itemData: '<p><span class="bolden">Name auf der Front: </span>' + items[i].itemData.frontName + '</p>' +
-                                        '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
-                                        '<p><span class="bolden">Größe: </span>' + items[i].itemData.size.toUpperCase() + '</p>' +
-                                        '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
+                                        '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
+                                        '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
+                                        '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
+                                        '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta.toUpperCase()+'</p>' +
+                                        '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
+                                        '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm.toUpperCase()+'</p>' +
+                                        '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
                                     }));
                                     _paq.push(['addEcommerceItem',
                                         "2", // (required) SKU: Product unique identifier
