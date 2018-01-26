@@ -68,7 +68,7 @@
                 "payment" => intval($payment),
                 "items" => $items,
                 "note" => $note
-            ], ", estDate = WEEK(ADDDATE(CURDATE(), INTERVAL 7 DAY),1)");
+            ], ", estDate = MONTH(CURDATE())+1");
             $res = $pdo->query("SELECT orderID FROM db_302476_3.rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
 
             //Send Email
@@ -142,7 +142,7 @@
             $pdo = new PDO_MYSQL();
             $startElem = ($page-1) * $pagesize;
             $endElem = $pagesize;
-            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], "state != 3");
+            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], "state < 3");
             $hits = self::getListMeta($page, $pagesize, $search);
             while($row = $stmt->fetchObject()) {
                 array_push($hits["orders"], [
@@ -168,8 +168,8 @@
          */
         public static function getListMeta($page, $pagesize, $search) {
             $pdo = new PDO_MYSQL();
-            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%'))", [":search" => $search]);
-            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders");
+            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%')) and state < 3", [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders where state < 3");
             $size = $res->size;
             $maxpage = ceil($size / $pagesize);
             return [

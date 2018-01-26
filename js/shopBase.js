@@ -2,7 +2,7 @@
  * Created by yanni on 2017-10-09.
  */
 let currentUrl = location.href;
-let slider1, slider2, slider3;
+let slider1, slider2, slider4;
 const names = [
     "Ranzlaube", "Gruppenzwerg", "Taschentuch", "Marcele", "Bollinator", "Nebelmaschine", "Der Ranz",
     "Ranz izz Life", "Pocketbike", "Da machste nix!", "1:30 oder 30:1 ?", "Gruppen-mechaniker", "Hoesqvarna?",
@@ -38,8 +38,41 @@ function hoodieDetail() {
     _paq.push(['setEcommerceView',
         "1", // (required) SKU: Product unique identifier
         "RheinhessenRiders Hoodie", // (optional) Product name
-        "Clothing", // (optional) Product category, or array of up to 5 categories
-        28 // (optional) Product Price as displayed on the page
+        "Clothing" // (optional) Product category, or array of up to 5 categories
+    ]);
+    _paq.push(['trackPageView']);
+}
+
+function mugDetail() {
+    document.title = "RR Tasse - RheinhessenRiders Shop";
+    _paq.push(['setReferrerUrl', currentUrl]);
+    currentUrl = '' + window.location.hash;
+    _paq.push(['setCustomUrl', currentUrl]);
+    _paq.push(['setDocumentTitle', document.title]);
+
+    // remove all previously assigned custom variables, requires Piwik 3.0.2
+    _paq.push(['deleteCustomVariables', 'page']);
+    _paq.push(['setGenerationTimeMs', 0]);
+    _paq.push(['trackPageView']);
+
+    $("#shopHome").hide();
+    $("#shopDetailMug").show();
+    $("#backbutton").show();
+    refreshPreviewMug();
+    slider4 = $('#slider4');
+    slider4.carousel({fullWidth: true, indicators: true});
+    slider4.css('height', $('#slider4 .carousel-item img').height()+"px");
+    //window.setInterval(() => slider1.carousel('next'),5000);
+    let previewFront = $("#preview-front");
+    let random = Math.floor(Math.random()*names.length);
+    previewFront.html("<span>"+names[random]+"</span>");
+    previewFront.textfill({maxFontPixels:100, minFontPixels:10});
+    $("select").select();
+
+    _paq.push(['setEcommerceView',
+        "5", // (required) SKU: Product unique identifier
+        "RheinhessenRiders Tasse", // (optional) Product name
+        "Accessories" // (optional) Product category, or array of up to 5 categories
     ]);
     _paq.push(['trackPageView']);
 }
@@ -102,8 +135,7 @@ function shirtDetail() {
     _paq.push(['setEcommerceView',
         "2", // (required) SKU: Product unique identifier
         "RheinhessenRiders Shirt", // (optional) Product name
-        "Clothing", // (optional) Product category, or array of up to 5 categories
-        19 // (optional) Product Price as displayed on the page
+        "Clothing" // (optional) Product category, or array of up to 5 categories
     ]);
     _paq.push(['trackPageView']);
 }
@@ -131,15 +163,6 @@ function shoppingCart() {
 
 function shopHome() {
     document.title = "Home - RheinhessenRiders Shop";
-    _paq.push(['setReferrerUrl', currentUrl]);
-    currentUrl = '' + window.location.hash;
-    _paq.push(['setCustomUrl', currentUrl]);
-    _paq.push(['setDocumentTitle', document.title]);
-
-    // remove all previously assigned custom variables, requires Piwik 3.0.2
-    _paq.push(['deleteCustomVariables', 'page']);
-    _paq.push(['setGenerationTimeMs', 0]);
-    _paq.push(['trackPageView']);
 
     $.post("backend/api/accesscodecheck.php",{accesscode: Cookies.get("accesscode")}, (data) => {
         let json = JSON.parse(data);
@@ -147,10 +170,12 @@ function shopHome() {
         $("#shopDetailShirt").hide();
         $("#shopDetailSticker").hide();
         $("#shopDetailHoodie").hide();
+        $("#shopDetailMug").hide();
         $("#shopping-cart").hide();
         $("#buyerInfo").hide();
         $("#orderInfo").hide();
         $("#backbutton").hide();
+        $("#impress").hide();
         $("#cart-list-bought").html("");
         window.scrollTo(0, 0);
         updateCartAmount();
@@ -177,11 +202,23 @@ function hashChangeCallback() {
     if(window.location.hash) {
         var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
         if (hash === "hoodie") hoodieDetail();
-        if (hash === "shirt") shirtDetail();
-        if (hash === "sticker") stickerDetail();
-        if (hash === "shopping-cart") shoppingCart();
-        if (hash === "buyerInfo") buy();
-        if (hash.startsWith("order")) orderInfo(hash);
+        else if (hash === "shirt") shirtDetail();
+        else if (hash === "sticker") stickerDetail();
+        else if (hash === "mug") mugDetail();
+        else if (hash === "shopping-cart") shoppingCart();
+        else if (hash === "buyerInfo") buy();
+        else if (hash.startsWith("order")) orderInfo(hash);
+        else {
+            _paq.push(['setReferrerUrl', currentUrl]);
+            currentUrl = '' + window.location.hash;
+            _paq.push(['setCustomUrl', currentUrl]);
+            _paq.push(['setDocumentTitle', document.title]);
+
+            // remove all previously assigned custom variables, requires Piwik 3.0.2
+            _paq.push(['deleteCustomVariables', 'page']);
+            _paq.push(['setGenerationTimeMs', 0]);
+            _paq.push(['trackPageView']);
+        }
     }
 }
 
@@ -203,11 +240,22 @@ function shopClosed() {
             if(window.location.hash) {
                 var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
                 if (hash === "hoodie") hoodieDetail();
-                if (hash === "shirt") shirtDetail();
-                if (hash === "sticker") stickerDetail();
-                if (hash === "shopping-cart") shoppingCart();
-                if (hash === "buyerInfo") buy();
-                if (hash.startsWith("order")) orderInfo(hash);
+                else if (hash === "shirt") shirtDetail();
+                else if (hash === "sticker") stickerDetail();
+                else if (hash === "shopping-cart") shoppingCart();
+                else if (hash === "buyerInfo") buy();
+                else if (hash.startsWith("order")) orderInfo(hash);
+                else {
+                    _paq.push(['setReferrerUrl', currentUrl]);
+                    currentUrl = '' + window.location.hash;
+                    _paq.push(['setCustomUrl', currentUrl]);
+                    _paq.push(['setDocumentTitle', document.title]);
+
+                    // remove all previously assigned custom variables, requires Piwik 3.0.2
+                    _paq.push(['deleteCustomVariables', 'page']);
+                    _paq.push(['setGenerationTimeMs', 0]);
+                    _paq.push(['trackPageView']);
+                }
             }
         } else {
             shopHome();
@@ -215,12 +263,6 @@ function shopClosed() {
             $("#shoppingcartbtn").hide();
         }
     });
-}
-
-function checkCode(e) {
-    let code = $("#betacode").val();
-    Cookies.set("beta", md5(code), {expires: 31});
-    //shopClosed();
 }
 
 function checkAccessCode() {

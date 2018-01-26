@@ -5,7 +5,7 @@ function startOrders() {
     $("#listHeader").html("<th data-field=\"id\" width=\"50px\">ID</th>\n" +
                         "<th data-field=\"name\" width=\"40%\">Status</th>\n" +
                         "<th data-field=\"name\" width=\"20%\">Bezahlmethode</th>\n" +
-                        "<th data-field=\"name\" width=\"20%\">Bedruckung</th>\n");
+                        "<th data-field=\"name\" width=\"20%\">wird bestellt</th>\n");
     $("#createNewBtnIcon").addClass("mddi-book-plus");
     $("#createNewTitle").html("Bestellung erstellen");
     $("#editTitle").html("Bestellung bearbeiten");
@@ -43,7 +43,7 @@ function resetOrders() {
 
 const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"];
 const shipmentType = ["Mainz-Lerchenberg (Yannick Félix)","Friesenheim (Philipp Lommel)", "Lieferung"];
-const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='green-text'>Bestellung bezahlt</span>", "<span class='green-text'>Bestellung wird bedruckt</span>","<span class='red-text'>Bestellung storniert.</span>"];
+const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='green-text'>Bestellung bezahlt</span>", "<span class='green-text'>Bestellung bestellt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
 
 let sortNameO = "#sort";
 let listNameO = "#listItems"
@@ -63,7 +63,7 @@ let listElemTmpltO = `
         <td>{{orderID}}</td>
         <td>{{customerName}} hat am {{timestamp}} bestellt.<br/>Status: {{{state}}}</td>
         <td>{{payment}}</td>
-        <td>in KW{{kw}}</td>
+        <td>in Monat {{kw}}</td>
     </tr>
     `;
 let templateO = Handlebars.compile(listElemTmpltO);
@@ -178,8 +178,8 @@ function updateDataO() {
 
 function animateO(i) {
     if(i <= sizeO) {
-        $("#row-"+i).fadeIn(150);
-        window.setTimeout("animateO("+(i+1)+")", 150);
+        $("#row-"+i).fadeIn(100);
+        window.setTimeout("animateO("+(i+1)+")", 100);
     }
 }
 

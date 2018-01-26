@@ -137,7 +137,7 @@ function buyNow() {
                                         items[i].price, // (recommended) Product price
                                         items[i].amount // (optional, default to 1) Product quantity
                                     ]);
-                                    price += 19*items[i].amount;
+                                    price += items[i].price*items[i].amount;
                                 } else if (items[i].itemType === 3) {
                                     target.append(cartItemBoughtTemplate({
                                         imageSrc: "img/sticker/Sticker-" + cityAbbrToLong(items[i].itemData.city) + ".jpg",
@@ -152,10 +152,10 @@ function buyNow() {
                                         "3", // (required) SKU: Product unique identifier
                                         "RheinhessenRiders Sticker", // (optional) Product name
                                         "Accessories", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
-                                        1, // (recommended) Product price
+                                        items[i].price, // (recommended) Product price
                                         items[i].amount // (optional, default to 1) Product quantity
                                     ]);
-                                    price += 1*items[i].amount;
+                                    price += items[i].price*items[i].amount;
                                 } else if (items[i].itemType === 4) {
                                     target.append(cartItemBoughtTemplate({
                                         imageSrc: "img/backgroundRR.jpg",
@@ -166,6 +166,27 @@ function buyNow() {
                                         itemData: ''
                                     }));
                                     price += items[i].price*items[i].amount;
+                                } else if(items[i].itemType === 5) {
+                                    target.append(cartItemBoughtTemplate({
+                                        imageSrc: "img/mug/Mug-1-pre.jpg",
+                                        itemID: i,
+                                        itemRef: "mug",
+                                        itemName: "RheinhessenRiders Tasse",
+                                        itemPrice: items[i].price * items[i].amount,
+                                        itemData: '<p><span class="bolden">Name auf der Tasse: </span>' + items[i].itemData.mugName + '</p>' +
+                                        '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
+                                        '<p><span class="bolden">Farbe: </span>' + items[i].itemData.color + '</p>' +
+                                        '<p><span class="bolden">Herzschlag: </span>' + items[i].itemData.heart + '</p>' +
+                                        '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
+                                    }));
+                                    _paq.push(['addEcommerceItem',
+                                        "5", // (required) SKU: Product unique identifier
+                                        "RheinhessenRiders Tasse", // (optional) Product name
+                                        "Accessories", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
+                                        items[i].price, // (recommended) Product price
+                                        items[i].amount // (optional, default to 1) Product quantity
+                                    ]);
+                                    price += items[i].price * items[i].amount;
                                 }
                             }
                             clearCart();

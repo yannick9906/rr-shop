@@ -125,6 +125,24 @@
         </div>
     </div>
     <div class="col s12 m4">
+        <div class="card" onclick="location.hash = '#mug'">
+            <div class="card-image">
+                <img src="img/mug/Mug-1-pre.jpg">
+                <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">RheinhessenRiders Tasse</span>
+            </div>
+            <div class="card-content black-text">
+                <p>Was macht einen Rheinhessen Rider aus? Wach, top motiviert und allzeit bereit
+                    die Reifen qualmen zu lassen.🔥 Weil das ohne Kaffee leider nix mit dem Wach
+                    sein wird, gibt es jetzt die Original RR-Tasse.<br/>
+                    <b>Warnung:</b> Nicht für Kaba verwendbar.
+                </p>
+            </div>
+            <div class="card-action">
+                <a href="#mug" class="green-text text-darken-2">ab 10€/Stk - details</a>
+            </div>
+        </div>
+    </div>
+    <!--<div class="col s12 m4">
         <div class="card">
             <div class="card-image">
                 <img src="img/sticker/Sticker-Mainz-1.jpg">
@@ -140,7 +158,7 @@
                 <a href="#sticker" class="orange-text text-darken-2">bald erhältlich</a>
             </div>
         </div>
-    </div>
+    </div>-->
 </div>
 <div class="container" id="shopDetailHoodie" style="display: none;">
     <div class="card-panel row">
@@ -348,7 +366,7 @@
             <div class="col s12">
                 <form class="row">
                     <div class="input-field col s12 l6">
-                        <input id="front_name_shirt" type="text" onkeyup="refreshPreviewHoodie()" value="Name">
+                        <input id="front_name_shirt" type="text" onkeyup="refreshPreviewShirt()" value="Name">
                         <label for="front_name_shirt">Name auf der Front</label>
                     </div>
                     <div class="input-field col s6 l6">
@@ -399,7 +417,7 @@
                         <label>Größe</label>
                     </div>
                     <div class="input-field col s6 l4">
-                        <select id="shirtAmount" onchange="hoodieRefreshPrice()">
+                        <select id="shirtAmount" onchange="shirtRefreshPrice()">
                             <option value="1" selected>1 Stk.</option>
                             <option value="2">2 Stk.</option>
                             <option value="3">3 Stk.</option>
@@ -414,6 +432,91 @@
             </div>
         </div>
         <div class="col s12 grey-text">Bilder von Tamina Burggraf und Hannah Kratz. Texte von Konstantin 'Reimann' Schmitt.</div>
+    </div>
+</div>
+<div class="container" id="shopDetailMug" style="display: none;">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text rrSpace hide-on-small-only">RheinhessenRiders Tasse</h4>
+        <h4 class="col s12 black-text rr hide-on-med-and-up">RheinhessenRiders Tasse</h4>
+        <div class="col s12 m6">
+            <div class="carousel carousel-slider" id="slider4">
+                <a class="carousel-item" href="#!"><img src="img/mug/Mug-1.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/mug/Mug-2.jpg"></a>
+                <a class="carousel-item" href="#!"><img src="img/mug/Mug-3.jpg"></a>
+            </div>
+            <p>Was macht einen Rheinhessen Rider aus? Wach, top motiviert und allzeit
+                bereit die Reifen qualmen zu lassen.🔥 Weil das ohne Kaffee leider nix
+                mit dem Wach sein wird, gibt es jetzt die Original RR-Tasse.<br/>
+                <b>Warnung:</b> Nicht für Kaba verwendbar.</p>
+            <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
+        </div>
+        <div class="col s12 m6 row">
+            <div class="col s12 row white black-text" id="preview-color-mug">
+                <div class="col s6" style="line-height: normal;">
+                    <p class="bolden">Vorder-/Rückseite:</p>
+                    <img class="inverted" src="img/preview/RH%20Mainz.png" width="100%" id="preview-back-mug"/>
+                    <img class="inverted" src="img/preview/sport.png" width="100%" id="preview-heart-mug"/>
+                    <div class="center preview" id="preview-front-mug" style="height: 75px;">
+                        <span>NAME</span>
+                    </div>
+                </div>
+                <div class="col s6 center">
+                    <p class="bolden">Mitte:</p>
+                    <img src="img/preview/RHGangschaltung.png" width="20%"/>
+                </div>
+            </div>
+            <div class="col s12">
+                <form class="row">
+                    <div class="input-field col s12 l6">
+                        <input id="mug_name" type="text" onkeyup="refreshPreviewMug()" value="Name">
+                        <label for="mug_name">Name auf der Tasse</label>
+                    </div>
+                    <div class="input-field col s6 l6">
+                        <select id="cityselMug" onchange="refreshPreviewMug()">
+                            <option value="" disabled selected>Stadt auswählen</option>
+                            <option value="mz">Mainz</option>
+                            <option value="wi">Wiesbaden</option>
+                            <option value="ffm">Frankfurt</option>
+                            <option value="az">Alzey</option>
+                            <option value="wo">Worms</option>
+                        </select>
+                        <label>Stadt</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="mugHeart" onchange="refreshPreviewMug()">
+                            <option value="" disabled>Herzschlag wählen</option>
+                            <option value="sport" selected>Sportler</option>
+                            <option value="sumo">Supermoto <3</option>
+                            <option value="naked">Naked</option>
+                        </select>
+                        <label>Herzschlag</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="mugColor" onchange="refreshPreviewMug()">
+                            <option value="" disabled>Farbe wählen</option>
+                            <option data-icon="img/color/FFFFFF-1.png" class="left circle" value="weiss" selected>Weiß (10 Euro)</option>
+                            <option data-icon="img/color/000000-1.png" class="left circle" value="black">Weiß mit Schwarz (12 Euro)</option>
+                            <option data-icon="img/color/FF0000-1.png" class="left circle" value="red">Weiß mit Rot (12 Euro)</option>
+                            <option data-icon="img/color/FF9999-1.png" class="left circle" value="magenta">Weiß mit Magenta (12 Euro)</option>
+                        </select>
+                        <label>Farbe</label>
+                    </div>
+                    <div class="input-field col s6 l4">
+                        <select id="mugAmount" onchange="mugRefreshPrice()">
+                            <option value="1" selected>1 Stk.</option>
+                            <option value="2">2 Stk.</option>
+                            <option value="3">3 Stk.</option>
+                            <option value="4">4 Stk.</option>
+                            <option value="5">5 Stk.</option>
+                        </select>
+                        <label>Anzahl</label>
+                    </div>
+                    <h4 class="col s5 offset-s4 bolden right-align rr" id="mug_price"> 10 €</h4>
+                    <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="mugAdd()"><i class="mddi mddi-basket-fill"></i></a>
+                </form>
+            </div>
+        </div>
+        <div class="col s12 grey-text">Bilder von Stefan Erpenbach. Texte von Konstantin 'Reimann' Schmitt.</div>
     </div>
 </div>
 <div class="container" id="shopDetailSticker" style="display: none;">
@@ -639,6 +742,18 @@
         </div>
     </div>
 </div>
+<div class="container" id="impress" style="display: none;">
+    <div class="card-panel row">
+        <h4 class="col s12 black-text rrSpace">Impressum</h4>
+        <span class="col s12 black-text bolden bigger">Angaben ggemäß §5 TMG:</span><br/>
+        <div class="col s12 row">
+            <div class="col s6 l3 bolden">Adresse: </div><div class="col s6 l3">Tucholskyweg 17, 55127 Mainz</div><br/>
+            <div class="col s6 l3 bolden">Telefon: </div><div class="col s6 l3">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">Geschäftsführer: </div><div class="col s6 l3 green-text">Laden ...</div><br/>
+            <div class="col s6 l3 bolden">E-Mail: </div><div class="col s6 l3">Laden ...</div><br/>
+        </div>
+    </div>
+</div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
@@ -647,13 +762,14 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="lib/md5.js"></script>
 <script type="text/javascript" src="lib/lockr.js"></script>
-<script type="text/javascript" src="js/shopBase.js?rev2"></script>
-<script type="text/javascript" src="js/shopCart.js?rev2"></script>
-<script type="text/javascript" src="js/shopHoodie.js?rev2"></script>
-<script type="text/javascript" src="js/shopShirt.js?rev2"></script>
-<script type="text/javascript" src="js/shopSticker.js?rev2"></script>
-<script type="text/javascript" src="js/shopBuy.js?rev2"></script>
-<script type="text/javascript" src="js/shopInfo.js?rev2"></script>
+<script type="text/javascript" src="js/shopBase.js?rev3"></script>
+<script type="text/javascript" src="js/shopCart.js?rev3"></script>
+<script type="text/javascript" src="js/shopHoodie.js?rev3"></script>
+<script type="text/javascript" src="js/shopShirt.js?rev3"></script>
+<script type="text/javascript" src="js/shopSticker.js?rev3"></script>
+<script type="text/javascript" src="js/shopBuy.js?rev3"></script>
+<script type="text/javascript" src="js/shopInfo.js?rev3"></script>
+<script type="text/javascript" src="js/shopMug.js?rev3"></script>
 <script>
     $(document).ready(() => {
         $('.carousel.carousel-slider').carousel({fullWidth: true, indicators: true});

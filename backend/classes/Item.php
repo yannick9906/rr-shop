@@ -11,9 +11,8 @@
 
 
     class Item {
-        private $Names = [1=>"RheinhessenRiders Hoodie",2=>"RheinhessenRiders Shirt",3=>"RheinhessenRiders Sticker",4=>"Versandkosten"];
-        private $Prices = [1=>28,2=>19,3=>1,4=>5];
-        private $Options = ["frontName"=>"Name auf der Front", "city"=>"Stadt", "size"=>"Größe", "color"=>"Farbe", "heart"=>"Herzschlag", "insta"=>"Instagram", "rightarm"=>"Druck Rechter Arm"];
+        private $Names = [1=>"RheinhessenRiders Hoodie",2=>"RheinhessenRiders Shirt",3=>"RheinhessenRiders Sticker",4=>"Versandkosten",5=>"RheinhessenRiders Tasse"];
+        private $Options = ["frontName"=>"Name auf der Front", "mugName"=>"Name auf der Tasse", "city"=>"Stadt", "size"=>"Größe", "color"=>"Farbe", "heart"=>"Herzschlag", "insta"=>"Instagram", "rightarm"=>"Druck Rechter Arm"];
         private $name, $amount, $itemData,$options,$price;
 
         /**

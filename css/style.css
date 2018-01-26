@@ -150,3 +150,7 @@ header, main, footer {
 .sidenav-overlay {
     z-index: 996;
 }
+
+.inverted {
+    filter: invert(100%);
+}

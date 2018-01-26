@@ -92,6 +92,20 @@ function displayCart() {
                 '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
             }));
             totalPrice += 1*items[i].amount;
+        } else if(items[i].itemType === 5) {
+            target.append(cartItemTemplate({
+                imageSrc: "img/mug/Mug-1-pre.jpg",
+                itemID: i,
+                itemRef: "mug",
+                itemName: "RheinhessenRiders Tasse",
+                itemPrice: items[i].price * items[i].amount,
+                itemData: '<p><span class="bolden">Name auf der Tasse: </span>' + items[i].itemData.mugName + '</p>' +
+                '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
+                '<p><span class="bolden">Farbe: </span>' + items[i].itemData.color + '</p>' +
+                '<p><span class="bolden">Herzschlag: </span>' + items[i].itemData.heart + '</p>' +
+                '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
+            }));
+            totalPrice += items[i].price * items[i].amount;
         }
     }
     $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
@@ -133,7 +147,7 @@ function clearCart() {
 }
 
 function updateCartAmount() {
-    $("#cartAmount").html(Lockr.smembers("items").length)
+    $("#cartAmount").html(Lockr.smembers("items").length);
     let items = Lockr.smembers("items");
     let total = 0;
 
@@ -143,28 +157,37 @@ function updateCartAmount() {
                 "1", // (required) SKU: Product unique identifier
                 "RheinhessenRiders Hoodie", // (optional) Product name
                 "Clothing", // (optional) Product category, string or array of up to 5 categories
-                28, // (recommended) Product price
+                items[i].price, // (recommended) Product price
                 items[i].amount // (optional, default to 1) Product quantity
             ]);
-            total += 28;
+            total += items[i].price*items[i].amount;
         } else if(items[i].itemType === 2) {
             _paq.push(['addEcommerceItem',
                 "2", // (required) SKU: Product unique identifier
                 "RheinhessenRiders Shirt", // (optional) Product name
                 "Clothing", // (optional) Product category, string or array of up to 5 categories
-                19, // (recommended) Product price
+                items[i].price, // (recommended) Product price
                 items[i].amount // (optional, default to 1) Product quantity
             ]);
-            total += 19;
+            total += items[i].price*items[i].amount;
         } else if(items[i].itemType === 3) {
             _paq.push(['addEcommerceItem',
                 "3", // (required) SKU: Product unique identifier
                 "RheinhessenRiders Sticker", // (optional) Product name
                 "Accessories", // (optional) Product category, string or array of up to 5 categories
-                1, // (recommended) Product price
+                items[i].price, // (recommended) Product price
                 items[i].amount // (optional, default to 1) Product quantity
             ]);
-            total += 1;
+            total += items[i].price*items[i].amount;
+        } else if(items[i].itemType === 3) {
+            _paq.push(['addEcommerceItem',
+                "5", // (required) SKU: Product unique identifier
+                "RheinhessenRiders Tasse", // (optional) Product name
+                "Accessories", // (optional) Product category, string or array of up to 5 categories
+                items[i].price, // (recommended) Product price
+                items[i].amount // (optional, default to 1) Product quantity
+            ]);
+            total += items[i].price*items[i].amount;
         }
     }
     _paq.push(['trackEcommerceCartUpdate',
