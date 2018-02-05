@@ -44,7 +44,7 @@
          */
         public static function fromOrderID($orderID) {
             $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
+            $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
             return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
         }
 
@@ -61,6 +61,8 @@
             $template = new \Template();
             $mail = new PHPMailer(true);
 
+            $items = Item::checkPriceAndCorrect($items);
+
             //Create Order
             $pdo->queryInsert("rrshop_orders", [
                 "orderID" => uniqid(),
@@ -69,7 +71,7 @@
                 "items" => $items,
                 "note" => $note
             ], ", estDate = MONTH(CURDATE())+1");
-            $res = $pdo->query("SELECT orderID FROM db_302476_3.rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
+            $res = $pdo->query("SELECT orderID FROM rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
 
             //Send Email
             $template->assign("orderID", $res->orderID);
@@ -168,8 +170,8 @@
          */
         public static function getListMeta($page, $pagesize, $search) {
             $pdo = new PDO_MYSQL();
-            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%')) and state < 3", [":search" => $search]);
-            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_orders where state < 3");
+            if($search != "") $res = $pdo->query("select count(*) as size from rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%')) and state < 3", [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from rrshop_orders where state < 3");
             $size = $res->size;
             $maxpage = ceil($size / $pagesize);
             return [

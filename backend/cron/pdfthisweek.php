@@ -13,12 +13,12 @@
     $pdo = new \rrshop\PDO_MYSQL();
 
     //TODO move all orders state 0 to week+1
-    $pdo->query("update db_302476_3.rrshop_orders set estDate = estDate+1 where state = 0");
+    $pdo->query("update rrshop_orders set estDate = estDate+1 where state = 0");
 
     //TODO get list w/ all orders state 1
 
     //TODO make pdf w/ these
 
     //TODO move all orders state 1 to state 2
-    $pdo->query("update db_302476_3.rrshop_orders set state = 2 where state = 1");
+    $pdo->query("update rrshop_orders set state = 2 where state = 1");
 

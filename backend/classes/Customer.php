@@ -40,7 +40,7 @@
          */
         public static function fromCustomerID($customerID) {
             $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_customers WHERE customerID = :cid", [":cid" => $customerID]);
+            $res = $pdo->query("SELECT * FROM rrshop_customers WHERE customerID = :cid", [":cid" => $customerID]);
             if($customerID == $res->customerID) return new Customer($customerID, $res->firstname, $res->lastname, $res->email, $res->addressCity, $res->addressStreet, $res->addressZip);
             else return new Customer(-1, "Kunde", "nicht gefunden", "null@null.null", "null", "null 00", "00000");
         }
@@ -51,7 +51,7 @@
          */
         public static function checkEMail($customerEmail) {
             $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_customers WHERE email = :email", [":email" => $customerEmail]);
+            $res = $pdo->query("SELECT * FROM rrshop_customers WHERE email = :email", [":email" => $customerEmail]);
             if($customerEmail == $res->email) return new Customer($res->customerID, $res->firstname, $res->lastname, $customerEmail, $res->addressCity, $res->addressStreet, $res->addressZip);
             else return false;
         }
@@ -128,8 +128,8 @@
          */
         public static function getListMeta($page, $pagesize, $search) {
             $pdo = new PDO_MYSQL();
-            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_customers where lower(concat(firstname,lastname,customerID)) like lower(concat('%',:search,'%'))", [":search" => $search]);
-            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_customers");
+            if($search != "") $res = $pdo->query("select count(*) as size from rrshop_customers where lower(concat(firstname,lastname,customerID)) like lower(concat('%',:search,'%'))", [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from rrshop_customers");
             $size = $res->size;
             $maxpage = ceil($size / $pagesize);
             return [

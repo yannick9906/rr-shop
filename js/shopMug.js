@@ -31,8 +31,8 @@ function refreshPreviewMug() {
 function mugRefreshPrice() {
     let amount = $("#mugAmount").val();
     let color = $("#mugColor").val();
-    if(color != "weiss") $("#mug_price").html(amount*12+" €")
-    else $("#mug_price").html(amount*10+" €")
+    if(color != "weiss") $("#mug_price").html(amount*14+" €")
+    else $("#mug_price").html(amount*12+" €")
 }
 
 function mugAdd() {
@@ -40,7 +40,7 @@ function mugAdd() {
         let item = {
             itemType: 5,
             amount: parseInt($("#mugAmount").val()),
-            price: $("#mugColor").val()==="weiss" ? 10:12,
+            price: $("#mugColor").val()==="weiss" ? 12:14,
             itemData: {
                 mugName: $("#mug_name").val(),
                 city: $("#cityselMug").val(),

@@ -19,7 +19,7 @@
         private $port   = 3306;
         private $pass   = "";
         private $user   = 'USER302476';
-        private $dbname = 'db_302476_3';
+        private $dbname = 'db_302476_2';
         /**
          * @return PDO PDO-Object
          */

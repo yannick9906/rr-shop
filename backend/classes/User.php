@@ -49,7 +49,7 @@
          */
         public static function fromUID($uID) {
             $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE uID = :uid", [":uid" => $uID]);
+            $res = $pdo->query("SELECT * FROM rrshop_user WHERE uID = :uid", [":uid" => $uID]);
             return new User($res->uID, $res->username, $res->passhash, $res->email, $res->emailNotify, $res->endpoint);
         }
 
@@ -61,7 +61,7 @@
          */
         public static function fromUName($uName) {
             $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE username = :uname", [":uname" => $uName]);
+            $res = $pdo->query("SELECT * FROM rrshop_user WHERE username = :uname", [":uname" => $uName]);
             return new User($res->uID, $res->username, $res->passhash, $res->email, $res->emailNotify, $res->endpoint);
         }
 
@@ -85,7 +85,7 @@
          */
         public static function doesUserNameExist($uName) {
             $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM db_302476_3.rrshop_user WHERE username = :uname", [":uname" => $uName]);
+            $res = $pdo->query("SELECT * FROM rrshop_user WHERE username = :uname", [":uname" => $uName]);
             return isset($res->uID);
         }
 
@@ -156,8 +156,8 @@
          */
         public static function getListMeta($page, $pagesize, $search) {
             $pdo = new PDO_MYSQL();
-            if($search != "") $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_user where lower(concat(username)) like lower(concat('%',:search,'%')) and uID >= 0", [":search" => $search]);
-            else $res = $pdo->query("select count(*) as size from db_302476_3.rrshop_user where uID >= 0");
+            if($search != "") $res = $pdo->query("select count(*) as size from rrshop_user where lower(concat(username)) like lower(concat('%',:search,'%')) and uID >= 0", [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from rrshop_user where uID >= 0");
             $size = $res->size;
             $maxpage = ceil($size / $pagesize);
             return [
@@ -174,7 +174,7 @@
          * @return bool
          */
         public function delete() {
-            return $this->pdo->query("DELETE FROM db_302476_3.rrshop_user WHERE uID = :uid", [":uid" => $this->uID]);
+            return $this->pdo->query("DELETE FROM rrshop_user WHERE uID = :uid", [":uid" => $this->uID]);
         }
 
         /**

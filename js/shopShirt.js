@@ -46,7 +46,7 @@ function refreshPreviewShirt() {
 
 function shirtRefreshPrice() {
     let amount = $("#shirtAmount").val();
-    $("#shirt_price").html(amount*19+" €")
+    $("#shirt_price").html(amount*22+" €")
 }
 
 function shirtAdd() {
@@ -54,7 +54,7 @@ function shirtAdd() {
         let item = {
             itemType: 2,
             amount: parseInt($("#shirtAmount").val()),
-            price: 19,
+            price: 22,
             itemData: {
                 frontName: $("#front_name_shirt").val(),
                 city: $("#cityselShirt").val(),

@@ -38,87 +38,95 @@ let cartItemTemplate = Handlebars.compile(`
 `);
 
 function displayCart() {
-    console.log("Display Cart");
+    console.log("Check Cart");
     let items = Lockr.smembers("items");
-    console.log(items);
-    let target = $("#cart-list");
-    target.html("");
-    $("#buyButton").removeClass("disabled");
-    $("#clearButton").removeClass("disabled");
-    let totalPrice = 0;
-    for(let i = 0; i < items.length; i++) {
-        if(items[i].itemType === 1) {
-            target.append(cartItemTemplate({
-                imageSrc:"img/hoodie/Hoodie-Back-1.jpg",
-                itemID:i,
-                itemRef:"hoodie",
-                itemName:"RheinhessenRiders Hoodie",
-                itemPrice: items[i].price*items[i].amount,
-                itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
-                '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
-                '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
-                '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
-                '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
-                '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
-                '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
-                '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
-            }));
-            totalPrice += items[i].price*items[i].amount;
-        } else if(items[i].itemType === 2) {
-            target.append(cartItemTemplate({
-                imageSrc:"img/shirt/Shirt-Back-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
-                itemID:i,
-                itemRef:"shirt",
-                itemName:"RheinhessenRiders Shirt",
-                itemPrice: items[i].price*items[i].amount,
-                itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
-                '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
-                '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
-                '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
-                '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
-                '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
-                '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
-                '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
-            }));
-            totalPrice += items[i].price*items[i].amount;
-        } else if(items[i].itemType === 3) {
-            target.append(cartItemTemplate({
-                imageSrc:"img/sticker/Sticker-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
-                itemID:i,
-                itemRef:"sticker",
-                itemName:"RheinhessenRiders Sticker",
-                itemPrice: 1*items[i].amount,
-                itemData: '<p><span class="bolden">Größe: </span>'+items[i].itemData.size+'</p>' +
-                '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
-            }));
-            totalPrice += 1*items[i].amount;
-        } else if(items[i].itemType === 5) {
-            target.append(cartItemTemplate({
-                imageSrc: "img/mug/Mug-1-pre.jpg",
-                itemID: i,
-                itemRef: "mug",
-                itemName: "RheinhessenRiders Tasse",
-                itemPrice: items[i].price * items[i].amount,
-                itemData: '<p><span class="bolden">Name auf der Tasse: </span>' + items[i].itemData.mugName + '</p>' +
-                '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
-                '<p><span class="bolden">Farbe: </span>' + items[i].itemData.color + '</p>' +
-                '<p><span class="bolden">Herzschlag: </span>' + items[i].itemData.heart + '</p>' +
-                '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
-            }));
-            totalPrice += items[i].price * items[i].amount;
+    $.post("backend/api/item/checkCart.php", {items: JSON.stringify(items)}, (data) => {
+        items = JSON.parse(data);
+        Lockr.rm("items");
+        for(let i = 0; i < items.length; i++) {
+            Lockr.sadd("items", items[i]);
         }
-    }
-    $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
-    if(items.length === 0) {
-        target.html(`
+        console.log("Display Cart");
+        console.log(items);
+        let target = $("#cart-list");
+        target.html("");
+        $("#buyButton").removeClass("disabled");
+        $("#clearButton").removeClass("disabled");
+        let totalPrice = 0;
+        for(let i = 0; i < items.length; i++) {
+            if(items[i].itemType === 1) {
+                target.append(cartItemTemplate({
+                    imageSrc:"img/hoodie/Hoodie-Back-1-25.jpg",
+                    itemID:i,
+                    itemRef:"hoodie",
+                    itemName:"RheinhessenRiders Hoodie",
+                    itemPrice: items[i].price*items[i].amount,
+                    itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
+                    '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
+                    '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
+                    '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
+                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
+                    '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
+                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
+                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
+                }));
+                totalPrice += items[i].price*items[i].amount;
+            } else if(items[i].itemType === 2) {
+                target.append(cartItemTemplate({
+                    imageSrc:"img/shirt/Shirt-Back-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
+                    itemID:i,
+                    itemRef:"shirt",
+                    itemName:"RheinhessenRiders Shirt",
+                    itemPrice: items[i].price*items[i].amount,
+                    itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
+                    '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
+                    '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
+                    '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
+                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
+                    '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
+                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
+                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
+                }));
+                totalPrice += items[i].price*items[i].amount;
+            } else if(items[i].itemType === 3) {
+                target.append(cartItemTemplate({
+                    imageSrc:"img/sticker/Sticker-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
+                    itemID:i,
+                    itemRef:"sticker",
+                    itemName:"RheinhessenRiders Sticker",
+                    itemPrice: 1*items[i].amount,
+                    itemData: '<p><span class="bolden">Größe: </span>'+items[i].itemData.size+'</p>' +
+                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
+                }));
+                totalPrice += 1*items[i].amount;
+            } else if(items[i].itemType === 5) {
+                target.append(cartItemTemplate({
+                    imageSrc: "img/mug/Mug-1-pre.jpg",
+                    itemID: i,
+                    itemRef: "mug",
+                    itemName: "RheinhessenRiders Tasse",
+                    itemPrice: items[i].price * items[i].amount,
+                    itemData: '<p><span class="bolden">Name auf der Tasse: </span>' + items[i].itemData.mugName + '</p>' +
+                    '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
+                    '<p><span class="bolden">Farbe: </span>' + items[i].itemData.color + '</p>' +
+                    '<p><span class="bolden">Herzschlag: </span>' + items[i].itemData.heart + '</p>' +
+                    '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
+                }));
+                totalPrice += items[i].price * items[i].amount;
+            }
+        }
+        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
+        if(items.length === 0) {
+            target.html(`
 <div style="height: 50px; "></div>
 <p class="center">Der Einkaufswagen ist leer.</p>
 <div style="height: 50px; "></div>
         `);
-        $("#buyButton").addClass("disabled");
-        $("#clearButton").addClass("disabled");
-        $("#cartTotalPrice").html("Gesamt: 0€");
-    }
+            $("#buyButton").addClass("disabled");
+            $("#clearButton").addClass("disabled");
+            $("#cartTotalPrice").html("Gesamt: 0€");
+        }
+    });
 }
 
 function cityAbbrToLong(city) {

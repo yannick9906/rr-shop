@@ -52,8 +52,8 @@ function refreshPreviewHoodie() {
 function hoodieRefreshPrice() {
     let amount = $("#hoodieAmount").val();
     let RRtext = $("#hoodieRightArm").val();
-    if(RRtext === "JA") $("#hoodie_price").html(amount*30+" €")
-    else $("#hoodie_price").html(amount*28+" €")
+    if(RRtext === "JA") $("#hoodie_price").html(amount*35+" €")
+    else $("#hoodie_price").html(amount*33+" €")
 }
 
 function hoodieAdd() {
@@ -61,7 +61,7 @@ function hoodieAdd() {
         let item = {
             itemType: 1,
             amount: parseInt($("#hoodieAmount").val()),
-            price: $("#hoodieRightArm").val()==="JA" ? 30:28,
+            price: $("#hoodieRightArm").val()==="JA" ? 35:33,
             itemData: {
                 frontName: $("#front_name").val(),
                 city: $("#citysel").val(),

@@ -92,7 +92,7 @@ function buyNow() {
                             for (let i = 0; i < items.length; i++) {
                                 if (items[i].itemType === 1) {
                                     target.append(cartItemBoughtTemplate({
-                                        imageSrc: "img/hoodie/Hoodie-Back-1.jpg",
+                                        imageSrc: "img/hoodie/Hoodie-Back-1-25.jpg",
                                         itemID: i,
                                         itemRef: "hoodie",
                                         itemName: "RheinhessenRiders Hoodie",

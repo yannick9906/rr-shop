@@ -64,4 +64,30 @@
         public function getTotalPrice() {
             return $this->amount * $this->price;
         }
+
+        public static function checkPriceAndCorrect($items) {
+            $corrected = json_decode($items, true);
+            for($i = 0; $i < sizeof($corrected); $i++) {
+                switch ($corrected[$i]['itemType']){
+                    case 1:
+                        if($corrected[$i]['itemData']['rightarm'] == "JA") $corrected[$i]['price'] = 35;
+                        else $corrected[$i]['price'] = 33;
+                        break;
+                    case 2:
+                        $corrected[$i]['price'] = 22;
+                        break;
+                    case 3:
+                        $corrected[$i]['price'] =1;
+                        break;
+                    case 4:
+                        $corrected[$i]['price'] = 5;
+                        break;
+                    case 5:
+                        if($corrected[$i]['itemData']['color'] == "weiss") $corrected[$i]['price'] = 12;
+                        else $corrected[$i]['price'] = 14;
+                        break;
+                }
+            }
+            return json_encode($corrected);
+        }
     }
