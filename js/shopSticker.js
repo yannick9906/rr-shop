@@ -8,7 +8,7 @@ function refreshPreviewSticker() {
 
 function stickerRefreshPrice() {
     let amount = $("#stickerAmount").val();
-    $("#sticker_price").html(amount*1+" €")
+    $("#sticker_price").html(amount*1+" €*")
 }
 
 

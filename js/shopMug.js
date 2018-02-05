@@ -31,8 +31,8 @@ function refreshPreviewMug() {
 function mugRefreshPrice() {
     let amount = $("#mugAmount").val();
     let color = $("#mugColor").val();
-    if(color != "weiss") $("#mug_price").html(amount*12+" €")
-    else $("#mug_price").html(amount*10+" €")
+    if(color != "weiss") $("#mug_price").html(amount*12+" €*")
+    else $("#mug_price").html(amount*10+" €*")
 }
 
 function mugAdd() {

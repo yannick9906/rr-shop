@@ -78,6 +78,11 @@
             $this->pdf->Ln(16);
             $this->pdf->setX(10);
             $this->pdf->MultiCell(0,6,"Notiz: ".wordwrap(utf8_decode($this->note)), 1,1);
+            $this->pdf->Ln(16);
+            $this->pdf->setX(10);
+            $this->pdf->SetFont("Arial","",10);
+
+            $this->pdf->Cell(0,10,utf8_decode("Gemäß §19 UStG wird keine Umsatzsteuer berechnet."),0,0,"C");
             return $totalPrice;
         }
 

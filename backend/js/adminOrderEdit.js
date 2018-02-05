@@ -174,7 +174,7 @@ function actionStornoOk() {
     $("#info-action-storno-no").hide();
     $("#info-action-storno").show();
     $("#info-action-storno").html("...");
-    $.post("api/order/update.php",{orderID: orderID, state: 3}, (data) => {
+    $.post("api/order/update.php",{orderID: orderID, state: 4}, (data) => {
         let json = JSON.parse(data);
         if(json.success) M.toast({html: "Bestellung storniert.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
