@@ -19,7 +19,7 @@
     require_once "lib/fpdf.php";
     require_once "lib/qrcode.class.php";
 
-    $order = \rrshop\Order::fromOrderID("5a5a35f7a9a1a");
+    $order = \rrshop\Order::fromOrderID($_GET["orderID"]);
     //print_r($orders);
     $invoice = new \rrshop\Invoice($order->getItems(), $order->getOrderID(), $order->getCustomer(), $order->getNote(), $order->getTimestamp());
     $invoice->preparePDF();

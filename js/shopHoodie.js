@@ -52,8 +52,8 @@ function refreshPreviewHoodie() {
 function hoodieRefreshPrice() {
     let amount = $("#hoodieAmount").val();
     let RRtext = $("#hoodieRightArm").val();
-    if(RRtext === "JA") $("#hoodie_price").html(amount*35+" €")
-    else $("#hoodie_price").html(amount*33+" €")
+    if(RRtext === "JA") $("#hoodie_price").html(amount*35+" €*")
+    else $("#hoodie_price").html(amount*33+" €*")
 }
 
 function hoodieAdd() {
