@@ -35,7 +35,7 @@
         public function preparePDF() {
             $this->pdf->AddPage();
             $this->pdf->AcceptPageBreak();
-            $this->pdf->Image("/home/webpages/lima-city/ybook/rr-beta/img/Shop-Logo.png",60,10,60);
+            $this->pdf->Image("/home/webpages/lima-city/ybook/rr-production/img/Shop-Logo.png",60,10,60);
             $qrcode = new \QRcode('https://shop.rheinhessenriders.tk/backend/#order-'.$this->orderID, 'M');
             $qrcode->disableBorder();
             $qrcode->displayFPDF($this->pdf, 10, 10, 50);
@@ -91,8 +91,8 @@
         }
 
         public function getPDFFile() {
-            echo "/home/webpages/lima-city/ybook/rr-beta/backend/invoices/".$this->orderID."-rechnung.pdf<br/>";
-            $this->pdf->Output("F", "/home/webpages/lima-city/ybook/rr-beta/backend/invoices/".$this->orderID."-rechnung.pdf",false);
+            echo "/home/webpages/lima-city/ybook/rr-production/backend/invoices/".$this->orderID."-rechnung.pdf<br/>";
+            $this->pdf->Output("F", "/home/webpages/lima-city/ybook/rr-production/backend/invoices/".$this->orderID."-rechnung.pdf",false);
         }
 
         public function showPDF() {

@@ -53,6 +53,7 @@ function displayCart() {
         $("#buyButton").removeClass("disabled");
         $("#clearButton").removeClass("disabled");
         let totalPrice = 0;
+        let shipping = 0;
         for(let i = 0; i < items.length; i++) {
             if(items[i].itemType === 1) {
                 target.append(cartItemTemplate({
@@ -90,15 +91,15 @@ function displayCart() {
                 totalPrice += items[i].price*items[i].amount;
             } else if(items[i].itemType === 3) {
                 target.append(cartItemTemplate({
-                    imageSrc:"img/sticker/Sticker-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
+                    imageSrc:"img/sticker/Sticker-Mainz-2.jpg",
                     itemID:i,
                     itemRef:"sticker",
                     itemName:"RheinhessenRiders Sticker",
-                    itemPrice: 1*items[i].amount,
-                    itemData: '<p><span class="bolden">Größe: </span>'+items[i].itemData.size+'</p>' +
+                    itemPrice: items[i].price*items[i].amount,
+                    itemData: '<p><span class="bolden">Typ: </span>'+items[i].itemData.type+'</p>' +
                     '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
                 }));
-                totalPrice += 1*items[i].amount;
+                totalPrice += items[i].price*items[i].amount;
             } else if(items[i].itemType === 5) {
                 target.append(cartItemTemplate({
                     imageSrc: "img/mug/Mug-1-pre.jpg",
@@ -113,9 +114,11 @@ function displayCart() {
                     '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
                 }));
                 totalPrice += items[i].price * items[i].amount;
+            } else if(items[i].itemType === 4) {
+                shipping = items[i].price;
             }
         }
-        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + 5€ Versand");
+        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + "+shipping+"€ Versand");
         if(items.length === 0) {
             target.html(`
 <div style="height: 50px; "></div>

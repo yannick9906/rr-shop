@@ -12,7 +12,7 @@
 
     class Item {
         private $Names = [1=>"RheinhessenRiders Hoodie",2=>"RheinhessenRiders Shirt",3=>"RheinhessenRiders Sticker",4=>"Versandkosten",5=>"RheinhessenRiders Tasse"];
-        private $Options = ["frontName"=>"Name auf der Front", "mugName"=>"Name auf der Tasse", "city"=>"Stadt", "size"=>"Größe", "color"=>"Farbe", "heart"=>"Herzschlag", "insta"=>"Instagram", "rightarm"=>"Druck Rechter Arm"];
+        private $Options = ["frontName"=>"Name auf der Front", "mugName"=>"Name auf der Tasse", "city"=>"Stadt", "size"=>"Größe", "color"=>"Farbe", "heart"=>"Herzschlag", "insta"=>"Instagram", "rightarm"=>"Druck Rechter Arm", "type"=>"Variante"];
         private $name, $amount, $itemData,$options,$price;
 
         /**
@@ -67,27 +67,38 @@
 
         public static function checkPriceAndCorrect($items) {
             $corrected = json_decode($items, true);
+            $shipping = [];
             for($i = 0; $i < sizeof($corrected); $i++) {
                 switch ($corrected[$i]['itemType']){
                     case 1:
                         if($corrected[$i]['itemData']['rightarm'] == "JA") $corrected[$i]['price'] = 35;
                         else $corrected[$i]['price'] = 33;
+                        array_push($shipping, 5);
                         break;
                     case 2:
                         $corrected[$i]['price'] = 22;
+                        array_push($shipping, 5);
                         break;
                     case 3:
-                        $corrected[$i]['price'] =1;
+                        $corrected[$i]['price'] = 0.2;
+                        array_push($shipping, 1.5);
                         break;
                     case 4:
-                        $corrected[$i]['price'] = 5;
+                        unset($corrected[$i]);
                         break;
                     case 5:
                         if($corrected[$i]['itemData']['color'] == "weiss") $corrected[$i]['price'] = 12;
                         else $corrected[$i]['price'] = 14;
+                        array_push($shipping, 5);
                         break;
                 }
             }
-            return json_encode($corrected);
+            if(sizeof($shipping) != 0) array_push($corrected, [
+                "itemType"=>4,
+                "amount"=>1,
+                "price"=>array_sum(array_unique($shipping)),
+                "itemData"=>[]
+            ]);
+            return json_encode(array_values($corrected));
         }
     }

@@ -100,12 +100,12 @@ function refreshInfo() {
                 totalPrice += items[i].price * items[i].amount;
             } else if (items[i].itemType === 3) {
                 target.append(cartItemBoughtTemplate({
-                    imageSrc: "../img/sticker/Sticker-" + cityAbbrToLong(items[i].itemData.city) + ".jpg",
+                    imageSrc: "../img/sticker/Sticker-Mainz-2.jpg",
                     itemID: i,
                     itemRef: "sticker",
                     itemName: "RheinhessenRiders Sticker",
                     itemPrice: items[i].price * items[i].amount,
-                    itemData: '<p><span class="bolden">Größe: </span>' + items[i].itemData.size + '</p>' +
+                    itemData: '<p><span class="bolden">Variante: </span>' + items[i].itemData.type + '</p>' +
                     '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
                 }));
                 totalPrice += items[i].price * items[i].amount;

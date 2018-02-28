@@ -53,14 +53,6 @@ function buy() {
 }
 
 function buyNow() {
-    let item = {
-        itemType: 4,
-        amount: 1,
-        price: 5,
-        itemData: {}
-    }
-    Lockr.sadd("items", item);
-
     let orderData = {
         firstname: $("#first_name").val(),
         lastname: $("#last_name").val(),
@@ -140,12 +132,12 @@ function buyNow() {
                                     price += items[i].price*items[i].amount;
                                 } else if (items[i].itemType === 3) {
                                     target.append(cartItemBoughtTemplate({
-                                        imageSrc: "img/sticker/Sticker-" + cityAbbrToLong(items[i].itemData.city) + ".jpg",
+                                        imageSrc: "img/sticker/Sticker-Mainz-2.jpg",
                                         itemID: i,
                                         itemRef: "sticker",
                                         itemName: "RheinhessenRiders Sticker",
-                                        itemPrice: 1 * items[i].amount,
-                                        itemData: '<p><span class="bolden">Größe: </span>' + items[i].itemData.size + '</p>' +
+                                        itemPrice: items[i].price * items[i].amount,
+                                        itemData: '<p><span class="bolden">Typ: </span>' + items[i].itemData.type + '</p>' +
                                         '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
                                     }));
                                     _paq.push(['addEcommerceItem',

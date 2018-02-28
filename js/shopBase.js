@@ -78,7 +78,7 @@ function mugDetail() {
 }
 
 function stickerDetail() {
-    /*
+
     document.title = "RR Sticker - RheinhessenRiders Shop";
     _paq.push(['setReferrerUrl', currentUrl]);
     currentUrl = '' + window.location.hash.substr(1);
@@ -93,7 +93,7 @@ function stickerDetail() {
     $("#shopHome").hide();
     $("#shopDetailSticker").show();
     $("#backbutton").show();
-    refreshPreviewHoodie();
+    refreshPreviewSticker();
     slider3 = $('#slider3');
     slider3.carousel({fullWidth: true, indicators: true});
     slider3.css('height', $('#slider3 .carousel-item img').height()+"px");
@@ -105,7 +105,6 @@ function stickerDetail() {
         1 // (optional) Product Price as displayed on the page
     ]);
     _paq.push(['trackPageView']);
-    */
 }
 
 function shirtDetail() {
@@ -123,7 +122,7 @@ function shirtDetail() {
     $("#shopHome").hide();
     $("#shopDetailShirt").show();
     $("#backbutton").show();
-    refreshPreviewHoodie();
+    refreshPreviewShirt();
     slider2 = $('#slider2');
     slider2.carousel({fullWidth: true, indicators: true});
     slider2.css('height', $('#slider2 .carousel-item img').height()+"px");
