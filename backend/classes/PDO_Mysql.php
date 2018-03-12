@@ -19,12 +19,13 @@
         private $port   = 3306;
         private $pass   = "";
         private $user   = 'USER302476';
-        private $dbname = 'db_302476_3';
+        private $dbname = '';
         /**
          * @return PDO PDO-Object
          */
         protected function connect() {
             $this->pass = getMysqlPasskey();
+            $this->dbname = getMysqlDBname();
             return new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->dbname,$this->user,$this->pass);
         }
         public function query($query, $array = []) {
