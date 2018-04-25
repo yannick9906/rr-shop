@@ -8,8 +8,8 @@
     <link type="text/css" rel="stylesheet" href="../lib/mdi/css/materialdesignicons.min.css" media="all" />
     <link type="text/css" rel="stylesheet" href="../css/style.css" media="all" />
 
-    <link rel="manifest" href="../manifest.json" />
-    <link rel="manifest" href="../rrshop.appcache" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="rrshop.appcache" />
     <link rel="icon" href="../icon/RRMainz-32.png">
     <link rel="apple-touch-icon-precomposed" href="../icon/RRMainz-32.png">
     <meta name="mobile-web-app-capable" content="yes" />
@@ -202,7 +202,7 @@
                 </div>
             </div>
         </main>
-        <main  id="account" style="display: none;">
+        <main id="account" style="display: none;">
             <div class="container">
                 <div class="card-panel">
                     <div class="row">
@@ -258,7 +258,7 @@
                     <div class="card-panel row black" id="scan-panel" style="display: none;">
                         <div class="input-field col s11">
                             <i class="prefix mddi mddi-barcode-scan"></i>
-                            <label for="barcode">Hier scannen</label>
+                            <label for="scan-field">Hier scannen</label>
                             <input class="white-input" id="scan-field" type="text" name="barcode" length="13" autofocus/>
                         </div>
                         <a class="btn-flat waves-effect waves-light col s1" style="margin-top:15px;" onclick="onSend()">
@@ -280,6 +280,8 @@
                         <div class="col s12"><br/><br/></div>
                         <a style="margin-bottom: 1rem;" onclick="actionPayed()" id="info-action-payed" class="waves-effect waves-light btn black white-text col s12">Bestellung bezahlt</a>
                         <a style="margin-bottom: 1rem;" onclick="actionPrinted()" id="info-action-printed" class="waves-effect waves-light btn black white-text col s12">Bestellung im Druck</a>
+                        <a style="margin-bottom: 1rem;" onclick="actionShipped()" id="info-action-shipped" class="waves-effect waves-light btn black white-text col s12">Bestellung im Versandt</a>
+                        <a style="margin-bottom: 1rem;" onclick="actionCompleted()" id="info-action-completed" class="waves-effect waves-light btn black white-text col s12">Bestellung abgeschlossen</a>
                         <a style="margin-bottom: 1rem;" onclick="actionStorno()" id="info-action-storno" class="waves-effect waves-light btn red white-text col s12">Bestellung Storno</a>
                         <a style="margin-bottom: 1rem;" onclick="actionStornoOk()" id="info-action-storno-yes" class="waves-effect waves-light btn green white-text col s6"><i class="mddi mddi-check"></i></a>
                         <a style="margin-bottom: 1rem;" onclick="actionStornoCancel()" id="info-action-storno-no" class="waves-effect waves-light btn black white-text col s6"><i class="mddi mddi-close"></i></a>
