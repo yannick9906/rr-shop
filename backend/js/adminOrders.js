@@ -43,7 +43,7 @@ function resetOrders() {
 
 const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"];
 const shipmentType = ["Mainz-Lerchenberg (Yannick Félix)","Friesenheim (Philipp Lommel)", "Lieferung"];
-const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='green-text'>Bestellung bezahlt</span>", "<span class='green-text'>Bestellung bestellt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
+const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='orange-text'>Bestellung bezahlt</span>", "<span class='orange-text'>Bestellung bestellt</span>","<span class='orange-text'>Bestellung versandt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
 
 let sortNameO = "#sort";
 let listNameO = "#listItems"

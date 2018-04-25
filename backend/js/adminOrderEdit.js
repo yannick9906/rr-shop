@@ -37,6 +37,7 @@ function startOrderEdit(hash) {
 }
 
 function refreshInfo() {
+    resetInfo();
     $.getJSON("api/order/checkInfo.php", {orderID: orderID}, (json) => {
         //$("#orderData").html(JSON.stringify(json, null, 2));
         $("#info-payment").html(paymentType[json.payment]);
@@ -50,11 +51,12 @@ function refreshInfo() {
         if(json.state === 1) {
             $("#info-action-payed").addClass("disabled");
         } else if(json.state === 2) {
-            $("#info-action-payed").addClass("disabled");
             $("#info-action-printed").addClass("disabled");
         } else if(json.state === 3) {
-            $("#info-action-payed").addClass("disabled");
-            $("#info-action-printed").addClass("disabled");
+            $("#info-action-shipped").addClass("disabled");
+        } else if(json.state === 4) {
+            $("#info-action-completed").addClass("disabled");
+        } else if(json.state === 5) {
             $("#info-action-storno").addClass("disabled");
         }
 
@@ -153,6 +155,8 @@ function resetInfo() {
     $("#info-price").html("...");
     $("#info-action-payed").removeClass("disabled");
     $("#info-action-printed").removeClass("disabled");
+    $("#info-action-shipped").removeClass("disabled");
+    $("#info-action-completed").removeClass("disabled");
     $("#info-action-storno").removeClass("disabled");
 }
 
@@ -174,7 +178,7 @@ function actionStornoOk() {
     $("#info-action-storno-no").hide();
     $("#info-action-storno").show();
     $("#info-action-storno").html("...");
-    $.post("api/order/update.php",{orderID: orderID, state: 4}, (data) => {
+    $.post("api/order/update.php",{orderID: orderID, state: 5}, (data) => {
         let json = JSON.parse(data);
         if(json.success) M.toast({html: "Bestellung storniert.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
@@ -201,7 +205,29 @@ function actionPrinted() {
         if(json.success) M.toast({html: "Bestellung im Druck.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
         refreshInfo();
-        $("#info-action-printed").html("Bestellung im druck");
+        $("#info-action-printed").html("Bestellung im Druck");
+    });
+}
+
+function actionShipped() {
+    $("#info-action-shipped").html("...");
+    $.post("api/order/update.php",{orderID: orderID, state: 3}, (data) => {
+        let json = JSON.parse(data);
+        if(json.success) M.toast({html: "Bestellung versandt.", duration: 1000, classes:"green"});
+        else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
+        refreshInfo();
+        $("#info-action-shipped").html("Bestellung versandt");
+    });
+}
+
+function actionCompleted() {
+    $("#info-action-completed").html("...");
+    $.post("api/order/update.php",{orderID: orderID, state: 4}, (data) => {
+        let json = JSON.parse(data);
+        if(json.success) M.toast({html: "Bestellung abgeschlossen.", duration: 1000, classes:"green"});
+        else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
+        refreshInfo();
+        $("#info-action-completed").html("Bestellung angeschlossen");
     });
 }
 
