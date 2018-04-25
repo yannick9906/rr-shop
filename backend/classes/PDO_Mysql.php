@@ -88,7 +88,7 @@
             $stmt = $db->prepare("insert into `" . $table . "` set " . $bindString . $custom);
             $this->bindValues($stmt, $fields);
             $stmt->execute();
-            //var_dump($stmt->errorInfo());
+            var_dump($stmt->errorInfo());
             return $stmt->fetchObject();
         }
         /**
