@@ -24,6 +24,7 @@ function resetDash() {
     $("#nav-orders").removeClass("active");
     $("#nav-customer").removeClass("active");
     $("#nav-users").removeClass("active");
+    $("#nav-kiosk").removeClass("active");
 
     //Panel reset:
     $("#welcomePanel").hide();
@@ -35,6 +36,7 @@ function resetDash() {
     resetScan();
     $("#account").hide();
     $("#orderEdit").hide();
+    $("#kiosk").hide();
 }
 
 function checkHash() {
@@ -48,5 +50,6 @@ function checkHash() {
         if(hash === "orders") startOrders();
         if(hash === "customers") startCustomers();
         if(hash === "users") startUsers();
+        if(hash === "kiosk") startKiosk();
     }
 }

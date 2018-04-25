@@ -85,6 +85,7 @@
                 <li id="nav-logout"><a onclick="doLogout();" ><!--class="sidenav-close" >--><i class="mddi mddi-logout-variant"></i>Logout</a></li>
                 <li><div class="divider"></div></li>
                 <li class="subheader"><a class="subheader black-text bolden">Main</a></li>
+                <li id="nav-kiosk" class="active"><a href="#kiosk" ><!--class="sidenav-close" >--><i class="mddi mddi-store"></i>Kioskmodus</a></li>
                 <li id="nav-order-scan" class="active"><a href="#scan" ><!--class="sidenav-close" >--><i class="mddi mddi-qrcode-scan"></i>Bestellungsscanner</a></li>
                 <li id="nav-orders"><a href="#orders"><!--class="sidenav-close" >--><i class="mddi mddi-star-circle"></i>Bestellungen</a></li>
                 <li id="nav-customers"><a href="#customers"><!--class="sidenav-close" >--><i class="mddi mddi-account-multiple"></i>Kunden</a></li>
@@ -294,6 +295,9 @@
                 </div>
             </div>
         </main>
+        <main id="kiosk" style="display:none;">
+
+        </main>
     </div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
@@ -302,14 +306,15 @@
 <script type="text/javascript" src="../lib/handlebars.min.js"></script>
 <script type="text/javascript" src="../lib/lockr.js"></script>
 <script type="text/javascript" src="../lib/md5.js"></script>
-<script type="text/javascript" src="js/adminLogin.js?rev4"></script>
-<script type="text/javascript" src="js/adminMain.js?rev4"></script>
-<script type="text/javascript" src="js/adminUsers.js?rev4"></script>
-<script type="text/javascript" src="js/adminOrders.js?rev4"></script>
-<script type="text/javascript" src="js/adminAccount.js?rev4"></script>
-<script type="text/javascript" src="js/adminCustomers.js?rev4"></script>
-<script type="text/javascript" src="js/adminOrderEdit.js?rev5"></script>
-<script type="text/javascript" src="js/adminScanner.js?rev4"></script>
+<script type="text/javascript" src="js/adminLogin.js?rev6"></script>
+<script type="text/javascript" src="js/adminMain.js?rev6"></script>
+<script type="text/javascript" src="js/adminUsers.js?rev6"></script>
+<script type="text/javascript" src="js/adminOrders.js?rev6"></script>
+<script type="text/javascript" src="js/adminAccount.js?rev6"></script>
+<script type="text/javascript" src="js/adminCustomers.js?rev6"></script>
+<script type="text/javascript" src="js/adminOrderEdit.js?rev6"></script>
+<script type="text/javascript" src="js/adminScanner.js?rev6"></script>
+<script type="text/javascript" src="js/adminKiosk.js?rev6"></script>
 <script>
     $(document).ready(() => {
         $('.sidenav').sidenav();
