@@ -43,9 +43,15 @@
          * @return Order
          */
         public static function fromOrderID($orderID) {
-            $pdo = new PDO_MYSQL();
-            $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
-            return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
+            if(substr( $orderID, 0, 2 ) === "5a") {
+                $pdo = new PDO_MYSQL();
+                $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderNum = :oid", [":oid" => $orderID]);
+                return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
+            } else {
+                $pdo = new PDO_MYSQL();
+                $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
+                return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
+            }
         }
 
         /**
@@ -62,10 +68,12 @@
             $mail = new PHPMailer(true);
 
             $items = Item::checkPriceAndCorrect($items);
-
+            $res1 = $pdo->query("SELECT orderID FROM rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
+            $orderNum = intval($res1->orderID)+1;
             //Create Order
             $pdo->queryInsert("rrshop_orders", [
-                "orderID" => uniqid(),
+                "orderID" => $orderNum,
+                "orderNum" => uniqid(),
                 "customer" => $customer->getCustomerID(),
                 "payment" => intval($payment),
                 "items" => $items,
