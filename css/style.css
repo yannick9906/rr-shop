@@ -1,5 +1,10 @@
-header, main, footer {
+/*header, main, footer {
     padding-left: 240px;
+    font-family: 'Dosis', sans-serif;
+}*/
+
+pre {
+    font-family: 'Share Tech Mono', monospace;
 }
 
 @media only screen and (max-width : 992px) {
@@ -153,4 +158,8 @@ header, main, footer {
 
 .inverted {
     filter: invert(100%);
+}
+
+.mono {
+    font-family: "Courier New", Courier, monospace;
 }

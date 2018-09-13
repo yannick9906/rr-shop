@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "RheinhessenRiders Shop",
-  "short_name": "RR Shop",
-  "description": "RheinhessenRiders Shop",
-  "version": "1.0.0a",
+  "name": "RheinhessenRiders Shop Beta",
+  "short_name": "RR Shop_b",
+  "description": "RheinhessenRiders Shop Beta",
+  "version": "2.0.0b",
   "icons": [
     {
       "src": "icon/RRMainz-512.png",
