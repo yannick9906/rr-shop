@@ -122,6 +122,20 @@
         </div>
     </div>
 
+    <!-- Shopping Cart -->
+    <div class="container" id="shopCart" style="display: none;">
+        <div class="card-panel row">
+            <h4 class="col s12 black-text rrSpace">Einkaufswagen</h4>
+            <span class="col s12 rr bigger right-align black-text" id="cartTotalPrice">Gesamt: 0€</span>
+            <div id="cart-list">
+                <!-- To be filled by JS -->
+            </div>
+            <div class="col s12">
+                <a id="buyButton" class="waves-effect waves-green btn black white-text" onclick="buy()" href="#buyerInfo">Zur Kasse</a>
+                <a id="clearButton" class="waves-effect waves-red btn black-text white" onclick="clearCart()">Warenkorb leeren</a>
+            </div>
+        </div>
+    </div>
 
     <footer class="page-footer grey darken-2">
         <div class="container">

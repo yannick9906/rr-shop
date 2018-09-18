@@ -6,6 +6,7 @@ const names = [
 let previews = [0,0,0,0,0];
 let thisItem = null;
 let features = null;
+let currentPrice = 0;
 
 let templateSliderImage = Handlebars.compile(`
 {{#each imageLink}}
@@ -232,5 +233,26 @@ function refreshPrice() {
 
     price *= parseInt($("#feature_amount").val())+1;
 
-    $("#detailPrice").html(price+" €*")
+    $("#detailPrice").html(price+" €*");
+    currentPrice = price;
+}
+
+function addToCart() {
+    refreshPrice();
+
+    let toAdd = {
+        itemType: parseInt(thisItem.itemID),
+        itemName: thisItem.itemName,
+        amount: parseInt($("#feature_amount").val())+1,
+        price: parseInt(currentPrice),
+        itemData: {}
+    }
+
+    for(let i=0; i < features.length; i++) {
+        toAdd.itemData[features[i].featureName] = $("#feature_"+features[i].featureName).val();
+    }
+
+    console.log(toAdd);
+    Lockr.sadd("items", toAdd);
+    M.toast({html: "Zum Einkaufswagen hinzugefügt", duration: 1000, classes:"green"});
 }
