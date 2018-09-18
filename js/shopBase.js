@@ -8,10 +8,14 @@ let itemActiveTemplate = Handlebars.compile(`
                     <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">{{displayName}}</span>
                 </div>
                 <div class="card-content black-text">
-                    <p>{{description}}</p>
+                    <p>{{{description}}}</p>
                 </div>
                 <div class="card-action">
-                    <a href="#{{itemName}}" class="green-text text-darken-2">ab {{basePrice}}€/{{baseAmount}}Stk - details</a>
+                    {{#if otherAmount}}
+                    <a href="#{{itemName}}" class="green-text text-darken-2">ab {{basePrice}}€ / {{baseAmount}} Stk - details</a>
+                    {{else}}
+                    <a href="#{{itemName}}" class="green-text text-darken-2">ab {{basePrice}}€ / Stk - details</a>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -25,10 +29,14 @@ let itemPreActiveTemplate = Handlebars.compile(`
                     <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">{{displayName}}</span>
                 </div>
                 <div class="card-content black-text">
-                    <p>{{description}}</p>
+                    <p>{{{description}}}</p>
                 </div>
                 <div class="card-action">
-                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€/{{baseAmount}}Stk - bald verfügbar</a>
+                                        {{#if otherAmount}}
+                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€ / {{baseAmount}} Stk - bald verfügbar</a>
+                    {{else}}
+                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€ / Stk - bald verfügbar</a>
+                    {{/if}}
                 </div>
             </div>
         </div>
@@ -98,6 +106,7 @@ function shopHome() {
                         items[i].width = widths[i];
                         items[i].imageLink = JSON.parse(items[i].imageLink);
                         items[i].imageUrl = items[i].imageLink[0];
+                        items[i].otherAmount = parseInt(items[i].baseAmount) != 1;
                         if (items[i].active == 1) shopHomeElem.append(itemActiveTemplate(items[i]));
                         else if (items[i].active == 2) shopHomeElem.append(itemPreActiveTemplate(items[i]));
                         itemData[items[i].itemName] = items[i];
