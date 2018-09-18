@@ -8,6 +8,7 @@ let templateCartItem = Handlebars.compile(`
             <div class="card-content" id="cardContent{{{cardID}}}1">
                 <span class="right rr price">{{price}} €</span>
                 <span class="rr bigger">{{displayName}}</span>
+                <p><span class="bolden">Anzahl: </span>{{amount}}</p>
 
             </div>
             <div class="card-action">
@@ -23,6 +24,7 @@ let templateCartItem = Handlebars.compile(`
         </div>
         <div class="card-content" id="cardContent{{{cardID}}}2">
             <span class="right rr price">{{price}} €</span>
+            <p><span class="bolden">Anzahl: </span>{{amount}}</p>
             
         </div>
         <div class="card-action">
@@ -64,6 +66,7 @@ function displayCart() {
                 displayName: thisItem.displayName,
                 imageUrl: thisItem.imageUrl,
                 price: cartItems[i].price,
+                amount: cartItems[i].amount,
                 itemName: cartItems[i].itemName
             }));
             itemDataToDisplay(cartItems[i], i);
@@ -104,6 +107,12 @@ function itemDataToDisplay(item, id) {
     });
 }
 
+function updateCartAmount() {
+    $("#cartAmount").html(Lockr.smembers("items").length);
+    let items = Lockr.smembers("items");
+
+    //TODO eCommerce Tracking
+}
 
 function delItem(itemID) {
     let items = Lockr.smembers("items");

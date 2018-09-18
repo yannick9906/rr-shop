@@ -252,7 +252,7 @@ function addToCart() {
         toAdd.itemData[features[i].featureName] = $("#feature_"+features[i].featureName).val();
     }
 
-    console.log(toAdd);
     Lockr.sadd("items", toAdd);
     M.toast({html: "Zum Einkaufswagen hinzugefügt", duration: 1000, classes:"green"});
+    updateCartAmount();
 }

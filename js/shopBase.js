@@ -95,6 +95,7 @@ function shopHome() {
         $("#backbutton").hide();
         $("#cart-list-bought").html("");
         window.scrollTo(0, 0);
+        updateCartAmount();
         //resetBuy()
         if (json.success == "true") {
             if(shopHomeElem.html() == "") {
