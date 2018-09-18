@@ -86,9 +86,40 @@
             </div>
         </div>
     </div>
+    <!-- Home -->
     <div class="container row" id="shopHome">
+    </div>
 
+    <!-- Item Detail -->
+    <div class="container" id="shopDetail" style="display: none;">
+        <div class="card-panel row">
+            <h4 class="col s12 black-text rrSpace hide-on-small-only" id="detailNameL">...</h4>
+            <h4 class="col s12 black-text rr hide-on-med-and-up" id="detailNameS">...</h4>
+            <div class="col s12 m6">
+                <div class="carousel carousel-slider" id="detailSlider">
+                    <a class="carousel-item" href="#rr_hoodie"><img src="img/mug/Mug-1.jpg"></a>
+                    <a class="carousel-item" href="#rr_hoodie"><img src="img/mug/Mug-2.jpg"></a>
+                    <a class="carousel-item" href="#rr_hoodie"><img src="img/mug/Mug-3.jpg"></a>
+                </div>
+                <p id="detailDescription">
+                <p class="bolden black-text">alle Preise zzgl. 5€ Versand</p>
+                <p class="bolden black-text">die hier gezeigten Farben sind nur eine Vorschau. Die echte Farbe kann abweichen.</p>
+            </div>
+            <div class="col s12 m6 row">
+                <div class="col s12 row black white-text" id="preview-color">
 
+                </div>
+                <div class="col s12 row">
+                    <form id="detailFeatures">
+
+                    </form>
+                    <h4 class="col s5 offset-s4 bolden right-align rr" id="detailPrice"> ** €*</h4>
+                    <a class="waves-effect waves-light btn black white-text col s3 right" style="margin-top: 15px;" onclick="addToCart()"><i class="mddi mddi-basket-fill"></i></a>
+                </div>
+            </div>
+            <div class="col s12 grey-text">*) Gemäß §19 UStG berechnen wir keine Umsatzsteuer.</div>
+            <div class="col s12 grey-text">Bilder von Tamina Burggraf, Hannah Kratz, Yannick F&#233;lix, Marcel Boll und Marvin. Texte von Konstantin 'Reimann' Schmitt.</div>
+        </div>
     </div>
 
 
@@ -136,11 +167,13 @@
     </footer>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
-    <script type="text/javascript" src="lib/materialize10/js/materialize.min.js"></script>
+    <script type="text/javascript" src="lib/materialize/js/bin/materialize.min.js"></script>
     <script type="text/javascript" src="lib/handlebars.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script type="text/javascript" src="lib/md5.js"></script>
     <script type="text/javascript" src="lib/lockr.js"></script>
     <script type="text/javascript" src="js/shopBase.js"></script>
+    <script type="text/javascript" src="js/shopDetail.js"></script>
+    <script type="text/javascript" src="js/shopCart.js"></script>
 </body>
 </html>
