@@ -84,6 +84,7 @@ function detail(hash) {
     $("#detailPrice").html("ab "+thisItem.basePrice+"€*");
     let slider = $("#detailSlider");
     slider.html(templateSliderImage(thisItem));
+    previews = [0,0,0,0,0];
 
     $.getJSON("backend/api/item/getItemDetail.php",{itemName: hash}, (json) => {
         let widths = [6,6,4,4,4,4,4,4,4,4,4];
