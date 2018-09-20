@@ -52,7 +52,7 @@ function hashChangeCallback() {
         var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
         if (hash.startsWith("rr_")) detail(hash);
         else if (hash === "shopping-cart") shopCart();
-        else if (hash === "buyerInfo") buy();
+        else if (hash === "buyerInfo") checkOut();
         else if (hash.startsWith("order")) orderInfo(hash);
         else {
             _paq.push(['setReferrerUrl', currentUrl]);
@@ -85,6 +85,7 @@ function checkAccessCode() {
 function shopHome() {
     $("#shopDetail").hide();
     $("#shopCart").hide();
+    $("#buyerInfo").hide();
     document.title = "Home - RheinhessenRiders Shop";
     let shopHomeElem = $("#shopHome");
     shopHomeElem.show();
