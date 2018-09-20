@@ -11,28 +11,80 @@
 
 
     class Item {
-        private $Names = [1=>"RheinhessenRiders Hoodie",2=>"RheinhessenRiders Shirt",3=>"RheinhessenRiders Sticker",4=>"Versandkosten",5=>"RheinhessenRiders Tasse"];
-        private $Options = ["frontName"=>"Name auf der Front", "mugName"=>"Name auf der Tasse", "city"=>"Stadt", "size"=>"Größe", "color"=>"Farbe", "heart"=>"Herzschlag", "insta"=>"Instagram", "rightarm"=>"Druck Rechter Arm", "type"=>"Variante"];
-        private $name, $amount, $itemData,$options,$price;
+        private $itemID, $itemName, $displayName, $invoiceName, $shipID;
+        private $basePrice, $baseAmount, $description, $imageLink;
+        private $pdo;
 
         /**
          * Item constructor.
          *
-         * @param $type
-         * @param $amount
-         * @param $itemData
+         * @param int $itemID
+         * @param string $itemName
+         * @param string $displayName
+         * @param string $invoiceName
+         * @param int $shipID
+         * @param int $basePrice
+         * @param int $baseAmount
+         * @param string $description
+         * @param string $imageLink
          */
-        public function __construct($type, $amount, $itemData, $price) {
-            $this->name = $this->Names[$type];
-            $this->price = $price;
-            $this->amount = $amount;
-            $this->itemData = $itemData;
-            foreach($itemData as $option => $value) {
-                $this->options .= (sizeof($this->options)==0?"":"; ").$this->Options[$option].": ".strtoupper($value);
-            }
-            if(strlen($this->options) < 64) $this->options.="\n.";
+        public function __construct($itemID, $itemName, $displayName, $invoiceName, $shipID, $basePrice, $baseAmount, $description, $imageLink) {
+            $this->itemID = $itemID;
+            $this->itemName = $itemName;
+            $this->displayName = $displayName;
+            $this->invoiceName = $invoiceName;
+            $this->shipID = $shipID;
+            $this->basePrice = $basePrice;
+            $this->baseAmount = $baseAmount;
+            $this->description = $description;
+            $this->imageLink = $imageLink;
+            $this->pdo = new PDO_MYSQL();
         }
 
+        /**
+         * @param int $itemID
+         * @return Item
+         */
+        public static function getItemByID($itemID) {
+            $pdo = new PDO_MYSQL();
+            $res = $pdo->query("SELECT * FROM rrshop_items WHERE itemID = :iid", [":iid" => $itemID]);
+            return new Item($res->itemID, $res->itemName, $res->displayName, $res->invoiceName, $res->shipID, $res->basePrice, $res->baseAmount, $res->description, $res->imageLink);
+        }
+
+        /**
+         * @param string $itemName
+         * @return Item
+         */
+        public static function getItemByName($itemName) {
+            $pdo = new PDO_MYSQL();
+            $res = $pdo->query("SELECT * FROM rrshop_items WHERE itemName = :inm", [":inm" => $itemName]);
+            return new Item($res->itemID, $res->itemName, $res->displayName, $res->invoiceName, $res->shipID, $res->basePrice, $res->baseAmount, $res->description, $res->imageLink);
+        }
+
+        /**
+         * @return array
+         */
+        public static function getItems() {
+            $pdo = new PDO_MYSQL();
+
+            $stmt = $pdo->queryMulti("select * from rrshop_items");
+            $rows = array();
+            while($r = $stmt->fetchObject()) {
+                array_push($rows, $r);
+            }
+            return $rows;
+        }
+
+        public static function getItemFeatures($itemName) {
+            $pdo = new PDO_MYSQL();
+            $stmt = $pdo->queryMulti("select * from rrshop_itemFeatures where itemID = (select itemID from rrshop_items where itemName = :itmNme limit 1)",[":itmNme" => $itemName]);
+            $rows = array();
+            while($r = $stmt->fetchObject()) {
+                array_push($rows, $r);
+            }
+            return $rows;
+        }
+        
         /**
          * @return string
          */
@@ -66,39 +118,29 @@
         }
 
         public static function checkPriceAndCorrect($items) {
+            $itemData = self::getItems();
             $corrected = json_decode($items, true);
-            $shipping = [];
-            for($i = 0; $i < sizeof($corrected); $i++) {
-                switch ($corrected[$i]['itemType']){
-                    case 1:
-                        if($corrected[$i]['itemData']['rightarm'] == "JA") $corrected[$i]['price'] = 35;
-                        else $corrected[$i]['price'] = 33;
-                        array_push($shipping, 5);
-                        break;
-                    case 2:
-                        $corrected[$i]['price'] = 22;
-                        array_push($shipping, 5);
-                        break;
-                    case 3:
-                        $corrected[$i]['price'] = 0.2;
-                        array_push($shipping, 1.5);
-                        break;
-                    case 4:
-                        unset($corrected[$i]);
-                        break;
-                    case 5:
-                        if($corrected[$i]['itemData']['color'] == "weiss") $corrected[$i]['price'] = 12;
-                        else $corrected[$i]['price'] = 14;
-                        array_push($shipping, 5);
-                        break;
+
+            for($i=0; $i < sizeof($corrected); $i++) {
+                $thisItem = $itemData[$corrected[$i]['itemType']-1];
+                $thisItemFeatures = self::getItemFeatures($thisItem->itemName);
+                $generatedPrice = $thisItem->basePrice;
+                //print_r($thisItem);
+
+                for($j=0; $j < sizeof($thisItemFeatures); $j++) {
+                    if($thisItemFeatures[$j]->featureType == "2") {
+                        $needle = array_values($corrected[$i]['itemData'])[$j];
+                        $haystack = json_decode($thisItemFeatures[$j]->possibleValues, true);
+                        $index = array_search($needle,array_keys($haystack));
+                        $addPrice = json_decode($thisItemFeatures[$j]->addPrice)[$index];
+                        $generatedPrice += $addPrice;
+                    }
                 }
+
+                $corrected[$i]['price'] = $generatedPrice*$corrected[$i]['amount'];
+                //print_r($generatedPrice);
             }
-            if(sizeof($shipping) != 0) array_push($corrected, [
-                "itemType"=>4,
-                "amount"=>1,
-                "price"=>array_sum(array_unique($shipping)),
-                "itemData"=>[]
-            ]);
+
             return json_encode(array_values($corrected));
         }
     }

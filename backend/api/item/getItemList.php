@@ -14,12 +14,4 @@
     require_once "../../classes/Customer.php";
     require_once "../../classes/PDO_Mysql.php";
 
-    $pdo = new \rrshop\PDO_MYSQL();
-
-    $stmt = $pdo->queryMulti("select * from rrshop_items");
-    $rows = array();
-    while($r = $stmt->fetchObject()) {
-        array_push($rows, $r);
-    }
-
-    echo json_encode($rows);
+    echo json_encode(\rrshop\Item::getItems());

@@ -15,13 +15,6 @@
     require_once "../../classes/Customer.php";
     require_once "../../classes/PDO_Mysql.php";
 
-    $pdo = new \rrshop\PDO_MYSQL();
     $itemName = $_GET['itemName'];
 
-    $stmt = $pdo->queryMulti("select * from rrshop_itemFeatures where itemID = (select itemID from rrshop_items where itemName = :itmNme limit 1)",[":itmNme" => $itemName]);
-    $rows = array();
-    while($r = $stmt->fetchObject()) {
-        array_push($rows, $r);
-    }
-
-    echo json_encode($rows);
+    echo json_encode(\rrshop\Item::getItemFeatures($itemName));

@@ -44,12 +44,12 @@ let templateCartData = Handlebars.compile(`
 function displayCart() {
     console.log("Check Cart");
     let cartItems = Lockr.smembers("items");
-    $.post("backend/api/item/checkCart.php", {items: JSON.stringify(cartItems)}, (data) => {
-        /*items = JSON.parse(data);
+    $.post("backend/api/cart/checkCart.php", {items: JSON.stringify(cartItems)}, (data) => {
+        items = JSON.parse(data);
         Lockr.rm("items");
         for(let i = 0; i < items.length; i++) {
             Lockr.sadd("items", items[i]);
-        }*/
+        }
         console.log("Display Cart");
         console.log(cartItems);
         let target = $("#cart-list");
