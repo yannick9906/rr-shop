@@ -40,7 +40,7 @@ function refreshInfo() {
     resetInfo();
     $.getJSON("api/order/checkInfo.php", {orderID: orderID}, (json) => {
         //$("#orderData").html(JSON.stringify(json, null, 2));
-        $("#info-payment").html(paymentType[json.payment]);
+        $("#info-payment").html(paymentType[json.infoPayment]);
         $("#info-customername").html(json.customername);
         $("#info-customermail").html(json.customer.email);
         $("#info-customeraddress").html(json.customer.addressStreet+", "+json.customer.addressZip+" "+json.customer.addressCity);

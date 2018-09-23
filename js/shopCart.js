@@ -69,7 +69,7 @@ function displayCart() {
                 amount: cartItems[i].amount,
                 itemName: cartItems[i].itemName
             }));
-            itemDataToDisplay(cartItems[i], i);
+            itemDataToDisplay(cartItems[i], i, "cardContent");
         }
         $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + "+shipping+"€ Versand");
 
@@ -87,7 +87,7 @@ function displayCart() {
     });
 }
 
-function itemDataToDisplay(item, id) {
+function itemDataToDisplay(item, id, nameIdentifier) {
     let displayableData = {};
     console.log(item.itemData);
     $.getJSON("backend/api/item/getItemDetail.php",{itemName: item.itemName}, (json) => {
@@ -102,8 +102,8 @@ function itemDataToDisplay(item, id) {
             if(thisFeature.possibleValues != "*") displayableData[thisFeature.displayName] = JSON.parse(thisFeature.possibleValues)[Object.values(item.itemData)[i]];
             else displayableData[thisFeature.displayName] = Object.values(item.itemData)[i];
         }
-        $("#cardContent"+id+"1").append(templateCartData({itemData: displayableData}));
-        $("#cardContent"+id+"2").append(templateCartData({itemData: displayableData}));
+        $("#"+nameIdentifier+id+"1").append(templateCartData({itemData: displayableData}));
+        $("#"+nameIdentifier+id+"2").append(templateCartData({itemData: displayableData}));
     });
 }
 

@@ -143,38 +143,38 @@
             <h4 class="col s12 black-text rrSpace">Kasse</h4>
             <form class="col s12 row" id="innerBuyerInfo">
                 <div class="input-field col s12 l6">
-                    <input id="first_name" type="text" data-length="128">
-                    <label for="first_name">Vorname</label>
+                    <input id="infoFirstName" type="text" data-length="128">
+                    <label for="infoFirstName">Vorname</label>
                 </div>
                 <div class="input-field col s12 l6">
-                    <input id="last_name" type="text" data-length="128">
-                    <label for="last_name">Nachname</label>
+                    <input id="infoLastName" type="text" data-length="128">
+                    <label for="infoLastName">Nachname</label>
                 </div>
                 <div class="input-field col s12">
-                    <input id="email" type="email" data-length="256">
-                    <label for="email">Email</label>
+                    <input id="infoEmail" type="email" data-length="256">
+                    <label for="infoEmail">Email</label>
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="note" class="materialize-textarea" data-length="1073741823"></textarea>
-                    <label for="note">Notizen</label>
+                    <textarea id="infoNote" class="materialize-textarea" data-length="1073741823"></textarea>
+                    <label for="infoNote">Notizen</label>
                 </div>
                 <div class="col s12 m3">
                     <h6 class="bolden">Bezahlmethode</h6>
                     <p>
                         <label>
-                            <input name="payment" type="radio" value="0" />
+                            <input name="infoPayment" type="radio" value="0" />
                             <span>Bar / Karte (vor Ort)</span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="payment" type="radio" value="1" />
+                            <input name="infoPayment" type="radio" value="1" />
                             <span>Überweisung</span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="payment" type="radio" value="2" />
+                            <input name="infoPayment" type="radio" value="2" />
                             <span>PayPal</span>
                         </label>
                     </p>
@@ -188,19 +188,19 @@
                     <h6 class="bolden">Versandart</h6>
                     <p>
                         <label>
-                            <input name="shipping" type="radio" value="0" />
+                            <input name="infoShipping" type="radio" value="0" />
                             <span>Mitnahme am nächsten Stammtisch</span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="shipping" type="radio" value="1" />
+                            <input name="infoShipping" type="radio" value="1" />
                             <span>Selbstabholung</span>
                         </label>
                     </p>
                     <p>
                         <label>
-                            <input name="shipping" type="radio" value="2" />
+                            <input name="infoShipping" type="radio" value="2" />
                             <span>Versand (+5 Euro)</span>
                         </label>
                     </p>
@@ -209,29 +209,57 @@
                 <div class="col s12 m6 row">
                     <h6 class="bolden s12">Addresse: </h6>
                     <div class="input-field col s12">
-                        <input id="address-street" type="text" data-length="256">
-                        <label for="address-street">Straße Hausnummer</label>
+                        <input id="infoAddressStreet" type="text" data-length="256">
+                        <label for="infoAddressStreet">Straße Hausnummer</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="address-zip" type="text" data-length="5">
-                        <label for="address-zip">Postleitzahl</label>
+                        <input id="infoAddressZip" type="text" data-length="5">
+                        <label for="infoAddressZip">Postleitzahl</label>
                     </div>
                     <div class="input-field col s6">
-                        <input id="address-city" type="text" data-length="128">
-                        <label for="address-city">Stadt</label>
+                        <input id="infoAddressCity" type="text" data-length="128">
+                        <label for="infoAddressCity">Stadt</label>
                     </div>
                     <p><br/></p>
                 </div>
                 <div class="col s12 row">
                     <p>
                         <label>
-                            <input class="filled-in" type="checkbox" />
+                            <input id="infoAGBConfirm" class="filled-in" type="checkbox" />
                             <span>Ich habe die <a href="agb.html" target="_blank">AGB</a> gelesen und stimme diesen zu. Sie beinhaltet auch unsere Datenschutzrichtlinie.</span>
                         </label>
                     </p>
                 </div>
-                <a id="buyNowButton" class="waves-effect waves-green btn black white-text col s12" onclick="buyNow()" href="#buyerInfo">Kostenpflichtig bestellen</a>
+                <a id="infoNextButton" class="waves-effect waves-green btn black white-text col s12" onclick="checkoutNext()" href="#buyerInfo">weiter</a>
             </form>
+            <div style="display: none;" id="buyerConfirm" class="col s12 container">
+                <div class="row container">
+                    <span class="bolden">Bestellung bereit.</span><br/>
+                    Überprüfe deine Bestellung.<br/>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 left-align">
+                        <div id="infoConfirmList">
+                            <!-- To be filled by JS -->
+                        </div>
+                    </div>
+                    <div class="col s12 m6 card-panel">
+                        <span class="row">
+                            <span class="bigger rr col s12">Kundendaten</span>
+                            <span class="bolden col s4">Name:</span>           <span class="col s8" id="infoConfirmName"></span>
+                            <span class="bolden col s4">E-Mail:</span>         <span class="col s8" id="infoConfirmEmail"></span>
+                            <span class="bolden col s4">Bezahlmethode:</span>  <span class="col s8" id="infoConfirmPayment"></span>
+                            <span class="bolden col s4">Versandart:</span>     <span class="col s8" id="infoConfirmShipping"></span>
+                            <span class="bolden col s4">Addresse:</span>       <span class="col s8" id="infoConfirmAddress"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="right-align">
+                    <span id="infoConfirmTotalPrice" class="bigger rr"></span>
+                    <a id="infoBackButton" class="btn white black-text" onclick="checkoutBack()" href="#buyerInfo">zurück</a>
+                    <a id="infoBuyButton" class="waves-effect waves-green btn black white-text" onclick="checkoutBuy()" href="#buyerInfo">Kostenpflichtig bestellen</a>
+                </div>
+            </div>
             <div style="display: none;" id="buyerLoading" class="center col s12">
                 <div class="preloader-wrapper big active">
                     <div class="spinner-layer spinner-blue-only">
@@ -256,11 +284,54 @@
             </div>
             <div style="display: none;" id="buyerSuccess" class="center col s12 container">
                 <div class="row">
-                    <div class="col s12 m6 left-align">
+                    <div class="col s12 m6 left-align container row">
                         <span class="bolden">Bestellung erfolgreich.</span><br/>
                         Weitere Infos folgen per Email.<br/>
-                        <div id="cart-list-bought">
-                            <!-- To be filled by JS -->
+                        <div class="card-panel col s12">
+                            <span class="bolden col s4">Bestellnummer:</span>  <span class="col s8" id="infoSuccessOrderID"></span>
+                            <span class="bolden col s4">Datum:</span>          <span class="col s8" id="infoSuccessOrderDate"></span>
+                            <span class="bolden col s4">Bezahlmethode:</span>  <span class="col s8" id="infoSuccessPayment"></span>
+                        </div>
+                        <div class="card-panel col s12" style="display: none;" id="infoSuccessPaymentBar">
+                            <span class="bigger rr">Bezahlmethode Bar / Karte</span>
+                            <p>
+                                <span class="bolden">Möglichkeit 1:</span><br/>
+                                Drucke die per Mail erhaltene Rechnung aus und packe diese zusammen mit dem Bargeld in einen Umschlag.<br/>
+                                Dieser wird entweder bei
+                                <br/><span class="bolden">Philipp Lommel, Am Hillesheimer Weg 8a, 67596 Frettenheim</span>
+                                <br/> oder
+                                <br/><span class="bolden">Yannick F&#233;lix, Tucholskyweg 17, 55127 Mainz</span>
+                                <br/>eingeworfen.
+                            </p>
+                            <p>
+                                <span class="bolden">Möglichkeit 2:</span><br/>
+                                Drucke die per Mail erhaltene Rechnung aus oder halte diese auf Deinem Smartphone bereit.<br/>
+                                Zur nächsten Möglichkeit kannst Du bei
+                                <br/><span class="bolden">Marcel Boll, Philipp Lommel oder Yannick F&#233;lix</span>
+                                </br>bezahlen. Kartenzahlung ist nur bei Yannick möglich.
+                            </p>
+                        </div>
+                        <div class="card-panel col s12" style="display: none;" id="infoSuccessPaymentTransfer">
+                            <span class="bigger rr">Bezahlmethode Überweisung</span>
+                            <p>
+                                Überweise den fälligen Betrag an folgendes Konto. Als Verwendungszweck muss die Bestellnummer angegeben werden, ansonsten kann die Bezahlung nicht zugeordnet werden.<br/>
+                                <br/>
+                                <span class="bolden">
+                                YANNICK FELIX<br/>
+                                DE26 1101 0100 2746 4008 44<br/>
+                                solarisBank AG
+                                </span>
+                            </p>
+                        </div>
+                        <div class="card-panel col s12" style="display: none;" id="infoSuccessPaymentPayPal">
+                            <span class="bigger rr">Bezahlmethode PayPal</span>
+                            <p>
+                                Schicke den fälligen Betrag an folgende E-Mail Adresse mit der Methode 'Geld an Freunde und Familie senden'. Falls Käuferschutz gewünscht ist, müssen die Gebühren selbst getragen werden. Als Notiz muss die Bestellnummer angegeben werden, ansonsten kann die Bezahlung nicht zugeordnet werden.<br/>
+                                <br/>
+                                <span class="bolden">
+                                shop@rheinhessenriders.tk
+                                </span>
+                            </p>
                         </div>
                     </div>
                     <img src="img/Boll.png" alt="Bollinater freut sich. ;)" class="col s12 m6"/>

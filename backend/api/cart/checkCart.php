@@ -21,4 +21,4 @@
 
     $items = $_POST["items"];
 
-    echo \rrshop\Item::checkPriceAndCorrect($items);
+    echo json_encode(\rrshop\Item::checkPriceAndCorrect(json_decode($items, true)));

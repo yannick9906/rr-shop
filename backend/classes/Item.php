@@ -119,10 +119,11 @@
 
         public static function checkPriceAndCorrect($items) {
             $itemData = self::getItems();
-            $corrected = json_decode($items, true);
+            $itemIDs = array_column($itemData, 'itemID');
+            $corrected = $items;
 
             for($i=0; $i < sizeof($corrected); $i++) {
-                $thisItem = $itemData[$corrected[$i]['itemType']-1];
+                $thisItem = $itemData[array_search($corrected[$i]['itemType'], $itemIDs)];
                 $thisItemFeatures = self::getItemFeatures($thisItem->itemName);
                 $generatedPrice = $thisItem->basePrice;
                 //print_r($thisItem);
@@ -141,6 +142,42 @@
                 //print_r($generatedPrice);
             }
 
-            return json_encode(array_values($corrected));
+            return array_values($corrected);
+        }
+
+        public static function addShipping($items, $shipAll) {
+            $corrected = $items;
+            $shipping = [0,0];
+            $cost = 0;
+            $shipType = 'none';
+            if($shipAll) $shipping[1] = 1;
+            //Check for shipping[0]
+            for($i=0; $i < sizeof($corrected); $i++) {
+                $itemName = $corrected[$i]['itemName'];
+                if($itemName == "rr_sticker") {
+                    $shipping[0] = 1;
+                    break;
+                }
+            }
+
+            if($shipping[0] == 0 and $shipping[1] == 1) {
+                $cost = 5; $shipType = 'items';
+            } elseif($shipping[0] == 1 and $shipping[1] == 1) {
+                $cost = 6.5; $shipType = 'both';
+            } elseif($shipping[0] == 1 and $shipping[1] == 0) {
+                $cost = 1.5; $shipType = 'sticker';
+            }
+
+            array_push($corrected, [
+                "itemType"=>99,
+                "price"=>$cost,
+                "amount"=>1,
+                "itemName"=>"rr_shipping",
+                "itemData"=>[
+                    "shipType"=>$shipType
+                ],
+            ]);
+
+            return array_values($corrected);
         }
     }

@@ -166,7 +166,7 @@ function updateDataO() {
             $(listNameO).html("");
             for(let i = 0; i < list.length; i++) {
                 let e = list[i];
-                $(listNameO).append(templateO({i: i,kw: e.estDate, orderID: e.orderID, customerName: e.customer.firstname+" "+e.customer.lastname, payment: paymentType[e.payment], state: stateType[e.state], timestamp: e.timestamp}))
+                $(listNameO).append(templateO({i: i,kw: e.estDate, orderID: e.orderID, customerName: e.customer.firstname+" "+e.customer.lastname, payment: paymentType[e.infoPayment], state: stateType[e.state], timestamp: e.timestamp}))
                 sizeO = i;
             }
             dataO = JSON.stringify(list);
