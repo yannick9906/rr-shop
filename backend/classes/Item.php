@@ -84,37 +84,155 @@
             }
             return $rows;
         }
-        
+
+        /**
+         * @return int
+         */
+        public function getItemID() {
+            return $this->itemID;
+        }
+
+        /**
+         * @param int $itemID
+         */
+        public function setItemID($itemID) {
+            $this->itemID = $itemID;
+        }
+
         /**
          * @return string
          */
-        public function getName() {
-            return $this->name;
+        public function getItemName() {
+            return $this->itemName;
+        }
+
+        /**
+         * @param string $itemName
+         */
+        public function setItemName($itemName) {
+            $this->itemName = $itemName;
+        }
+
+        /**
+         * @return string
+         */
+        public function getDisplayName() {
+            return $this->displayName;
+        }
+
+        /**
+         * @param string $displayName
+         */
+        public function setDisplayName($displayName) {
+            $this->displayName = $displayName;
+        }
+
+        /**
+         * @return string
+         */
+        public function getInvoiceName() {
+            return $this->invoiceName;
+        }
+
+        /**
+         * @param string $invoiceName
+         */
+        public function setInvoiceName($invoiceName) {
+            $this->invoiceName = $invoiceName;
         }
 
         /**
          * @return int
          */
-        public function getAmount() {
-            return $this->amount;
+        public function getShipID() {
+            return $this->shipID;
         }
 
         /**
-         * @return array
+         * @param int $shipID
          */
-        public function getItemData() {
-            return $this->itemData;
+        public function setShipID($shipID) {
+            $this->shipID = $shipID;
+        }
+
+        /**
+         * @return int
+         */
+        public function getBasePrice() {
+            return $this->basePrice;
+        }
+
+        /**
+         * @param int $basePrice
+         */
+        public function setBasePrice($basePrice) {
+            $this->basePrice = $basePrice;
+        }
+
+        /**
+         * @return int
+         */
+        public function getBaseAmount() {
+            return $this->baseAmount;
+        }
+
+        /**
+         * @param int $baseAmount
+         */
+        public function setBaseAmount($baseAmount) {
+            $this->baseAmount = $baseAmount;
         }
 
         /**
          * @return string
          */
-        public function getOptions() {
-            return $this->options;
+        public function getDescription() {
+            return $this->description;
+        }
+
+        /**
+         * @param string $description
+         */
+        public function setDescription($description) {
+            $this->description = $description;
+        }
+
+        /**
+         * @return string
+         */
+        public function getImageLink() {
+            return $this->imageLink;
+        }
+
+        /**
+         * @param string $imageLink
+         */
+        public function setImageLink($imageLink) {
+            $this->imageLink = $imageLink;
         }
 
         public function getTotalPrice() {
             return $this->amount * $this->price;
+        }
+
+        public function itemDataToInvoice($item, $rows = 2) {
+            $thisItemFeatures = self::getItemFeatures($this->itemName);
+            $invoiceString = "";
+
+            for($j=0; $j < sizeof($thisItemFeatures); $j++) {
+                if($j==0) $invoiceString .= $thisItemFeatures[$j]->invoiceName.": ";
+                else $invoiceString .= "; ".$thisItemFeatures[$j]->invoiceName.": ";
+                if($thisItemFeatures[$j]->featureType == "1") {
+                    $invoiceString .= array_values($item['itemData'])[$j];
+                } elseif($thisItemFeatures[$j]->featureType == "2") {
+                    $needle = array_values($item['itemData'])[$j];
+                    $haystack = json_decode($thisItemFeatures[$j]->possibleValues, true);
+                    $invoiceString .= $haystack[$needle];
+                }
+            }
+            if(strlen($invoiceString) < 64 && $rows >= 2) $invoiceString.="\n.";
+            if(strlen($invoiceString) < 118 && $rows >= 3) $invoiceString.="\n.\n.";
+            return $invoiceString;
         }
 
         public static function checkPriceAndCorrect($items) {
@@ -126,7 +244,6 @@
                 $thisItem = $itemData[array_search($corrected[$i]['itemType'], $itemIDs)];
                 $thisItemFeatures = self::getItemFeatures($thisItem->itemName);
                 $generatedPrice = $thisItem->basePrice;
-                //print_r($thisItem);
 
                 for($j=0; $j < sizeof($thisItemFeatures); $j++) {
                     if($thisItemFeatures[$j]->featureType == "2") {
@@ -179,5 +296,13 @@
             ]);
 
             return array_values($corrected);
+        }
+
+        public static function getTotalPriceOfItems($items) {
+            $totalPrice = 0;
+            for($i=0; $i < sizeof($items); $i++) {
+                $totalPrice += $items[$i]['price']*$items[$i]['amount'];
+            }
+            return $totalPrice;
         }
     }

@@ -62,6 +62,7 @@ function checkoutNext() {
         let cartItems = Lockr.smembers("items");
         $.post("backend/api/cart/addShipping.php", {items: JSON.stringify(cartItems), shipping: orderData.shipping}, (data) => {
             let cartItems = JSON.parse(data);
+            orderData.items = JSON.stringify(cartItems);
             Lockr.rm("items");
             for (let i = 0; i < cartItems.length; i++) {
                 if(cartItems[i].itemType != 99)
@@ -106,31 +107,55 @@ function checkoutBuy() {
     $("#buyerConfirm").hide();
     $("#buyerLoading").show();
     //-> Send Order Post (only db creation)
-    setTimeout(() => {
-        $("#buyerLoading").fadeOut(250, () => {
-            $("#buyerCheck").fadeIn(250);
-            setTimeout(() => {
-                $("#buyerCheck").fadeOut(250, () => {
-                    $("#buyerSuccess").fadeIn(250);
-                });
-            },500);
-        });
-    }, 2000);
+    sendOrder((success) => {
+        if(success || success === "true")
+            $("#buyerLoading").fadeOut(250, () => {
+                $("#buyerCheck").fadeIn(250);
+                setTimeout(() => {
+                    $("#buyerCheck").fadeOut(250, () => {
+                        $("#buyerSuccess").fadeIn(250);
+                    });
+                },500);
+            });
+        else
+            $("#buyerLoading").fadeOut(250, () => {
+                $("#buyerFail").fadeIn(250);
+            });
+    });
     //Stop loading, show success or fail
     //-> Send Notification & Invoice Post if success
 }
 
 function sendOrder(callback) {
+    $("#infoSuccessPaymentBar").hide();
+    $("#infoSuccessPaymentTransfer").hide();
+    $("#infoSuccessPaymentPayPal").hide();
     //Send Order Post
     console.log("Sending Basic Order Data...");
     $.post("backend/api/order/create.php",orderData,(data) => {
         let json = JSON.parse(data);
 
-        //Prepare success page before calling callback
-        callback();
-        orderID = json.orderID;
-        securityToken = json.orderNum;
+        //Prepare the success page before calling callback
+        $("#infoSuccessOrderID").html(json.orderID);
+        $("#infoSuccessOrderDate").html(json.orderDate);
+        $("#infoSuccessOrderPayment").html(paymentType[orderData.payment]);
+        $("#infoSuccessOrderTotalPrice").html(json.totalPrice);
+
+        if(orderData.payment === 0) $("#infoSuccessPaymentBar").show();
+        else if(orderData.payment === 1) $("#infoSuccessPaymentTransfer").show();
+        else if(orderData.payment === 2) $("#infoSuccessPaymentPayPal").show();
+
+        //Start Animation
+        callback(json.success);
         console.log("Basic Order Data Response recieved.");
+
+        //Prepare the rest.
+        if(json.success || json.success === "true") {
+            orderID = json.orderID;
+            securityToken = json.orderNum;
+            sendRest();
+            clearCart();
+        }
     });
 }
 
@@ -138,7 +163,7 @@ function sendRest() {
     //Both only one time possible, security token needed.
     //Send Adminnotifications
     console.log("Sending Adminnotification Request...");
-    $.getJSON("backend/api/order/nofiy.php",{orderID: orderID, token: securityToken},() => {
+    $.getJSON("backend/api/order/notify.php",{orderID: orderID, token: securityToken},() => {
 
         console.log("Adminnotification Response received.");
     });

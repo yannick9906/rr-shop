@@ -18,18 +18,21 @@
         /**
          * Customer constructor.
          *
+         * @param $customerID
          * @param $firstname
          * @param $lastname
          * @param $email
-         * @param $customerID
+         * @param $addressCity
+         * @param $addressStreet
+         * @param $addressZip
          */
         public function __construct($customerID, $firstname, $lastname, $email, $addressCity, $addressStreet, $addressZip) {
-            $this->firstname = utf8_encode($firstname);
-            $this->lastname = utf8_encode($lastname);
-            $this->email = utf8_encode($email);
+            $this->firstname = $firstname;
+            $this->lastname = $lastname;
+            $this->email = $email;
             $this->addressZip = $addressZip;
-            $this->addressCity = utf8_encode($addressCity);
-            $this->addressStreet = utf8_encode($addressStreet);
+            $this->addressCity = $addressCity;
+            $this->addressStreet = $addressStreet;
             $this->customerID = $customerID;
             $this->pdo = new PDO_MYSQL();
         }
@@ -52,6 +55,7 @@
         public static function checkEMail($customerEmail) {
             $pdo = new PDO_MYSQL();
             $res = $pdo->query("SELECT * FROM rrshop_customers WHERE email = :email", [":email" => $customerEmail]);
+            if(!isset($res->email)) return false;
             if($customerEmail == $res->email) return new Customer($res->customerID, $res->firstname, $res->lastname, $customerEmail, $res->addressCity, $res->addressStreet, $res->addressZip);
             else return false;
         }
@@ -68,12 +72,12 @@
         public static function createNew($firstname, $lastname, $email, $addressCity, $addressStreet, $addressZip) {
             $pdo = new PDO_MYSQL();
             $pdo->queryInsert("rrshop_customers", [
-                "firstname" =>  utf8_decode($firstname),
-                "lastname" =>  utf8_decode($lastname),
-                "email" =>  utf8_decode($email),
-                "addressStreet" =>  utf8_decode($addressStreet),
-                "addressCity" =>  utf8_decode($addressCity),
-                "addressZip" =>  utf8_decode($addressZip)
+                "firstname" =>  $firstname,
+                "lastname" =>  $lastname,
+                "email" =>  $email,
+                "addressStreet" =>  $addressStreet,
+                "addressCity" =>  $addressCity,
+                "addressZip" =>  $addressZip
             ]);
 
             return self::checkEMail($email);
@@ -106,12 +110,12 @@
             while($row = $stmt->fetchObject()) {
                 array_push($hits["customers"], [
                     "customerID" => $row->customerID,
-                    "firstname" => utf8_encode($row->firstname),
-                    "lastname" => utf8_encode($row->lastname),
-                    "email" => utf8_encode($row->email),
-                    "addressStreet" => utf8_encode($row->addressStreet),
+                    "firstname" => $row->firstname,
+                    "lastname" => $row->lastname,
+                    "email" => $row->email,
+                    "addressStreet" => $row->addressStreet,
                     "addressZip" => $row->addressZip,
-                    "addressCity" => utf8_encode($row->addressCity),
+                    "addressCity" => $row->addressCity,
                     "check" => md5($row->customerID+$row->firstname+$row->lastname+$row->email+$row->addressZip)
                 ]);
             }
@@ -145,12 +149,12 @@
          */
         public function saveChanges() {
             $this->pdo->queryUpdate("rrshop_customers",
-                ["firstname" => utf8_decode($this->firstname),
-                 "lastname" => utf8_decode($this->lastname),
-                 "email" => utf8_decode($this->email),
-                 "addressCity" => utf8_decode($this->addressCity),
-                 "addressZip" => utf8_decode($this->addressZip),
-                 "addressStreet" => utf8_decode($this->addressStreet)],
+                ["firstname" => $this->firstname,
+                 "lastname" => $this->lastname,
+                 "email" => $this->email,
+                 "addressCity" => $this->addressCity,
+                 "addressZip" => $this->addressZip,
+                 "addressStreet" => $this->addressStreet],
                 "customerID = :cid",
                 ["cid" => $this->customerID]
             );

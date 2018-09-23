@@ -86,6 +86,12 @@ function shopHome() {
     $("#shopDetail").hide();
     $("#shopCart").hide();
     $("#buyerInfo").hide();
+    $("#buyerConfirm").hide();
+    $("#buyerSuccess").hide();
+    $("#buyerFail").hide();
+    $("#buyerCheck").hide();
+    $("#buyerLoading").hide();
+    $("#innerBuyerInfo").show();
     document.title = "Home - RheinhessenRiders Shop";
     let shopHomeElem = $("#shopHome");
     shopHomeElem.show();

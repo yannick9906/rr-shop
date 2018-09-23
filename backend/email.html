@@ -22,6 +22,9 @@
         .fontSmall {
             font-size: 11px;
         }
+        .bolden {
+            font-weight: bold;
+        }
         a:hover {
             text-decoration: none;
         }
@@ -52,11 +55,44 @@
         <hr/>
         <div class="mainCenter fontBig">N&auml;chste Schritte:</div>
         <div style="{displayBar}" class="mainCenter fontMed">Bezahlmethode Bar:</div>
-        <div style="{displayBar}" class="mainCenter">So schnell wie m&ouml;glich den genannten Betrag entweder bei Philipp Lommel oder Yannick F&#233;lix in einem Umschlag mit deiner Rechnung ausgedruckt abgeben/einwerfen.<br/><br/>Philipp Lommel, Am Hillesheimer Weg 8a, 67596 Frettenheim<br/>Yannick F&#233;lix, Tucholskyweg 17, 55127 Mainz-Lerchenberg</div><br/>
+        <div style="{displayBar}" class="mainCenter">
+            <p>
+                <span class="bolden">M&ouml;glichkeit 1:</span><br/>
+                Drucke die im Anhang erhaltene Rechnung aus und packe diese zusammen mit dem Bargeld in einen Umschlag.<br/>
+                Dieser wird entweder bei
+                <br/><span class="bolden">Philipp Lommel, Am Hillesheimer Weg 8a, 67596 Frettenheim</span>
+                <br/> oder
+                <br/><span class="bolden">Yannick F&#233;lix, Tucholskyweg 17, 55127 Mainz</span>
+                <br/>eingeworfen.
+            </p>
+            <p>
+                <span class="bolden">M&ouml;glichkeit 2:</span><br/>
+                Drucke die im Anhang erhaltene Rechnung aus oder halte diese auf Deinem Smartphone bereit.<br/>
+                Zur n&auml;chsten M&ouml;glichkeit kannst Du bei
+                <br/><span class="bolden">Marcel Boll, Philipp Lommel oder Yannick F&#233;lix</span>
+                </br>bezahlen. Kartenzahlung ist nur bei Yannick m&ouml;glich.
+            </p>
+        </div><br/>
         <div style="{displayPaypal}" class="mainCenter fontMed">Bezahlmethode PayPal:</div>
-        <div style="{displayPaypal}" class="mainCenter">So schnell wie m&ouml;glich den genannten Betrag via 'PayPal Familie und Freunde Geld senden' an shop@rheinhessenriders.tk senden. Bestellnummer #{orderID} nicht vergessen.</div><br/>
+        <div style="{displayPaypal}" class="mainCenter">
+            <p>
+                Schicke den f&auml;lligen Betrag an folgende E-Mail Adresse mit der Methode 'Geld an Freunde und Familie senden'. Falls K&auml;uferschutz gew&uuml;nscht ist, m&uuml;ssen die Geb&uuml;hren selbst getragen werden. Als Notiz muss die Bestellnummer angegeben werden, ansonsten kann die Bezahlung nicht zugeordnet werden.<br/>
+                <br/>
+                <span class="bolden">shop@rheinhessenriders.tk</span>
+            </p>
+        </div><br/>
         <div style="{displayUberweisung}" class="mainCenter fontMed">Bezahlmethode &Uuml;berweisung:</div>
-        <div style="{displayUberweisung}" class="mainCenter">So schnell wie m&ouml;glich den genannten Betrag an folgendes Bankkonto unter Angabe der Bestellnummer #{orderID} &uuml;berweisen.<br/>solarisBank AG<br/>Yannick Felix<br/>DE26 1101 0100 2746 4008 44</div><br/>
+        <div style="{displayUberweisung}" class="mainCenter">
+            <p>
+                &Uuml;berweise den f&auml;lligen Betrag an folgendes Konto. Als Verwendungszweck muss die Bestellnummer angegeben werden, ansonsten kann die Bezahlung nicht zugeordnet werden.<br/>
+                <br/>
+                <span class="bolden">
+                    YANNICK FELIX<br/>
+                    DE26 1101 0100 2746 4008 44<br/>
+                    solarisBank AG
+                </span>
+            </p>
+        </div><br/>
         <hr/>
         <div class="mainCenter fontMed">Deinen Bestellstatus kannst du hier pr&uuml;fen:</div><br/>
         <div class="mainCenter fontBig"><a href="https://shop.rheinhessenriders.tk/#order-{orderID}" style="background-color: black;color:white;padding: 5px;border-radius: 3px;text-decoration: none !important;text-decoration: none;">Bestellstatus</a></div>
