@@ -4,8 +4,8 @@ function startOrders() {
     $("#listSearchIcon").addClass("mddi-magnify");
     $("#listHeader").html("<th data-field=\"id\" width=\"50px\">ID</th>\n" +
                         "<th data-field=\"name\" width=\"40%\">Status</th>\n" +
-                        "<th data-field=\"name\" width=\"20%\">Bezahlmethode</th>\n" +
-                        "<th data-field=\"name\" width=\"20%\">wird bestellt</th>\n");
+                        "<th data-field=\"name\" width=\"20%\">Bezahlung & Versand</th>\n" +
+                        "<th data-field=\"name\" width=\"20%\">Gesamtpreis</th>\n");
     $("#createNewBtnIcon").addClass("mddi-book-plus");
     $("#createNewTitle").html("Bestellung erstellen");
     $("#editTitle").html("Bestellung bearbeiten");
@@ -41,8 +41,8 @@ function resetOrders() {
     $("#createNewBtn").show();
 }
 
-const paymentType = ["Bar","Überweisung","PayPal","Lastschrift"];
-const shipmentType = ["Mainz-Lerchenberg (Yannick Félix)","Friesenheim (Philipp Lommel)", "Lieferung"];
+const paymentType = ["Bar / Karte","Überweisung","PayPal","Lastschrift"];
+const shipmentType = ["Mitnahme am nächsten Stammtisch","Selbstabholung", "Versand nach Hause"];
 const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='orange-text'>Bestellung bezahlt</span>", "<span class='orange-text'>Bestellung bestellt</span>","<span class='orange-text'>Bestellung versandt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
 
 let sortNameO = "#sort";
@@ -62,8 +62,8 @@ let listElemTmpltO = `
     <tr id="row-{{i}}" style="display: none;" onclick="location.hash = 'order-{{orderID}}'" class="clickable">
         <td>{{orderID}}</td>
         <td>{{customerName}} hat am {{timestamp}} bestellt.<br/>Status: {{{state}}}</td>
-        <td>{{payment}}</td>
-        <td>in Monat {{kw}}</td>
+        <td>{{payment}}<br/>{{shipping}}</td>
+        <td>{{totalPrice}} EUR</td>
     </tr>
     `;
 let templateO = Handlebars.compile(listElemTmpltO);
@@ -166,7 +166,7 @@ function updateDataO() {
             $(listNameO).html("");
             for(let i = 0; i < list.length; i++) {
                 let e = list[i];
-                $(listNameO).append(templateO({i: i,kw: e.estDate, orderID: e.orderID, customerName: e.customer.firstname+" "+e.customer.lastname, payment: paymentType[e.infoPayment], state: stateType[e.state], timestamp: e.timestamp}))
+                $(listNameO).append(templateO({i: i,kw: e.estDate, orderID: e.orderID, customerName: e.customer.firstname+" "+e.customer.lastname, payment: paymentType[e.payment], shipping: shipmentType[e.shipping], totalPrice: e.totalPrice, state: stateType[e.state], timestamp: e.timestamp}))
                 sizeO = i;
             }
             dataO = JSON.stringify(list);

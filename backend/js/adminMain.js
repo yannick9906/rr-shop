@@ -1,3 +1,5 @@
+let itemData = [];
+
 $(document).ready(() => {
     checkHash()
     window.onhashchange = checkHash;
@@ -35,6 +37,8 @@ function resetDash() {
     resetScan();
     $("#account").hide();
     $("#orderEdit").hide();
+
+    $(window).off('focusin', refreshInfo);
 }
 
 function checkHash() {

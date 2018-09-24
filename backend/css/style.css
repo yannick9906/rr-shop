@@ -1,0 +1,165 @@
+header, main, footer {
+    padding-left: 240px;
+    font-family: 'Dosis', sans-serif;
+}
+
+pre {
+    font-family: 'Share Tech Mono', monospace;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+.button-back {
+    line-height: 58px;
+    height: 58px;
+    font-size: 2.7rem;
+    left: 0;
+    position: fixed;
+}
+
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    z-index: 10000;
+}
+
+@font-face {
+    font-family: 'American-Captain';
+    src:url('../../fonts/American-Captain.ttf.woff') format('woff'),
+    url('../../fonts/American-Captain.ttf.svg#American-Captain') format('svg'),
+    url('../../fonts/American-Captain.ttf.eot'),
+    url('../../fonts/American-Captain.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.preview {
+    width: 100%;
+    padding: 0 20px 20px;
+    vertical-align: top;
+    height: 150px;
+    font-family: 'American-Captain';
+}
+
+.rr {
+    font-family: American-Captain;
+}
+
+.rrSpace {
+    font-family: American-Captain;
+    letter-spacing: 5px;
+}
+
+.bolden {
+    font-weight: bold;
+}
+
+.bigger {
+    font-size: 25px;
+}
+
+.price {
+    font-size: 30px;
+    vertical-align: top;
+}
+
+.spacer {
+    content: ' ';
+    height: 50px !important;
+    min-height: 50px;
+}
+
+/* label color */
+.white-input label {
+    color: #fff;
+}
+/* label focus color */
+.white-input:focus + label {
+    color: #fff;
+}
+/* label underline focus color */
+.white-input:focus {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+/* valid color */
+.white-input.valid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+/* invalid color */
+.white-input.invalid {
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #fff;
+}
+
+/* label focus color */
+.white-input {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 0 #fff;
+}
+
+.placeholder-big {
+    display: inline-block;
+    background-color: #bdbdbd;
+    border-radius: 15px;
+    height: 0px;
+    border: #bdbdbd 15px solid;
+    margin: 5px;
+}
+
+.placeholder-small {
+    display: inline-block;
+    background-color: #bdbdbd;
+    border-radius: 5px;
+    height: 0px;
+    border: #bdbdbd 5px solid;
+    margin: 5px;
+}
+
+.placeholder-big.light {
+    background-color: #e0e0e0;
+    border-color: #e0e0e0;
+}
+
+.placeholder-small.light {
+    background-color: #e0e0e0;
+    border-color: #e0e0e0;
+}
+
+.sub {
+    padding-left: 57px;
+}
+
+.anim {
+    transition: position 1s ease-out;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.sidenav-overlay {
+    z-index: 996;
+}
+
+.inverted {
+    filter: invert(100%);
+}
+
+.mono {
+    font-family: "Courier New", Courier, monospace;
+}

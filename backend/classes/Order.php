@@ -120,7 +120,8 @@
                     "customer" => Customer::fromCustomerID($row->customer),
                     "state" => $row->state,
                     "payment" => $row->payment,
-                    "estDate" => $row->estDate,
+                    "shipping" => $row->shipping,
+                    "totalPrice" => $row->totalPrice,
                     "check" => md5($row->orderID+$row->timestamp+$row->customer)
                 ]);
             }
