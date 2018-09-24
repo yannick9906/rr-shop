@@ -1,125 +1,80 @@
-/**
- * Created by yanni on 2017-10-09.
- */
-
-let cartItemTemplate = Handlebars.compile(`
+let templateCartItem = Handlebars.compile(`
 <div class="col s12">
     <div class="card horizontal hide-on-small-only">
         <div class="card-image" style="max-width: 35%; width: 35%;">
-            <img src="{{{imageSrc}}}">
+            <img src="{{{imageUrl}}}">
         </div>
         <div class="card-stacked">
-            <div class="card-content">
-                <span class="right rr price">{{itemPrice}} €</span>
-                <span class="rr bigger">{{itemName}}</span>
-                {{{itemData}}}
+            <div class="card-content" id="cardContent{{{cardID}}}1">
+                <span class="right rr price">{{price}} €</span>
+                <span class="rr bigger">{{displayName}}</span>
+                <p><span class="bolden">Anzahl: </span>{{amount}}</p>
+
             </div>
             <div class="card-action">
-                <a href="#{{{itemRef}}}">Info</a>
-                <a href="#shopping-cart" class="red-text" onclick="delItem({{{itemID}}})">Entfernen</a>
+                <a href="#{{{itemName}}}">Info</a>
+                <a href="#shopping-cart" class="red-text" onclick="delItem({{{cardID}}})">Entfernen</a>
             </div>
         </div>
     </div>
     <div class="card hide-on-med-and-up">
         <div class="card-image">
-            <img src="{{{imageSrc}}}">
-            <span class="card-title rr">{{itemName}}</span>
+            <img src="{{{imageUrl}}}">
+            <span class="card-title rr">{{displayName}}</span>
         </div>
-        <div class="card-content">
-            <span class="right rr price">{{itemPrice}} €</span>
-            {{{itemData}}}
+        <div class="card-content" id="cardContent{{{cardID}}}2">
+            <span class="right rr price">{{price}} €</span>
+            <p><span class="bolden">Anzahl: </span>{{amount}}</p>
+            
         </div>
         <div class="card-action">
-            <a href="#{{{itemRef}}}">Info</a>
-            <a href="#shopping-cart" class="red-text" onclick="delItem({{{itemID}}})">Entfernen</a>
+            <a href="#{{{itemName}}}">Info</a>
+            <a href="#shopping-cart" class="red-text" onclick="delItem({{{cardID}}})">Entfernen</a>
         </div>
     </div>
 </div>
 `);
 
+let templateCartData = Handlebars.compile(`
+{{#each itemData}}
+    <p><span class="bolden">{{@key}}: </span>{{this}}</p>
+{{/each}}
+`);
+
 function displayCart() {
     console.log("Check Cart");
-    let items = Lockr.smembers("items");
-    $.post("backend/api/item/checkCart.php", {items: JSON.stringify(items)}, (data) => {
+    let cartItems = Lockr.smembers("items");
+    $.post("backend/api/cart/checkCart.php", {items: JSON.stringify(cartItems)}, (data) => {
         items = JSON.parse(data);
         Lockr.rm("items");
         for(let i = 0; i < items.length; i++) {
             Lockr.sadd("items", items[i]);
         }
         console.log("Display Cart");
-        console.log(items);
+        console.log(cartItems);
         let target = $("#cart-list");
         target.html("");
         $("#buyButton").removeClass("disabled");
         $("#clearButton").removeClass("disabled");
         let totalPrice = 0;
         let shipping = 0;
-        for(let i = 0; i < items.length; i++) {
-            if(items[i].itemType === 1) {
-                target.append(cartItemTemplate({
-                    imageSrc:"img/hoodie/Hoodie-Back-1-25.jpg",
-                    itemID:i,
-                    itemRef:"hoodie",
-                    itemName:"RheinhessenRiders Hoodie",
-                    itemPrice: items[i].price*items[i].amount,
-                    itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
-                    '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
-                    '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
-                    '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
-                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
-                    '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
-                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
-                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
-                }));
-                totalPrice += items[i].price*items[i].amount;
-            } else if(items[i].itemType === 2) {
-                target.append(cartItemTemplate({
-                    imageSrc:"img/shirt/Shirt-Back-"+cityAbbrToLong(items[i].itemData.city)+".jpg",
-                    itemID:i,
-                    itemRef:"shirt",
-                    itemName:"RheinhessenRiders Shirt",
-                    itemPrice: items[i].price*items[i].amount,
-                    itemData: '<p><span class="bolden">Name auf der Front: </span>'+items[i].itemData.frontName+'</p>' +
-                    '<p><span class="bolden">Stadt: </span>'+cityAbbrToLong(items[i].itemData.city)+'</p>' +
-                    '<p><span class="bolden">Größe: </span>'+items[i].itemData.size.toUpperCase()+'</p>' +
-                    '<p><span class="bolden">Farbe: </span>'+items[i].itemData.color+'</p>' +
-                    '<p><span class="bolden">RR Insta: </span>'+items[i].itemData.insta+'</p>' +
-                    '<p><span class="bolden">Herzschlag: </span>'+items[i].itemData.heart+'</p>' +
-                    '<p><span class="bolden">RR Rechter Arm: </span>'+items[i].itemData.rightarm+'</p>' +
-                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
-                }));
-                totalPrice += items[i].price*items[i].amount;
-            } else if(items[i].itemType === 3) {
-                target.append(cartItemTemplate({
-                    imageSrc:"img/sticker/Sticker-Mainz-2.jpg",
-                    itemID:i,
-                    itemRef:"sticker",
-                    itemName:"RheinhessenRiders Sticker",
-                    itemPrice: items[i].price*items[i].amount,
-                    itemData: '<p><span class="bolden">Typ: </span>'+items[i].itemData.type+'</p>' +
-                    '<p><span class="bolden">Anzahl: </span>'+items[i].amount+'</p>'
-                }));
-                totalPrice += items[i].price*items[i].amount;
-            } else if(items[i].itemType === 5) {
-                target.append(cartItemTemplate({
-                    imageSrc: "img/mug/Mug-1-pre.jpg",
-                    itemID: i,
-                    itemRef: "mug",
-                    itemName: "RheinhessenRiders Tasse",
-                    itemPrice: items[i].price * items[i].amount,
-                    itemData: '<p><span class="bolden">Name auf der Tasse: </span>' + items[i].itemData.mugName + '</p>' +
-                    '<p><span class="bolden">Stadt: </span>' + cityAbbrToLong(items[i].itemData.city) + '</p>' +
-                    '<p><span class="bolden">Farbe: </span>' + items[i].itemData.color + '</p>' +
-                    '<p><span class="bolden">Herzschlag: </span>' + items[i].itemData.heart + '</p>' +
-                    '<p><span class="bolden">Anzahl: </span>' + items[i].amount + '</p>'
-                }));
-                totalPrice += items[i].price * items[i].amount;
-            } else if(items[i].itemType === 4) {
-                shipping = items[i].price;
-            }
+        for(let i = 0; i < cartItems.length; i++) {
+            let thisItem = itemData[cartItems[i].itemName];
+            totalPrice += cartItems[i].price;
+            target.append(templateCartItem({
+                cardID: i,
+                displayName: thisItem.displayName,
+                imageUrl: thisItem.imageUrl,
+                price: cartItems[i].price,
+                amount: cartItems[i].amount,
+                itemName: cartItems[i].itemName
+            }));
+            itemDataToDisplay(cartItems[i], i, "cardContent");
         }
         $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + "+shipping+"€ Versand");
-        if(items.length === 0) {
+
+
+        if(cartItems.length === 0) {
             target.html(`
 <div style="height: 50px; "></div>
 <p class="center">Der Einkaufswagen ist leer.</p>
@@ -132,13 +87,31 @@ function displayCart() {
     });
 }
 
-function cityAbbrToLong(city) {
-    if(city === "mz") return "Mainz";
-    else if(city === "wi") return "Wiesbaden";
-    else if(city === "az") return "Alzey";
-    else if(city === "wo") return "Worms";
-    else if(city === "ffm") return "Frankfurt";
-    else return null;
+function itemDataToDisplay(item, id, nameIdentifier) {
+    let displayableData = {};
+    console.log(item.itemData);
+    $.getJSON("backend/api/item/getItemDetail.php",{itemName: item.itemName}, (json) => {
+        let features = {};
+        for(let j=0; j<json.length; j++){
+            features[json[j].featureName] = json[j];
+        }
+
+        for(let i=0; i<Object.keys(item.itemData).length; i++) {
+            let thisFeature = features[Object.keys(item.itemData)[i]]
+
+            if(thisFeature.possibleValues != "*") displayableData[thisFeature.displayName] = JSON.parse(thisFeature.possibleValues)[Object.values(item.itemData)[i]];
+            else displayableData[thisFeature.displayName] = Object.values(item.itemData)[i];
+        }
+        $("#"+nameIdentifier+id+"1").append(templateCartData({itemData: displayableData}));
+        $("#"+nameIdentifier+id+"2").append(templateCartData({itemData: displayableData}));
+    });
+}
+
+function updateCartAmount() {
+    $("#cartAmount").html(Lockr.smembers("items").length);
+    let items = Lockr.smembers("items");
+
+    //TODO eCommerce Tracking
 }
 
 function delItem(itemID) {
@@ -157,51 +130,10 @@ function clearCart() {
     updateCartAmount();
 }
 
-function updateCartAmount() {
-    $("#cartAmount").html(Lockr.smembers("items").length);
-    let items = Lockr.smembers("items");
-    let total = 0;
-
-    for(let i = 0; i < items.length; i++) {
-        if(items[i].itemType === 1) {
-            _paq.push(['addEcommerceItem',
-                "1", // (required) SKU: Product unique identifier
-                "RheinhessenRiders Hoodie", // (optional) Product name
-                "Clothing", // (optional) Product category, string or array of up to 5 categories
-                items[i].price, // (recommended) Product price
-                items[i].amount // (optional, default to 1) Product quantity
-            ]);
-            total += items[i].price*items[i].amount;
-        } else if(items[i].itemType === 2) {
-            _paq.push(['addEcommerceItem',
-                "2", // (required) SKU: Product unique identifier
-                "RheinhessenRiders Shirt", // (optional) Product name
-                "Clothing", // (optional) Product category, string or array of up to 5 categories
-                items[i].price, // (recommended) Product price
-                items[i].amount // (optional, default to 1) Product quantity
-            ]);
-            total += items[i].price*items[i].amount;
-        } else if(items[i].itemType === 3) {
-            _paq.push(['addEcommerceItem',
-                "3", // (required) SKU: Product unique identifier
-                "RheinhessenRiders Sticker", // (optional) Product name
-                "Accessories", // (optional) Product category, string or array of up to 5 categories
-                items[i].price, // (recommended) Product price
-                items[i].amount // (optional, default to 1) Product quantity
-            ]);
-            total += items[i].price*items[i].amount;
-        } else if(items[i].itemType === 3) {
-            _paq.push(['addEcommerceItem',
-                "5", // (required) SKU: Product unique identifier
-                "RheinhessenRiders Tasse", // (optional) Product name
-                "Accessories", // (optional) Product category, string or array of up to 5 categories
-                items[i].price, // (recommended) Product price
-                items[i].amount // (optional, default to 1) Product quantity
-            ]);
-            total += items[i].price*items[i].amount;
-        }
-    }
-    _paq.push(['trackEcommerceCartUpdate',
-        total]); // (required) Cart amount
-    _paq.push(['trackPageView']);
+function shopCart() {
+    $("#shopHome").hide();
+    $("#shopCart").show();
+    $("#breadCart").show();
+    $("#backbutton").show();
+    displayCart();
 }

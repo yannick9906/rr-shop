@@ -26,7 +26,7 @@
         protected function connect() {
             $this->pass = getMysqlPasskey();
             $this->dbname = getMysqlDBname();
-            return new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->dbname,$this->user,$this->pass);
+            return new PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->dbname.';charset=utf8',$this->user,$this->pass);
         }
         public function query($query, $array = []) {
             $db = $this->connect();
@@ -88,7 +88,7 @@
             $stmt = $db->prepare("insert into `" . $table . "` set " . $bindString . $custom);
             $this->bindValues($stmt, $fields);
             $stmt->execute();
-            var_dump($stmt->errorInfo());
+            //var_dump($stmt->errorInfo());
             return $stmt->fetchObject();
         }
         /**

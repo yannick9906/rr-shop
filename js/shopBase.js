@@ -1,196 +1,46 @@
-/**
- * Created by yanni on 2017-10-09.
- */
 let currentUrl = location.href;
-let slider1, slider2, slider4;
-const names = [
-    "Ranzlaube", "Gruppenzwerg", "Taschentuch", "Marcele", "Bollinator", "Nebelmaschine", "Der Ranz",
-    "Ranz izz Life", "Pocketbike", "Da machste nix!", "1:30 oder 30:1 ?", "Gruppen-mechaniker", "Hoesqvarna?",
-    "Sumo ist Life"
-]
+let itemData = [];
+let itemActiveTemplate = Handlebars.compile(`
+        <div class="col s12 m{{width}}">
+            <div class="card" onclick="location.hash = '#{{itemName}}'">
+                <div class="card-image">
+                    <img src="{{{imageUrl}}}">
+                    <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">{{displayName}}</span>
+                </div>
+                <div class="card-content black-text">
+                    <p>{{{description}}}</p>
+                </div>
+                <div class="card-action">
+                    {{#if otherAmount}}
+                    <a href="#{{itemName}}" class="green-text text-darken-2">ab {{basePrice}}€ / {{baseAmount}} Stk - details</a>
+                    {{else}}
+                    <a href="#{{itemName}}" class="green-text text-darken-2">ab {{basePrice}}€ / Stk - details</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+`);
 
-function hoodieDetail() {
-    document.title = "RR Hoodie - RheinhessenRiders Shop";
-    _paq.push(['setReferrerUrl', currentUrl]);
-    currentUrl = '' + window.location.hash;
-    _paq.push(['setCustomUrl', currentUrl]);
-    _paq.push(['setDocumentTitle', document.title]);
-
-    // remove all previously assigned custom variables, requires Piwik 3.0.2
-    _paq.push(['deleteCustomVariables', 'page']);
-    _paq.push(['setGenerationTimeMs', 0]);
-    _paq.push(['trackPageView']);
-
-    $("#shopHome").hide();
-    $("#shopDetailHoodie").show();
-    $("#backbutton").show();
-    refreshPreviewHoodie();
-    slider1 = $('#slider1');
-    slider1.carousel({fullWidth: true, indicators: true});
-    slider1.css('height', $('#slider1 .carousel-item img').height()+"px");
-    //window.setInterval(() => slider1.carousel('next'),5000);
-    let previewFront = $("#preview-front");
-    let random = Math.floor(Math.random()*names.length);
-    previewFront.html("<span>"+names[random]+"</span>");
-    previewFront.textfill({maxFontPixels:100, minFontPixels:10});
-    $("select").select();
-
-    _paq.push(['setEcommerceView',
-        "1", // (required) SKU: Product unique identifier
-        "RheinhessenRiders Hoodie", // (optional) Product name
-        "Clothing" // (optional) Product category, or array of up to 5 categories
-    ]);
-    _paq.push(['trackPageView']);
-}
-
-function mugDetail() {
-    document.title = "RR Tasse - RheinhessenRiders Shop";
-    _paq.push(['setReferrerUrl', currentUrl]);
-    currentUrl = '' + window.location.hash;
-    _paq.push(['setCustomUrl', currentUrl]);
-    _paq.push(['setDocumentTitle', document.title]);
-
-    // remove all previously assigned custom variables, requires Piwik 3.0.2
-    _paq.push(['deleteCustomVariables', 'page']);
-    _paq.push(['setGenerationTimeMs', 0]);
-    _paq.push(['trackPageView']);
-
-    $("#shopHome").hide();
-    $("#shopDetailMug").show();
-    $("#backbutton").show();
-    refreshPreviewMug();
-    slider4 = $('#slider4');
-    slider4.carousel({fullWidth: true, indicators: true});
-    slider4.css('height', $('#slider4 .carousel-item img').height()+"px");
-    //window.setInterval(() => slider1.carousel('next'),5000);
-    let previewFront = $("#preview-front");
-    let random = Math.floor(Math.random()*names.length);
-    previewFront.html("<span>"+names[random]+"</span>");
-    previewFront.textfill({maxFontPixels:100, minFontPixels:10});
-    $("select").select();
-
-    _paq.push(['setEcommerceView',
-        "5", // (required) SKU: Product unique identifier
-        "RheinhessenRiders Tasse", // (optional) Product name
-        "Accessories" // (optional) Product category, or array of up to 5 categories
-    ]);
-    _paq.push(['trackPageView']);
-}
-
-function stickerDetail() {
-
-    document.title = "RR Sticker - RheinhessenRiders Shop";
-    _paq.push(['setReferrerUrl', currentUrl]);
-    currentUrl = '' + window.location.hash.substr(1);
-    _paq.push(['setCustomUrl', currentUrl]);
-    _paq.push(['setDocumentTitle', document.title]);
-
-    // remove all previously assigned custom variables, requires Piwik 3.0.2
-    _paq.push(['deleteCustomVariables', 'page']);
-    _paq.push(['setGenerationTimeMs', 0]);
-    _paq.push(['trackPageView']);
-
-    $("#shopHome").hide();
-    $("#shopDetailSticker").show();
-    $("#backbutton").show();
-    refreshPreviewSticker();
-    slider3 = $('#slider3');
-    slider3.carousel({fullWidth: true, indicators: true});
-    slider3.css('height', $('#slider3 .carousel-item img').height()+"px");
-
-    _paq.push(['setEcommerceView',
-        "3", // (required) SKU: Product unique identifier
-        "RheinhessenRiders Sticker", // (optional) Product name
-        "Accessories", // (optional) Product category, or array of up to 5 categories
-        1 // (optional) Product Price as displayed on the page
-    ]);
-    _paq.push(['trackPageView']);
-}
-
-function shirtDetail() {
-    document.title = "RR Shirt - RheinhessenRiders Shop";
-    _paq.push(['setReferrerUrl', currentUrl]);
-    currentUrl = '' + window.location.hash;
-    _paq.push(['setCustomUrl', currentUrl]);
-    _paq.push(['setDocumentTitle', document.title]);
-
-    // remove all previously assigned custom variables, requires Piwik 3.0.2
-    _paq.push(['deleteCustomVariables', 'page']);
-    _paq.push(['setGenerationTimeMs', 0]);
-    _paq.push(['trackPageView']);
-
-    $("#shopHome").hide();
-    $("#shopDetailShirt").show();
-    $("#backbutton").show();
-    refreshPreviewShirt();
-    slider2 = $('#slider2');
-    slider2.carousel({fullWidth: true, indicators: true});
-    slider2.css('height', $('#slider2 .carousel-item img').height()+"px");
-    let previewFront = $("#preview-front-shirt");
-    let random = Math.floor(Math.random()*names.length);
-    previewFront.html("<span>"+names[random]+"</span>");
-    previewFront.textfill({maxFontPixels:100, minFontPixels:10});
-
-    _paq.push(['setEcommerceView',
-        "2", // (required) SKU: Product unique identifier
-        "RheinhessenRiders Shirt", // (optional) Product name
-        "Clothing" // (optional) Product category, or array of up to 5 categories
-    ]);
-    _paq.push(['trackPageView']);
-}
-
-function shoppingCart() {
-    document.title = "Einkaufswagen - RheinhessenRiders Shop";
-    _paq.push(['setReferrerUrl', currentUrl]);
-    currentUrl = '' + window.location.hash;
-    _paq.push(['setCustomUrl', currentUrl]);
-    _paq.push(['setDocumentTitle', document.title]);
-
-    // remove all previously assigned custom variables, requires Piwik 3.0.2
-    _paq.push(['deleteCustomVariables', 'page']);
-    _paq.push(['setGenerationTimeMs', 0]);
-    _paq.push(['trackPageView']);
-
-    $("#shopHome").hide();
-    $("#shopping-cart").show();
-    $("#breadCart").show();
-    $("#backbutton").show();
-    displayCart();
-    updateCartAmount();
-    resetBuy()
-}
-
-function shopHome() {
-    document.title = "Home - RheinhessenRiders Shop";
-
-    $.post("backend/api/accesscodecheck.php",{accesscode: Cookies.get("accesscode")}, (data) => {
-        let json = JSON.parse(data);
-
-        $("#shopDetailShirt").hide();
-        $("#shopDetailSticker").hide();
-        $("#shopDetailHoodie").hide();
-        $("#shopDetailMug").hide();
-        $("#shopping-cart").hide();
-        $("#buyerInfo").hide();
-        $("#orderInfo").hide();
-        $("#backbutton").hide();
-        $("#impress").hide();
-        $("#cart-list-bought").html("");
-        window.scrollTo(0, 0);
-        updateCartAmount();
-        resetBuy()
-        if (json.success == "true") {
-            $("#shopHome").show();
-            $("#shoppingcartbtn").show();
-            $("#shopCode").hide();
-            hashChangeCallback();
-        } else {
-            $("#shopHome").hide();
-            $("#shoppingcartbtn").hide();
-            $("#shopCode").show();
-        }
-    });
-}
+let itemPreActiveTemplate = Handlebars.compile(`
+        <div class="col s12 m{{width}}">
+            <div class="card">
+                <div class="card-image">
+                    <img src="{{{imageUrl}}}">
+                    <span class="card-title rrSpace" style="text-shadow: 0 0 10px black;">{{displayName}}</span>
+                </div>
+                <div class="card-content black-text">
+                    <p>{{{description}}}</p>
+                </div>
+                <div class="card-action">
+                                        {{#if otherAmount}}
+                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€ / {{baseAmount}} Stk - bald verfügbar</a>
+                    {{else}}
+                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€ / Stk - bald verfügbar</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+`);
 
 function hashChange() {
     shopHome();
@@ -200,12 +50,9 @@ function hashChange() {
 function hashChangeCallback() {
     if(window.location.hash) {
         var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-        if (hash === "hoodie") hoodieDetail();
-        else if (hash === "shirt") shirtDetail();
-        else if (hash === "sticker") stickerDetail();
-        else if (hash === "mug") mugDetail();
-        else if (hash === "shopping-cart") shoppingCart();
-        else if (hash === "buyerInfo") buy();
+        if (hash.startsWith("rr_")) detail(hash);
+        else if (hash === "shopping-cart") shopCart();
+        else if (hash === "buyerInfo") checkOut();
         else if (hash.startsWith("order")) orderInfo(hash);
         else {
             _paq.push(['setReferrerUrl', currentUrl]);
@@ -229,43 +76,70 @@ function updateBreadCrump() {
     }
 }
 
-function shopClosed() {
-    $.post("backend/api/accesscodecheck.php",{accesscode: Cookies.get("beta")}, (data) => {
-        let json = JSON.parse(data);
-        if (json.success) {
-            $("#shoppingcartbtn").show();
-            $("#shopClosed").hide();
-            shopHome();
-            if(window.location.hash) {
-                var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
-                if (hash === "hoodie") hoodieDetail();
-                else if (hash === "shirt") shirtDetail();
-                else if (hash === "sticker") stickerDetail();
-                else if (hash === "shopping-cart") shoppingCart();
-                else if (hash === "buyerInfo") buy();
-                else if (hash.startsWith("order")) orderInfo(hash);
-                else {
-                    _paq.push(['setReferrerUrl', currentUrl]);
-                    currentUrl = '' + window.location.hash;
-                    _paq.push(['setCustomUrl', currentUrl]);
-                    _paq.push(['setDocumentTitle', document.title]);
-
-                    // remove all previously assigned custom variables, requires Piwik 3.0.2
-                    _paq.push(['deleteCustomVariables', 'page']);
-                    _paq.push(['setGenerationTimeMs', 0]);
-                    _paq.push(['trackPageView']);
-                }
-            }
-        } else {
-            shopHome();
-            $("#shopHome").hide();
-            $("#shoppingcartbtn").hide();
-        }
-    });
-}
-
 function checkAccessCode() {
     let code = $("#accesscode").val();
     Cookies.set("accesscode", md5(code), {expires: 90});
     shopHome();
 }
+
+function shopHome() {
+    $("#shopDetail").hide();
+    $("#shopCart").hide();
+    $("#buyerInfo").hide();
+    $("#buyerConfirm").hide();
+    $("#buyerSuccess").hide();
+    $("#buyerFail").hide();
+    $("#buyerCheck").hide();
+    $("#buyerLoading").hide();
+    $("#innerBuyerInfo").show();
+    document.title = "Home - RheinhessenRiders Shop";
+    let shopHomeElem = $("#shopHome");
+    shopHomeElem.show();
+
+    $.post("backend/api/accesscodecheck.php",{accesscode: Cookies.get("accesscode")}, (data) => {
+
+        let json = JSON.parse(data);
+        $("#backbutton").hide();
+        $("#cart-list-bought").html("");
+        window.scrollTo(0, 0);
+        updateCartAmount();
+        //resetBuy()
+        if (json.success == "true") {
+            if(shopHomeElem.html() == "") {
+                $.post("backend/api/item/getItemList.php", null, (d) => {
+                    let items = JSON.parse(d);
+                    let widths = [6, 6, 4, 4, 4, 4, 4, 4]
+
+                    for (let i = 0; i < items.length; i++) {
+                        items[i].width = widths[i];
+                        items[i].imageLink = JSON.parse(items[i].imageLink);
+                        items[i].imageUrl = items[i].imageLink[0];
+                        items[i].otherAmount = parseInt(items[i].baseAmount) != 1;
+                        if (items[i].active == 1) shopHomeElem.append(itemActiveTemplate(items[i]));
+                        else if (items[i].active == 2) shopHomeElem.append(itemPreActiveTemplate(items[i]));
+                        itemData[items[i].itemName] = items[i];
+                    }
+
+                    $("#shoppingcartbtn").show();
+                    $("#shopCode").hide();
+                    hashChangeCallback();
+                });
+            } else {
+                hashChangeCallback();
+            }
+        } else {
+            shopHomeElem.hide();
+            $("#shoppingcartbtn").hide();
+            $("#shopCode").show();
+        }
+    });
+}
+
+
+$(document).ready(() => {
+    $("#shopHome").html("");
+    window.onhashchange = hashChange;
+    shopHome();
+    updateBreadCrump();
+    M.AutoInit();
+});

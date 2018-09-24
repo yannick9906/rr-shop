@@ -2,8 +2,8 @@
     /**
      * Created by PhpStorm.
      * User: yanni
-     * Date: 2018-02-05
-     * Time: 12:47 AM
+     * Date: 9/20/2018
+     * Time: 8:17 PM
      */
 
     ini_set('display_errors', 1);
@@ -20,5 +20,8 @@
     require_once "../../classes/User.php";
 
     $items = $_POST["items"];
+    $shipAll = $_POST["shipping"]==2;
 
-    echo \rrshop\Item::checkPriceAndCorrect($items);
+    $correctedCart = \rrshop\Item::checkPriceAndCorrect(json_decode($items, true));
+
+    echo json_encode(\rrshop\Item::addShipping($correctedCart,$shipAll));

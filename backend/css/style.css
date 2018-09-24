@@ -1,7 +1,7 @@
-/*header, main, footer {
+header, main, footer {
     padding-left: 240px;
     font-family: 'Dosis', sans-serif;
-}*/
+}
 
 pre {
     font-family: 'Share Tech Mono', monospace;
@@ -33,10 +33,10 @@ pre {
 
 @font-face {
     font-family: 'American-Captain';
-    src:url('../fonts/American-Captain.ttf.woff') format('woff'),
-    url('../fonts/American-Captain.ttf.svg#American-Captain') format('svg'),
-    url('../fonts/American-Captain.ttf.eot'),
-    url('../fonts/American-Captain.ttf.eot?#iefix') format('embedded-opentype');
+    src:url('../../fonts/American-Captain.ttf.woff') format('woff'),
+    url('../../fonts/American-Captain.ttf.svg#American-Captain') format('svg'),
+    url('../../fonts/American-Captain.ttf.eot'),
+    url('../../fonts/American-Captain.ttf.eot?#iefix') format('embedded-opentype');
     font-weight: normal;
     font-style: normal;
 }

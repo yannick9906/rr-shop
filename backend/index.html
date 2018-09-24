@@ -6,7 +6,8 @@
 
     <link type="text/css" rel="stylesheet" href="lib/materialize10/css/materialize.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="../lib/mdi/css/materialdesignicons.min.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="../css/style.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="css/style.css" media="all" />
+    <link href="https://fonts.googleapis.com/css?family=Dosis|Share+Tech+Mono" rel="stylesheet">
 
     <link rel="manifest" href="manifest.json" />
     <link rel="manifest" href="rrshop.appcache" />
@@ -65,8 +66,8 @@
         <div class="navbar-fixed">
             <nav class="black">
                 <div class="nav-wrapper">
-                    <a href="#!" class="brand-logo hide-on-med-and-down" style="padding-left: 310px;">RRShop Admin Panel</a>
-                    <a href="#!" class="brand-logo hide-on-large-only">RRSHOP</a>
+                    <a href="#!" class="brand-logo hide-on-med-and-down rrSpace" style="padding-left: 310px;">RRShop Admin Panel</a>
+                    <a href="#!" class="brand-logo hide-on-large-only rrSpace">RRSHOP</a>
                     <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="mddi mddi-menu small"></i></a>
                 </div>
             </nav>
@@ -84,10 +85,13 @@
                 <li id="nav-account"><a href="#account" ><!--class="sidenav-close" >--><i class="mddi mddi-account-circle"></i>Account</a></li>
                 <li id="nav-logout"><a onclick="doLogout();" ><!--class="sidenav-close" >--><i class="mddi mddi-logout-variant"></i>Logout</a></li>
                 <li><div class="divider"></div></li>
-                <li class="subheader"><a class="subheader black-text bolden">Main</a></li>
+                <li class="subheader"><a class="subheader black-text bolden">Bestellungen</a></li>
                 <li id="nav-order-scan" class="active"><a href="#scan" ><!--class="sidenav-close" >--><i class="mddi mddi-qrcode-scan"></i>Bestellungsscanner</a></li>
                 <li id="nav-orders"><a href="#orders"><!--class="sidenav-close" >--><i class="mddi mddi-star-circle"></i>Bestellungen</a></li>
                 <li id="nav-customers"><a href="#customers"><!--class="sidenav-close" >--><i class="mddi mddi-account-multiple"></i>Kunden</a></li>
+                <li><div class="divider"></div></li>
+                <li class="subheader"><a class="subheader black-text bolden">Artikel</a></li>
+                <li id="nav-articels" class="active"><a href="#articels" ><!--class="sidenav-close" >--><i class="mddi mddi-duck"></i>Artikelliste</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="subheader black-text bolden">Administration</a></li>
                 <!--<li id="nav-database"><a href="../adminer/"><i class="mddi mddi-database"></i>Datenbank</a></li>-->
@@ -254,7 +258,7 @@
         </main>
         <main id="orderEdit" style="display: none;">
             <div class="container row">
-                <div class="container col s12 l5">
+                <div class="container col s12">
                     <div class="card-panel row black" id="scan-panel" style="display: none;">
                         <div class="input-field col s11">
                             <i class="prefix mddi mddi-barcode-scan"></i>
@@ -265,29 +269,62 @@
                             <i class="mddi mddi-send right white-text"></i>
                         </a>
                     </div>
-
                     <div class="row card-panel">
-                        <div class="col s12 bolden" id="oe-header">Bestellung #... bearbeiten</div><br/><br/>
-                        <div class="col s6 bolden">Bezahlmethode: </div><div class="col s6" id="info-payment">...</div>
-                        <div class="col s6 bolden">Kundenname: </div><div class="col s6" id="info-customername">...</div>
-                        <div class="col s6 bolden">Kundenemail: </div><div class="col s6" id="info-customermail">...</div>
-                        <div class="col s6 bolden">Kundenadresse: </div><div class="col s6" id="info-customeraddress">...</div>
-                        <div class="col s6 bolden">Bedruckung: </div><div class="col s6" id="info-printing">...</div>
-                        <div class="col s6 bolden">Gesamtpreis: </div><div class="col s6" id="info-price">...</div>
-                        <div class="col s6 bolden">Status: </div><div class="col s6" id="info-state">...</div>
-                        <div class="col s6 bolden">Notiz: </div><div class="input-field col s6"><textarea id="info-note" class="materialize-textarea">...</textarea><label for="info-note">Notiz bearbeiten</label></div>
-                        <a style="margin-bottom: 1rem;" onclick="actionSave()" id="info-action-save" class="waves-effect waves-light btn green lighten-2 white-text col s12">Änderungen Speichern</a>
-                        <div class="col s12"><br/><br/></div>
-                        <a style="margin-bottom: 1rem;" onclick="actionPayed()" id="info-action-payed" class="waves-effect waves-light btn black white-text col s12">Bestellung bezahlt</a>
-                        <a style="margin-bottom: 1rem;" onclick="actionPrinted()" id="info-action-printed" class="waves-effect waves-light btn black white-text col s12">Bestellung im Druck</a>
-                        <a style="margin-bottom: 1rem;" onclick="actionShipped()" id="info-action-shipped" class="waves-effect waves-light btn black white-text col s12">Bestellung im Versandt</a>
-                        <a style="margin-bottom: 1rem;" onclick="actionCompleted()" id="info-action-completed" class="waves-effect waves-light btn black white-text col s12">Bestellung abgeschlossen</a>
-                        <a style="margin-bottom: 1rem;" onclick="actionStorno()" id="info-action-storno" class="waves-effect waves-light btn red white-text col s12">Bestellung Storno</a>
-                        <a style="margin-bottom: 1rem;" onclick="actionStornoOk()" id="info-action-storno-yes" class="waves-effect waves-light btn green white-text col s6"><i class="mddi mddi-check"></i></a>
-                        <a style="margin-bottom: 1rem;" onclick="actionStornoCancel()" id="info-action-storno-no" class="waves-effect waves-light btn black white-text col s6"><i class="mddi mddi-close"></i></a>
+                        <div class="col s12 l6 row">
+                            <div class="col s12 bolden" id="oe-header">Bestellung #... bearbeiten</div><br/><br/>
+                            <pre style="display: none;" id="orderjson"></pre>
+                            <div class="col s12 m3 bolden">Kundendaten: </div><div class="col s12 m9" id="info-customerdata">...</div>
+                            <div class="col s4 m3 bolden">Datum: </div><div class="col s8 m9" id="info-timestamp">...</div>
+                            <div class="col s4 m3 bolden">Bezahlmethode: </div><div class="col s8 m9" id="info-payment">...</div>
+                            <div class="col s4 m3 bolden">Versandart: </div><div class="col s8 m9" id="info-shipping">...</div>
+                            <div class="col s4 m3 bolden">Gesamtpreis: </div><div class="col s8 m9" id="info-price">...</div>
+                            <div class="col s4 m3 bolden">Notiz: </div><div class="input-field col s8 m9"><textarea id="info-note" class="materialize-textarea">...</textarea><label for="info-note">Notiz bearbeiten</label></div>
+                            <a style="margin-bottom: 1rem;" onclick="actionSave()" id="info-action-save" class="waves-effect waves-light btn green lighten-2 white-text col s12">Änderungen Speichern</a>
+                            <a style="margin-bottom: 1rem;" onclick="actionStorno()" id="info-action-storno" class="waves-effect waves-light btn red white-text col s12">Bestellung Storno</a>
+                            <a style="margin-bottom: 1rem;" onclick="actionStornoOk()" id="info-action-storno-yes" class="waves-effect waves-light btn green white-text col s6"><i class="mddi mddi-check"></i></a>
+                            <a style="margin-bottom: 1rem;" onclick="actionStornoCancel()" id="info-action-storno-no" class="waves-effect waves-light btn black white-text col s6"><i class="mddi mddi-close"></i></a>
+                        </div>
+                        <div class="col s12 l6 row">
+                            <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-3 center z-depth-0 bigger col s12">Status: <span id="info-state"></span></div>
+                            <div id="info-action-cluster-online">
+                                <div class="col s12" style="padding:0;">Zahlung: Online (PayPal, Überweisung):</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Zahlungseingang...</div>
+                                <a style="margin-bottom: 1rem;" onclick="actionPayed()" id="info-action-payed" class="waves-effect waves-light btn black white-text col s12">Zahlung eingegangen</a>
+                            </div>
+                            <div id="info-action-cluster-offline">
+                                <div class="col s12" style="padding:0;">Zahlung: Offline (Bar, Karte):</div>
+                                <a style="margin-bottom: 1rem;padding-bottom: 3rem;padding-top:1rem;vertical-align: center;" onclick="actionPayed()" id="info-action-pay-cash" class="waves-effect waves-light btn green white-text center col s6"> BAR</a>
+                                <a style="margin-bottom: 1rem;padding-bottom: 3rem;padding-top:1rem;vertical-align: center;" onclick="actionPayNow()" id="info-action-pay-card" class="waves-effect waves-light btn green white-text center col offset-s1 s5"> Karte</a>
+                            </div>
+                            <div id="info-action-cluster-waiting">
+                                <div class="col s12" style="padding:0;">Bearbeitung:</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Bestellung...</div>
+                            </div>
+                            <div id="info-action-cluster-ready">
+                                <div class="col s12" style="padding:0;">Bearbeitung:</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Fertigstellung...</div>
+                            </div>
+                            <div id="info-action-cluster-start-shipment">
+                                <div class="col s12" style="padding:0;">Versand:</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">TODO Sendungsverfolgungsfeld...</div>
+                            </div>
+                            <div id="info-action-cluster-shipment">
+                                <div class="col s12" style="padding:0;">Versand:</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Zustellung...</div>
+                            </div>
+                            <div id="info-action-cluster-complete">
+                                <div class="col s12" style="padding:0;">Abgeschlossen:</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Retoure? Refund?</div>
+                            </div>
+                            <a style="margin-bottom: 1rem; margin-right: 1rem;" onclick="actionUndo()" id="info-action-undo" class="waves-effect waves-light btn orange white-text col s6">rückgängig</a>
+                            <!--<a style="margin-bottom: 1rem;" onclick="actionPrinted()" id="info-action-printed" class="waves-effect waves-light btn black white-text col s12">Bestellung im Druck</a>
+                            <a style="margin-bottom: 1rem;" onclick="actionShipped()" id="info-action-shipped" class="waves-effect waves-light btn black white-text col s12">Bestellung im Versandt</a>
+                            <a style="margin-bottom: 1rem;" onclick="actionCompleted()" id="info-action-completed" class="waves-effect waves-light btn black white-text col s12">Bestellung abgeschlossen</a>
+                            -->
+                        </div>
                     </div>
                 </div>
-                <div class="container col s12 l6 offset-l1">
+                <div class="container col s12 ">
                     <div class="card-panel row">
                         <div class="col s12" id="orderData">
 
@@ -316,7 +353,7 @@
     $(document).ready(() => {
         $('.sidenav').sidenav();
         $(".dropdown-button").dropdown();
-        //$("select").material_select();
+        $('select').select();
     });
 </script>
 </html>

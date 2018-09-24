@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>RheinhessenRiders Shop</title>
+
+    <link type="text/css" rel="stylesheet" href="lib/materialize/sass/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="rrshop.appcache" />
+    <link rel="icon" href="icon/RRMainz-32.png">
+    <link rel="apple-touch-icon-precomposed" href="img/preview/RH%20Mainz.jpg">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;" onresize="updateBreadCrump();">
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//stats.rheinhessenriders.tk/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<!-- End Piwik Code -->
+
+<!-- Navbar -->
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper black">
+            <a href="#home" class="brand-logo hide-on-med-and-down rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-large-only hide-on-small-only rr" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-med-and-up rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RR Shop</a>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="card-panel container">
+        <h3 class="rrSpace">Versandkosten:</h3>
+
+        <p>
+            <b>Versandkosten bei Zustellung nach Hause:</b> 5.00 Euro<br/>
+            <b>Versand von Stickern generell:</b> 1.50 Euro<br/>
+        </p>
+    </div>
+</div>
+
+
+<footer class="page-footer grey darken-2" style="position:fixed;bottom: 0; width: 100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text rr">RheinhessenRiders</h5>
+                <p class="grey-text text-lighten-4">
+                    Was sind wir? RheinhessenRiders steht nicht für eine kleine WhatsApp-Gruppen aus Rheinhessen... Nein wir sind eine Familie von Zweiradverrückten, die ein Hobby teilen und so viel Zeit miteinander verbringen. Monatliche Stammtische, kleinere Meets und Natürlich Ausfahrten sind Standart - Zu gegebenen Anlass finden jedoch auch Korsos und Fotoshootings statt, für die wir mehrere interne Fotographen haben.<br/>
+                    Organisiert wird alles von einem tollen Adminteam und Strub 😂<br/>
+                    <br/>
+                    Was musst du mitbringen, um zu uns zu kommen?<br/>
+
+                    - Du bist mindestens 16 Jahre alt und hast A1 (oder in absehbarer Zeit)<br/>
+                    - Du kommst aus dem Raum Rheinhessen 🍷<br/>
+                    - Du verkraftest auch mal ein paar blöde Sprüche (gilt besonders für Rc und Cbr Fahrer)<br/>
+                    <br/>
+                    Und liebst natürlich das <s>Shisharauchen</s> Motorradfahren 👌🏻
+                </p>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text rr">Legal</h5>
+                <ul>
+                    <li><a class="white-text" href="/impress.html">Impressum</a></li>
+                    <li><a class="white-text" href="/versand.html">Versand</a></li>
+                    <li><a class="white-text" href="/agb.html">AGB</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text rr">Social</h5>
+                <ul>
+                    <li><a class="white-text" href="https://www.youtube.com/channel/UCSp56Iw86o1O1zBYNqpYIqA">YouTube</a></li>
+                    <li><a class="white-text" href="https://www.instagram.com/rheinhessen_riders">Instagram</a></li>
+                    <li><a class="white-text" href="https://www.facebook.com/rheinhessenriders/?ref=br_rs">Facebook</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made with <a class="grey-text text-darken-4" href="http://materializecss.com">Materialize</a> by Yannick F&#233;lix
+        </div>
+    </div>
+</footer>
+</body>
+</html>

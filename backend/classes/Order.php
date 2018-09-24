@@ -12,29 +12,33 @@
 
     class Order implements \JsonSerializable {
         private $customer, $items, $timestamp;
-        private $orderID, $payment, $state, $estDate, $note;
+        private $orderID, $orderNum, $payment, $shipping, $state, $note, $totalPrice;
         private $pdo;
 
         /**
          * Order constructor.
          *
          * @param $orderID
+         * @param $orderNum
          * @param $customer
          * @param $items
          * @param $payment
+         * @param $shipping
          * @param $state
-         * @param $estDate
          * @param $note
+         * @param $timestamp
          */
-        public function __construct($orderID, $customer, $items, $payment, $state, $estDate, $note, $timestamp) {
+        public function __construct($orderID, $orderNum, $customer, $items, $payment, $shipping, $state, $note, $timestamp, $totalPrice) {
             $this->orderID = $orderID;
             $this->customer = Customer::fromCustomerID(intval($customer));
             $this->items = $items;
             $this->payment = intval($payment);
             $this->state =intval($state);
-            $this->estDate = $estDate;
+            $this->shipping = $shipping;
             $this->note = $note;
             $this->timestamp = strtotime($timestamp);
+            $this->orderNum = $orderNum;
+            $this->totalPrice = $totalPrice;
             $this->pdo = new PDO_MYSQL();
         }
 
@@ -46,11 +50,11 @@
             if(substr( $orderID, 0, 2 ) === "5a") {
                 $pdo = new PDO_MYSQL();
                 $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderNum = :oid", [":oid" => $orderID]);
-                return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
+                return new Order($res->orderID, $res->orderNum, $res->customer, $res->items, $res->payment, $res->shipping, $res->state, $res->note, $res->timestamp, $res->totalPrice);
             } else {
                 $pdo = new PDO_MYSQL();
                 $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
-                return new Order($orderID, $res->customer, $res->items, $res->payment, $res->state, $res->estDate, $res->note, $res->timestamp);
+                return new Order($res->orderID, $res->orderNum, $res->customer, $res->items, $res->payment, $res->shipping, $res->state, $res->note, $res->timestamp, $res->totalPrice);
             }
         }
 
@@ -58,76 +62,31 @@
          * @param Customer $customer
          * @param string   $items
          * @param int      $payment
+         * @param int      $shipping
          * @param string   $note
          * @return Order
-         * @throws \PHPMailer\PHPMailer\Exception
          */
-        public static function createOrder($customer, $items, $payment, $note) {
+        public static function createOrder($customer, $items, $payment, $shipping, $note, $orderPrice) {
             $pdo = new PDO_MYSQL();
-            $template = new \Template();
-            $mail = new PHPMailer(true);
 
-            $items = Item::checkPriceAndCorrect($items);
             $res1 = $pdo->query("SELECT orderID FROM rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
-            $orderNum = intval($res1->orderID)+1;
+            $orderID = intval($res1->orderID)+1;
             //Create Order
             $pdo->queryInsert("rrshop_orders", [
-                "orderID" => $orderNum,
+                "orderID" => $orderID,
                 "orderNum" => uniqid(),
                 "customer" => $customer->getCustomerID(),
                 "payment" => intval($payment),
-                "items" => $items,
+                "shipping" => intval($shipping),
+                "items" => json_encode($items),
+                "totalPrice" => $orderPrice,
                 "note" => $note
-            ], ", estDate = MONTH(CURDATE())+1");
+            ]);
             $res = $pdo->query("SELECT orderID FROM rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
 
-            //Send Email
-            $template->assign("orderID", $res->orderID);
-            switch ($payment) {
-                case 0:
-                    $template->assign("displayBar", "");
-                    $template->assign("displayPaypal", "display: none;");
-                    $template->assign("displayUberweisung", "display: none;");
-                    break;
-                case 1:
-                    $template->assign("displayBar", "display: none;");
-                    $template->assign("displayPaypal", "display: none;");
-                    $template->assign("displayUberweisung", "");
-                    break;
-                case 2:
-                    $template->assign("displayBar", "display: none;");
-                    $template->assign("displayPaypal", "");
-                    $template->assign("displayUberweisung", "display: none;");
-                    break;
-            }
-            $invoice = new Invoice($items, $res->orderID, $customer, $note, time());
-            $totalPrice = $invoice->preparePDF();
-            $invoice->getPDFAttachment();
-
-            User::sendOutNotifications(json_encode([
-                "info"  => "statechange",
-                "orderState" => 0,
-                "customerName" => $customer->getFirstname()." ".$customer->getLastname(),
-                "orderID" => $res->orderID,
-                "orderPrice" => $totalPrice
-            ]));
-
-            $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
-            $mail->addAddress($customer->getEmail(),$customer->getFirstname()." ".$customer->getLastname());
-            $mail->addEmbeddedImage('../../../img/reimann.jpg', 'reimann');
-            $mail->addEmbeddedImage('../../../img/title.jpg', 'title');
-            $mail->addAttachment($res->orderID."-rechnung.pdf",$res->orderID."-rechnung.pdf");
-
-
-            $mail->isHTML(true);
-            //Todo add plain text version
-            $mail->Subject = "Deine Bestellung #".$res->orderID." ist eingegangen.";
-            $mail->Body    = $template->parse("../../email.html");
-            $mail->AltBody = "";
-
-            $mail->send();
             //Return Order
-            return self::fromOrderID($res->orderID);
+            if($res->orderID == $orderID) return self::fromOrderID($res->orderID);
+            else return null;
         }
 
         /**
@@ -161,7 +120,8 @@
                     "customer" => Customer::fromCustomerID($row->customer),
                     "state" => $row->state,
                     "payment" => $row->payment,
-                    "estDate" => $row->estDate,
+                    "shipping" => $row->shipping,
+                    "totalPrice" => $row->totalPrice,
                     "check" => md5($row->orderID+$row->timestamp+$row->customer)
                 ]);
             }
@@ -229,11 +189,103 @@
                 ["state" => $this->state,
                  "items" => $this->items,
                  "payment" => $this->payment,
+                 "shipping" => $this->shipping,
                  "note" => $this->note,
-                 "estDate" => $this->estDate],
+                 "totalPrice" => $this->totalPrice],
                 "orderID = :oid",
                 ["oid" => $this->orderID]
             );
+        }
+
+        /**
+         *  HTML5 Notification to all subscribed admins
+         */
+        public function notifyAdmins() {
+            User::sendOutNotifications(json_encode([
+                "info"  => "statechange",
+                "orderState" => 0,
+                "customerName" => $this->customer->getFirstname()." ".$this->customer->getLastname(),
+                "orderID" => $this->orderID,
+                "orderPrice" => $this->totalPrice
+            ]));
+        }
+
+        /**
+         * Generate Invoice for the current order and save it
+         *
+         * @return string Invoice Path
+         */
+        public function saveInvoice() {
+            $invoice = new Invoice($this->items, $this->orderID, $this->customer, $this->note, $this->timestamp, $this->totalPrice);
+            $invoice->preparePDF();
+            return $invoice->getPDFFile();
+            //$invoice->showPDF();
+        }
+
+        /**
+         * Send Email Notification to the Customer
+         *
+         * @throws \PHPMailer\PHPMailer\Exception
+         */
+        public function sendEmailToCustomer() {
+
+            if($this->state == 0) {
+                //Send Email
+                $template = new \Template();
+                $mail = new PHPMailer(true);
+
+                $template->assign("orderID", $this->orderID);
+                switch ($this->payment) {
+                    case 0:
+                        $template->assign("displayBar", "");
+                        $template->assign("displayPaypal", "display: none;");
+                        $template->assign("displayUberweisung", "display: none;");
+                        break;
+                    case 1:
+                        $template->assign("displayBar", "display: none;");
+                        $template->assign("displayPaypal", "display: none;");
+                        $template->assign("displayUberweisung", "");
+                        break;
+                    case 2:
+                        $template->assign("displayBar", "display: none;");
+                        $template->assign("displayPaypal", "");
+                        $template->assign("displayUberweisung", "display: none;");
+                        break;
+                }
+                //$template->assign("displayPaypal", "");
+                //$template->assign("displayUberweisung", "");
+                //$template->assign("displayBar", "");
+
+                $mail->setFrom("noreply@shop.rheinhessenriders.tk", "RheinhessenRiders Shop");
+                $mail->addAddress($this->customer->getEmail(), $this->customer->getFirstname() . " " . $this->customer->getLastname());
+                $mail->addEmbeddedImage('../../../img/reimann.jpg', 'reimann');
+                $mail->addEmbeddedImage('../../../img/title.jpg', 'title');
+                $mail->addAttachment("../../invoices/" . $this->orderID . "-rechnung.pdf", $this->orderID . "-rechnung.pdf");
+
+
+                $mail->isHTML(true);
+                //Todo add plain text version
+                $mail->Subject = "RR Shop - Deine Bestellung #" . $this->orderID . " ist eingegangen.";
+                $mail->Body = $template->parse("../../email.html");
+                $mail->AltBody = "";
+
+                $mail->send();
+            }
+            //TODO add other state update Mails
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getOrderNum() {
+            return $this->orderNum;
+        }
+
+        /**
+         * @param mixed $orderNum
+         */
+        public function setOrderNum($orderNum) {
+            $this->orderNum = $orderNum;
         }
 
         /**
@@ -327,7 +379,33 @@
             $this->note = $note;
         }
 
+        /**
+         * @return mixed
+         */
+        public function getShipping() {
+            return $this->shipping;
+        }
 
+        /**
+         * @param mixed $shipping
+         */
+        public function setShipping($shipping) {
+            $this->shipping = $shipping;
+        }
+
+        /**
+         * @return mixed
+         */
+        public function getTotalPrice() {
+            return $this->totalPrice;
+        }
+
+        /**
+         * @param mixed $totalPrice
+         */
+        public function setTotalPrice($totalPrice) {
+            $this->totalPrice = $totalPrice;
+        }
 
         /**
          * Specify dataO which should be serialized to JSON
@@ -340,11 +418,14 @@
         public function jsonSerialize() {
             return [
                 "orderID" => $this->orderID,
+                "orderNum" => $this->orderNum,
                 "state" => $this->state,
-                "nextClose" => $this->estDate,
+                "shipping" => $this->shipping,
                 "payment" => $this->payment,
+                "timestamp" => date("d. m. Y H:i",$this->timestamp),
                 "customername" => $this->customer->getFirstname()." ".$this->customer->getLastname(),
                 "customer" => $this->customer,
+                "totalPrice" => $this->totalPrice,
                 "note" => $this->note,
                 "items" => json_decode($this->items)
             ];
