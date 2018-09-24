@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>RheinhessenRiders Shop</title>
+
+    <link type="text/css" rel="stylesheet" href="lib/materialize/sass/materialize.css" media="screen,projection"/>
+    <link rel="stylesheet" href="lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+
+    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="rrshop.appcache" />
+    <link rel="icon" href="icon/RRMainz-32.png">
+    <link rel="apple-touch-icon-precomposed" href="img/preview/RH%20Mainz.jpg">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="background: url('img/backgroundRR.jpg') no-repeat center center fixed; -webkit-background-size: cover;background-size: cover;" onresize="updateBreadCrump();">
+<!-- Piwik -->
+<script type="text/javascript">
+    var _paq = _paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u="//stats.rheinhessenriders.tk/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', '1']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+</script>
+<!-- End Piwik Code -->
+
+<!-- Navbar -->
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper black">
+            <a href="#home" class="brand-logo hide-on-med-and-down rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-large-only hide-on-small-only rr" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RheinhessenRiders Shop</a>
+            <a href="#home" class="brand-logo hide-on-med-and-up rrSpace" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">RR Shop</a>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="card-panel container">
+        <h3 class="rrSpace">Datenschutz</h3>
+        <h4>Datenschutzerklärung</h4>
+        <p>Verantwortliche Stelle im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutzgrundverordnung (DSGVO), ist:</p>
+        <p>RheinhessenRiders Shop Inh. Yannick Félix
+            <br>Tucholskyweg 17
+            <br>55127 Mainz</p>
+        <h5>Ihre Betroffenenrechte</h5>
+        <p>Unter den angegebenen Kontaktdaten unseres Datenschutzbeauftragten können Sie jederzeit folgende Rechte ausüben:</p>
+        <ul>
+            <li>Auskunft über Ihre bei uns gespeicherten Daten und deren Verarbeitung (Art. 15 DSGVO),</li>
+            <li>Berichtigung unrichtiger personenbezogener Daten (Art. 16 DSGVO),</li>
+            <li>Löschung Ihrer bei uns gespeicherten Daten (Art. 17 DSGVO),</li>
+            <li>Einschränkung der Datenverarbeitung, sofern wir Ihre Daten aufgrund gesetzlicher Pflichten noch nicht löschen dürfen (Art. 18 DSGVO),</li>
+            <li>Widerspruch gegen die Verarbeitung Ihrer Daten bei uns (Art. 21 DSGVO) und</li>
+            <li>Datenübertragbarkeit, sofern Sie in die Datenverarbeitung eingewilligt haben oder einen Vertrag mit uns abgeschlossen haben (Art. 20 DSGVO).</li>
+        </ul>
+        <p>Sofern Sie uns eine Einwilligung erteilt haben, können Sie diese jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+        <p>Sie können sich jederzeit mit einer Beschwerde an eine Aufsichtsbehörde wenden, z. B. an die zuständige Aufsichtsbehörde des Bundeslands Ihres Wohnsitzes oder an die für uns als verantwortliche Stelle zuständige Behörde.</p>
+        <p>Eine Liste der Aufsichtsbehörden (für den nichtöffentlichen Bereich) mit Anschrift finden Sie unter: <a href="https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html" target="_blank" rel="nofollow noopener">https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html</a>.</p>
+        <h5>Erfassung allgemeiner Informationen beim Besuch unserer Website</h5>
+        <h6>Art und Zweck der Verarbeitung:</h6>
+        <p>Wenn Sie auf unsere Website zugreifen, d.h., wenn Sie sich nicht registrieren oder anderweitig Informationen übermitteln, werden automatisch Informationen allgemeiner Natur erfasst. Diese Informationen (Server-Logfiles) beinhalten etwa die Art des Webbrowsers, das verwendete Betriebssystem, den Domainnamen Ihres Internet-Service-Providers, Ihre IP-Adresse und ähnliches. </p>
+        <p>Sie werden insbesondere zu folgenden Zwecken verarbeitet:</p>
+        <ul>
+            <li>Sicherstellung eines problemlosen Verbindungsaufbaus der Website,</li>
+            <li>Sicherstellung einer reibungslosen Nutzung unserer Website,</li>
+            <li>Auswertung der Systemsicherheit und -stabilität sowie</li>
+            <li>zu weiteren administrativen Zwecken.</li>
+        </ul>
+        <p>Wir verwenden Ihre Daten nicht, um Rückschlüsse auf Ihre Person zu ziehen. Informationen dieser Art werden von uns ggfs. statistisch ausgewertet, um unseren Internetauftritt und die dahinterstehende Technik zu optimieren.</p>
+        <h6>Rechtsgrundlage:</h6>
+        <p>Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. f DSGVO auf Basis unseres berechtigten Interesses an der Verbesserung der Stabilität und Funktionalität unserer Website.</p>
+        <h6>Empfänger:</h6>
+        <p>Empfänger der Daten sind ggf. technische Dienstleister, die für den Betrieb und die Wartung unserer Webseite als Auftragsverarbeiter tätig werden.</p>
+        <h6>Speicherdauer:</h6>
+        <p>Die Daten werden gelöscht, sobald diese für den Zweck der Erhebung nicht mehr erforderlich sind. Dies ist für die Daten, die der Bereitstellung der Webseite dienen, grundsätzlich der Fall, wenn die jeweilige Sitzung beendet ist.</p>
+        <h6>Bereitstellung vorgeschrieben oder erforderlich:</h6>
+        <p>Die Bereitstellung der vorgenannten personenbezogenen Daten ist weder gesetzlich noch vertraglich vorgeschrieben. Ohne die IP-Adresse ist jedoch der Dienst und die Funktionsfähigkeit unserer Website nicht gewährleistet. Zudem können einzelne Dienste und Services nicht verfügbar oder eingeschränkt sein. Aus diesem Grund ist ein Widerspruch ausgeschlossen. </p>
+        <h5>Cookies</h5>
+        <h6>Art und Zweck der Verarbeitung:</h6>
+        <p>Wie viele andere Webseiten verwenden wir auch so genannte „Cookies“. Bei Cookies handelt es sich um kleine Textdateien, die auf Ihrem Endgerät (Laptop, Tablet, Smartphone o.ä.) gespeichert werden, wenn Sie unsere Webseite besuchen. </p>
+        <p>Hierdurch erhalten wir bestimmte Daten wie z. B. IP-Adresse, verwendeter Browser und Betriebssystem.</p>
+        <p>Cookies können nicht verwendet werden, um Programme zu starten oder Viren auf einen Computer zu übertragen. Anhand der in Cookies enthaltenen Informationen können wir Ihnen die Navigation erleichtern und die korrekte Anzeige unserer Webseiten ermöglichen.</p>
+        <p>In keinem Fall werden die von uns erfassten Daten an Dritte weitergegeben oder ohne Ihre Einwilligung eine Verknüpfung mit personenbezogenen Daten hergestellt.</p>
+        <p>Natürlich können Sie unsere Website grundsätzlich auch ohne Cookies betrachten. Internet-Browser sind regelmäßig so eingestellt, dass sie Cookies akzeptieren. Im Allgemeinen können Sie die Verwendung von Cookies jederzeit über die Einstellungen Ihres Browsers deaktivieren. Bitte verwenden Sie die Hilfefunktionen Ihres Internetbrowsers, um zu erfahren, wie Sie diese Einstellungen ändern können. Bitte beachten Sie, dass einzelne Funktionen unserer Website möglicherweise nicht funktionieren, wenn Sie die Verwendung von Cookies deaktiviert haben.</p>
+        <h6>Speicherdauer und eingesetzte Cookies:</h6>
+        <p>Soweit Sie uns durch Ihre Browsereinstellungen oder Zustimmung die Verwendung von Cookies erlauben, können folgende Cookies auf unseren Webseiten zum Einsatz kommen:</p>
+        <p>Zugangscode (14 Tage)</p>
+        <p>Soweit diese Cookies (auch) personenbezogene Daten betreffen können, informieren wir Sie darüber in den folgenden Abschnitten.</p>
+        <p>Sie können über Ihre Browsereinstellungen einzelne Cookies oder den gesamten Cookie-Bestand löschen. Darüber hinaus erhalten Sie Informationen und Anleitungen, wie diese Cookies gelöscht oder deren Speicherung vorab blockiert werden können. Je nach Anbieter Ihres Browsers finden Sie die notwendigen Informationen unter den nachfolgenden Links:</p>
+        <ul>
+            <li>Mozilla Firefox: <a href="https://support.mozilla.org/de/kb/cookies-loeschen-daten-von-websites-entfernen" target="_blank" rel="nofollow noopener">https://support.mozilla.org/de/kb/cookies-loeschen-daten-von-websites-entfernen</a></li>
+            <li>Internet Explorer: <a href="https://support.microsoft.com/de-de/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank" rel="nofollow noopener">https://support.microsoft.com/de-de/help/17442/windows-internet-explorer-delete-manage-cookies</a></li>
+            <li>Google Chrome: <a href="https://support.google.com/accounts/answer/61416?hl=de" target="_blank" rel="nofollow noopener">https://support.google.com/accounts/answer/61416?hl=de</a></li>
+            <li>Opera: <a href="http://www.opera.com/de/help" target="_blank" rel="nofollow noopener">http://www.opera.com/de/help</a></li>
+            <li>Safari: <a href="https://support.apple.com/kb/PH17191?locale=de_DE&viewlocale=de_DE" target="_blank" rel="nofollow noopener">https://support.apple.com/kb/PH17191?locale=de_DE&viewlocale=de_DE</a></li>
+        </ul>
+        <h5>Erbringung kostenpflichtiger Leistungen</h5>
+        <h6>Art und Zweck der Verarbeitung:</h6>
+        <p>Zur Erbringung kostenpflichtiger Leistungen werden von uns zusätzliche Daten erfragt, wie z.B. Zahlungsangaben, um Ihre Bestellung ausführen zu können.</p>
+        <h6>Rechtsgrundlage:</h6>
+        <p>Die Verarbeitung der Daten, die für den Abschluss des Vertrages erforderlich ist, basiert auf Art. 6 Abs. 1 lit. b DSGVO.</p>
+        <h6>Empfänger:</h6>
+        <p>Empfänger der Daten sind ggf. Auftragsverarbeiter.</p>
+        <h6>Speicherdauer:</h6>
+        <p>Wir speichern diese Daten in unseren Systemen bis die gesetzlichen Aufbewahrungsfristen abgelaufen sind. Diese betragen grundsätzlich 6 oder 10 Jahre aus Gründen der ordnungsmäßigen Buchführung und steuerrechtlichen Anforderungen.</p>
+        <h6>Bereitstellung vorgeschrieben oder erforderlich:</h6>
+        <p>Die Bereitstellung Ihrer personenbezogenen Daten erfolgt freiwillig. Ohne die Bereitstellung Ihrer personenbezogenen Daten können wir Ihnen keinen Zugang auf unsere angebotenen Inhalte und Leistungen gewähren.</p>
+        <h5>Verwendung von Matomo</h5>
+        <h6>Art und Zweck der Verarbeitung:</h6>
+        <p>Diese Website benutzt Matomo (ehemals Piwik), eine Open-Source-Software zur statistischen Auswertung von Besucherzugriffen. Anbieter der Software Matomo ist die InnoCraft Ltd., 150 Willis St, 6011 Wellington, Neuseeland.</p>
+        <p>Matomo verwendet sog. Cookies, also Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglichen.</p>
+        <p>Die durch das Cookie erzeugten Informationen über Ihre Nutzung des Internetangebotes werden auf einem Server in Deutschland gespeichert.</p>
+        <p>Die IP-Adresse wird unmittelbar nach der Verarbeitung und vor deren Speicherung anonymisiert. Sie haben die Möglichkeit, die Installation der Cookies durch Änderung der Einstellung Ihrer Browser-Software zu verhindern. Wir weisen Sie darauf hin, dass bei entsprechender Einstellung eventuell nicht mehr alle Funktionen dieser Website zur Verfügung stehen.</p>
+        <p>Sie können sich entscheiden, ob in Ihrem Browser ein eindeutiger Webanalyse-Cookie abgelegt werden darf, um dem Betreiber der Webseite die Erfassung und Analyse verschiedener statistischer Daten zu ermöglichen.</p>
+        <p>Nähere Informationen zu den Privatsphäre-Einstellungen der Matomo Software finden Sie unter folgendem Link: <a href="https://matomo.org/docs/privacy/" target="_blank" rel="nofollow noopener"><em>https://matomo.org/docs/privacy/</em></a><em>.</em></p>
+        <h6>Rechtsgrundlage:</h6>
+        <p>Die Verarbeitung der Daten erfolgt auf Grundlage einer Einwilligung des Nutzers (Art. 6 Abs. 1 lit. a DSGVO).</p>
+        <h6>Empfänger:</h6>
+        <p>Empfänger der Daten sind ggf. Auftragsverarbeiter.</p>
+        <h6>Speicherdauer:</h6>
+        <p>Die Löschung der Daten erfolgt, sobald diese für unsere Aufzeichnungszwecke nicht mehr erforderlich sind.</p>
+        <p>In unserem Fall geschieht die nach folgendem Zeitraum: 2 Jahre.</p>
+        <h6>Bereitstellung vorgeschrieben oder erforderlich:</h6>
+        <p>Die Bereitstellung Ihrer personenbezogenen Daten erfolgt freiwillig, allein auf Basis Ihrer Einwilligung. Sofern Sie den Zugriff unterbinden, kann es hierdurch zu Funktionseinschränkungen auf der Website kommen.</p>
+        <h6>Widerruf der Einwilligung:</h6>
+        <p>Sie können die Speicherung der Cookies durch eine entsprechende Einstellung Ihrer Browser-Software verhindern; wir weisen Sie jedoch darauf hin, dass Sie in diesem Fall gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich werden nutzen können.</p>
+        <h6>Profiling:</h6>
+        <p>Mit Hilfe des Tracking-Tools Matomo kann das Verhalten der Besucher der Webseite bewertet und die Interessen analysiert werden. Hierzu erstellen wir ein pseudonymes Nutzerprofil.</p>
+        <h5>Verwendung von Scriptbibliotheken (Google Webfonts)</h5>
+        <h6>Art und Zweck der Verarbeitung:</h6>
+        <p>Um unsere Inhalte browserübergreifend korrekt und grafisch ansprechend darzustellen, verwenden wir auf dieser Website „Google Web Fonts“ der Google LLC (1600 Amphitheatre Parkway, Mountain View, CA 94043, USA; nachfolgend „Google“) zur Darstellung von Schriften.</p>
+        <p>Die Datenschutzrichtlinie des Bibliothekbetreibers Google finden Sie hier: <a href="https://www.google.com/policies/privacy/">https://www.google.com/policies/privacy/</a></p>
+        <h6>Rechtsgrundlage:</h6>
+        <p>Rechtsgrundlage für die Einbindung von Google Webfonts und dem damit verbundenen Datentransfer zu Google ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). </p>
+        <h6>Empfänger:</h6>
+        <p>Der Aufruf von Scriptbibliotheken oder Schriftbibliotheken löst automatisch eine Verbindung zum Betreiber der Bibliothek aus. Dabei ist es theoretisch möglich – aktuell allerdings auch unklar ob und ggf. zu welchen Zwecken – dass der Betreiber in diesem Fall Google Daten erhebt.</p>
+        <h6>Speicherdauer:</h6>
+        <p>Wir erheben keine personenbezogenen Daten, durch die Einbindung von Google Webfonts.</p>
+        <p>Weitere Informationen zu Google Web Fonts finden Sie unter <a href="https://developers.google.com/fonts/faq">https://developers.google.com/fonts/faq</a> und in der Datenschutzerklärung von Google: <a href="https://www.google.com/policies/privacy/">https://www.google.com/policies/privacy/</a>.</p>
+        <h6>Drittlandtransfer:</h6>
+        <p>Google verarbeitet Ihre Daten in den USA und hat sich dem EU_US Privacy Shield unterworfen <a href="https://www.privacyshield.gov/EU-US-Framework">https://www.privacyshield.gov/EU-US-Framework</a>.</p>
+        <h6>Bereitstellung vorgeschrieben oder erforderlich:</h6>
+        <p>Die Bereitstellung der personenbezogenen Daten ist weder gesetzlich, noch vertraglich vorgeschrieben. Allerdings kann ohne die korrekte Darstellung der Inhalte von Standardschriften nicht ermöglicht werden.</p>
+        <h6>Widerruf der Einwilligung:</h6>
+        <p>Zur Darstellung der Inhalte wird regelmäßig die Programmiersprache JavaScript verwendet. Sie können der Datenverarbeitung daher widersprechen, indem Sie die Ausführung von JavaScript in Ihrem Browser deaktivieren oder einen Einbindung JavaScript-Blocker installieren. Bitte beachten Sie, dass es hierdurch zu Funktionseinschränkungen auf der Website kommen kann.</p>
+        <h5>SSL-Verschlüsselung</h5>
+        <p>Um die Sicherheit Ihrer Daten bei der Übertragung zu schützen, verwenden wir dem aktuellen Stand der Technik entsprechende Verschlüsselungsverfahren (z. B. SSL) über HTTPS.</p>
+        <h5>Änderung unserer Datenschutzbestimmungen</h5>
+        <p>Wir behalten uns vor, diese Datenschutzerklärung anzupassen, damit sie stets den aktuellen rechtlichen Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen, z.B. bei der Einführung neuer Services. Für Ihren erneuten Besuch gilt dann die neue Datenschutzerklärung.</p>
+        <h5>Fragen an den Datenschutzbeauftragten</h5>
+        <p>Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail oder wenden Sie sich direkt an die für den Datenschutz verantwortliche Person in unserer Organisation:</p>
+        <p>info@rheinhessenriders.tk</p>
+        <p><em>Die Datenschutzerklärung wurde mit dem </em><em><a href="https://www.activemind.de/datenschutz/datenschutzhinweis-generator/" target="_blank" rel="noopener">Datenschutzerklärungs-Generator der activeMind AG erstellt</a> (Version 2018-09-24).</em></p>
+    </div>
+</div>
+
+
+<footer class="page-footer grey darken-2">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text rr">RheinhessenRiders</h5>
+                <p class="grey-text text-lighten-4">
+                    Was sind wir? RheinhessenRiders steht nicht für eine kleine WhatsApp-Gruppen aus Rheinhessen... Nein wir sind eine Familie von Zweiradverrückten, die ein Hobby teilen und so viel Zeit miteinander verbringen. Monatliche Stammtische, kleinere Meets und Natürlich Ausfahrten sind Standart - Zu gegebenen Anlass finden jedoch auch Korsos und Fotoshootings statt, für die wir mehrere interne Fotographen haben.<br/>
+                    Organisiert wird alles von einem tollen Adminteam und Strub 😂<br/>
+                    <br/>
+                    Was musst du mitbringen, um zu uns zu kommen?<br/>
+
+                    - Du bist mindestens 16 Jahre alt und hast A1 (oder in absehbarer Zeit)<br/>
+                    - Du kommst aus dem Raum Rheinhessen 🍷<br/>
+                    - Du verkraftest auch mal ein paar blöde Sprüche (gilt besonders für Rc und Cbr Fahrer)<br/>
+                    <br/>
+                    Und liebst natürlich das <s>Shisharauchen</s> Motorradfahren 👌🏻
+                </p>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text rr">Legal</h5>
+                <ul>
+                    <li><a class="white-text" href="/impress.html">Impressum</a></li>
+                    <li><a class="white-text" href="/versand.html">Versand</a></li>
+                    <li><a class="white-text" href="/datenschutz.html">Datenschutz</a></li>
+                    <li><a class="white-text" href="/agb.html">AGB</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text rr">Social</h5>
+                <ul>
+                    <li><a class="white-text" href="https://www.youtube.com/channel/UCSp56Iw86o1O1zBYNqpYIqA">YouTube</a></li>
+                    <li><a class="white-text" href="https://www.instagram.com/rheinhessen_riders">Instagram</a></li>
+                    <li><a class="white-text" href="https://www.facebook.com/rheinhessenriders/?ref=br_rs">Facebook</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made with <a class="grey-text text-darken-4" href="http://materializecss.com">Materialize</a> by Yannick F&#233;lix
+        </div>
+    </div>
+</footer>
+</body>
+</html>

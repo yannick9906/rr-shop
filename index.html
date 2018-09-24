@@ -6,7 +6,7 @@
 
     <link type="text/css" rel="stylesheet" href="lib/materialize/sass/materialize.css" media="screen,projection"/>
     <link rel="stylesheet" href="lib/mdi/css/materialdesignicons.min.css" media="all" type="text/css" />
-    <link rel="stylesheet" href="css/style.css" media="all" type="text/css" />
+    <link rel="stylesheet" href="css/style.css?rev=10" media="all" type="text/css" />
 
     <link rel="manifest" href="manifest.json" />
     <link rel="manifest" href="rrshop.appcache" />
@@ -58,7 +58,7 @@
                     <p class="bolden">Dieser Shop ist nur f&uuml;r Gruppenmitglieder.</p>
                     <p>Demnach wird ein Zugangscode benötigt um diesen Shop zu benutzen.<br/>
                         Um einen Code zu erhalten spreche bitte eine Person aus unserem Admin-Team an.</p>
-                    <p>Dieser 'Shop' wird nur zur Organisation der Bestellungen benutzt. Es wird keine Ware verkauft.</p>
+                    <p>Es wird ein Cookie benutzt um den Zugangscode für 14 Tage zu speichern.</p>
                     <p>Mit der Eingabe des Zugangscodes erklärst du dich damit einverstanden.</p>
                     <form>
                         <div class="row">
@@ -226,7 +226,7 @@
                     <p>
                         <label>
                             <input id="infoAGBConfirm" class="filled-in" type="checkbox" />
-                            <span>Ich habe die <a href="agb.html" target="_blank">AGB</a> gelesen und stimme diesen zu. Sie beinhaltet auch unsere Datenschutzrichtlinie.</span>
+                            <span>Ich habe die <a href="agb.html" target="_blank">AGB</a> und den <a href="datenschutz.html" target="_blank">Datenschutz</a> gelesen und stimme diesen zu.</span>
                         </label>
                     </p>
                 </div>
@@ -364,6 +364,7 @@
                     <ul>
                         <li><a class="white-text" href="/impress.html">Impressum</a></li>
                         <li><a class="white-text" href="/versand.html">Versand</a></li>
+                        <li><a class="white-text" href="/datenschutz.html">Datenschutz</a></li>
                         <li><a class="white-text" href="/agb.html">AGB</a></li>
                     </ul>
                 </div>
@@ -390,9 +391,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script type="text/javascript" src="lib/md5.js"></script>
     <script type="text/javascript" src="lib/lockr.js"></script>
-    <script type="text/javascript" src="js/shopBase.js"></script>
-    <script type="text/javascript" src="js/shopDetail.js"></script>
-    <script type="text/javascript" src="js/shopCart.js"></script>
-    <script type="text/javascript" src="js/shopCheckout.js"></script>
+    <script type="text/javascript" src="js/shopBase.js?rev=10"></script>
+    <script type="text/javascript" src="js/shopDetail.js?rev=10"></script>
+    <script type="text/javascript" src="js/shopCart.js?rev=10"></script>
+    <script type="text/javascript" src="js/shopCheckout.js?rev=10"></script>
 </body>
 </html>
