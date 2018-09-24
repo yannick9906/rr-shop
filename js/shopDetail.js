@@ -253,6 +253,14 @@ function addToCart() {
         toAdd.itemData[features[i].featureName] = $("#feature_"+features[i].featureName).val();
     }
 
+    _paq.push(['addEcommerceItem',
+        thisItem.itemID, // (required) SKU: Product unique identifier
+        thisItem.invoiceName, // (optional) Product name
+        "Merchandise", // (optional) Product category, or array of up to 5 categories
+        parseInt(currentPrice), // (recommended) Product price
+        parseInt($("#feature_amount").val())+1 // (optional, default to 1) Product quantity
+    ]);
+
     Lockr.sadd("items", toAdd);
     M.toast({html: "Zum Einkaufswagen hinzugefügt", duration: 1000, classes:"green"});
     updateCartAmount();

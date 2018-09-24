@@ -41,6 +41,8 @@ let templateCartData = Handlebars.compile(`
 {{/each}}
 `);
 
+let lastTotal = 0;
+
 function displayCart() {
     console.log("Check Cart");
     let cartItems = Lockr.smembers("items");
@@ -71,7 +73,8 @@ function displayCart() {
             }));
             itemDataToDisplay(cartItems[i], i, "cardContent");
         }
-        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€ + "+shipping+"€ Versand");
+        lastTotal = totalPrice;
+        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€");
 
 
         if(cartItems.length === 0) {
@@ -109,23 +112,29 @@ function itemDataToDisplay(item, id, nameIdentifier) {
 
 function updateCartAmount() {
     $("#cartAmount").html(Lockr.smembers("items").length);
-    let items = Lockr.smembers("items");
 
-    //TODO eCommerce Tracking
+    _paq.push(['trackEcommerceCartUpdate',
+        lastTotal]); // (required) Cart amount
+    _paq.push(['trackPageView']);
 }
 
 function delItem(itemID) {
     let items = Lockr.smembers("items");
+    let itemType = 0;
     Lockr.rm("items");
     for(let i = 0; i < items.length; i++) {
         if(i !== itemID) Lockr.sadd("items", items[i]);
+        else itemType = items[i]['itemType'];
     }
+
     displayCart();
     updateCartAmount();
 }
 
 function clearCart() {
     Lockr.rm("items");
+
+
     displayCart();
     updateCartAmount();
 }

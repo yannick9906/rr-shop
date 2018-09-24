@@ -86,6 +86,14 @@ function checkoutNext() {
                     itemName: cartItems[i].itemName
                 }));
                 itemDataToDisplay(cartItems[i], i, "cardContentNoOptions");
+
+                _paq.push(['addEcommerceItem',
+                    thisItem.itemID, // (required) SKU: Product unique identifier
+                    thisItem.invoiceName, // (optional) Product name
+                    "Merchandise", // (optional) Product category. You can also specify an array of up to 5 categories eg. ["Books", "New releases", "Biography"]
+                    cartItems[i].price, // (recommended) Product price
+                    cartItems[i].amount * thisItem.baseAmount // (optional, default to 1) Product quantity
+                ]);
             }
             $("#infoConfirmTotalPrice").html("Gesamt: " + itemPrice + "€ + " + shipPrice + "€ Versand");
 
@@ -153,6 +161,17 @@ function sendOrder(callback) {
         if(json.success || json.success === "true") {
             orderID = json.orderID;
             securityToken = json.orderNum;
+
+            _paq.push(['trackEcommerceOrder',
+                json.orderID, // (required) Unique Order ID
+                json.totalPrice, // (required) Order Revenue grand total (includes tax, shipping, and subtracted discount)
+                false, // (optional) Order sub total (excludes shipping)
+                0, // (optional) Tax amount
+                false, // (optional) Shipping amount
+                false // (optional) Discount offered (set to false for unspecified parameter)
+            ]);
+            _paq.push(['trackPageView']);
+
             sendRest();
             clearCart();
         }

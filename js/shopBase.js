@@ -33,9 +33,9 @@ let itemPreActiveTemplate = Handlebars.compile(`
                 </div>
                 <div class="card-action">
                                         {{#if otherAmount}}
-                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€ / {{baseAmount}} Stk - bald verfügbar</a>
+                    <a class="orange-text text-darken-2">ab {{basePrice}}€ / {{baseAmount}} Stk - bald verfügbar</a>
                     {{else}}
-                    <a href="#{{itemName}}" class="orange-text text-darken-2">ab {{basePrice}}€ / Stk - bald verfügbar</a>
+                    <a class="orange-text text-darken-2">ab {{basePrice}}€ / Stk - bald verfügbar</a>
                     {{/if}}
                 </div>
             </div>
