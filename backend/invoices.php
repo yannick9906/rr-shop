@@ -19,7 +19,7 @@
     require_once "lib/fpdf.php";
     require_once "lib/qrcode.class.php";
 
-    $orders = \rrshop\Order::getListObjects(1,999,"", "", "state = 1 and estDate = MONTH(CURDATE())+1");
+    $orders = \rrshop\Order::getListObjects(1,999,"", "", "state = 1 and estDate <= MONTH(CURDATE())+1");
     //print_r($orders);
     foreach ($orders as $order) {
         $invoice = new \rrshop\Invoice($order->getItems(), $order->getOrderID(), $order->getCustomer(), $order->getNote(), $order->getTimestamp());

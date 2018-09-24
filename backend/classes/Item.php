@@ -267,13 +267,13 @@
             $shipping = [0,0];
             $cost = 0;
             $shipType = 'none';
-            if($shipAll) $shipping[1] = 1;
             //Check for shipping[0]
             for($i=0; $i < sizeof($corrected); $i++) {
                 $itemName = $corrected[$i]['itemName'];
                 if($itemName == "rr_sticker") {
                     $shipping[0] = 1;
-                    break;
+                } else if($shipAll && $itemName != "rr_shipping") {
+                    $shipping[1] = 1;
                 }
             }
 
@@ -301,7 +301,7 @@
         public static function getTotalPriceOfItems($items) {
             $totalPrice = 0;
             for($i=0; $i < sizeof($items); $i++) {
-                $totalPrice += $items[$i]['price']*$items[$i]['amount'];
+                $totalPrice += $items[$i]['price'];
             }
             return $totalPrice;
         }

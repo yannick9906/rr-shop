@@ -64,7 +64,7 @@
                 $this->pdf->MultiCell(100,4,utf8_decode($itemType->itemDataToInvoice($item)),1);
                 $this->pdf->SetXY($currentX+100, $currentY);
                 $this->pdf->SetFont("Arial","",10);
-                $this->pdf->Cell(20,8,$item["amount"],1,0,"R");
+                $this->pdf->Cell(20,8,$item["amount"]*$itemType->getBaseAmount(),1,0,"R");
                 $this->pdf->SetFont("","b");
                 $this->pdf->Cell(20,8,$this->numFormat($item["price"])." EUR",1,1,"R");
             }
@@ -94,8 +94,8 @@
         }
 
         public function getPDFFile() {
-            $this->pdf->Output("F", "/home/webpages/lima-city/ybook/rr-beta/backend/invoices/".$this->orderID."-rechnung.pdf",false);
-            return "/home/webpages/lima-city/ybook/rr-beta/backend/invoices/".$this->orderID."-rechnung.pdf<br/>";
+            $this->pdf->Output("F", "/home/webpages/lima-city/ybook/rr-production/backend/invoices/".$this->orderID."-rechnung.pdf",false);
+            return "/home/webpages/lima-city/ybook/rr-production/backend/invoices/".$this->orderID."-rechnung.pdf<br/>";
         }
 
         public function showPDF() {

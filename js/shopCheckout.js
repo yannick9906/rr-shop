@@ -82,7 +82,7 @@ function checkoutNext() {
                     displayName: thisItem.displayName,
                     imageUrl: thisItem.imageUrl,
                     price: cartItems[i].price,
-                    amount: cartItems[i].amount,
+                    amount: cartItems[i].amount * thisItem.baseAmount,
                     itemName: cartItems[i].itemName
                 }));
                 itemDataToDisplay(cartItems[i], i, "cardContentNoOptions");

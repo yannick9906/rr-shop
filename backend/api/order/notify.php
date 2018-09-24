@@ -16,6 +16,11 @@
     require_once "../../classes/Template.php";
     require_once "../../vendor/autoload.php";
     require_once "../../classes/User.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/PHPMailer.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/Exception.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/OAuth.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/POP3.php";
+    require_once "../../vendor/phpmailer/phpmailer/src/SMTP.php";
 
     $accesscode = $_COOKIE['accesscode'];
     $accesscodes = \rrshop\accesscodes();
