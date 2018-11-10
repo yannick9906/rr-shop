@@ -104,7 +104,7 @@ function shopHome() {
         window.scrollTo(0, 0);
         updateCartAmount();
         //resetBuy()
-        if (json.success == "true") {
+        if (json.success) {
             if(shopHomeElem.html() == "") {
                 $.post("backend/api/item/getItemList.php", null, (d) => {
                     let items = JSON.parse(d);

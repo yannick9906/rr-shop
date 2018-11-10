@@ -39,6 +39,7 @@ function resetDash() {
     $("#orderEdit").hide();
 
     $(window).off('focusin', refreshInfo);
+    $('body').css('background-image','none');
 }
 
 function checkHash() {

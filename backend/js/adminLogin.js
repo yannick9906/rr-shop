@@ -20,6 +20,8 @@ function startLogin() {
     $("#loginPanel").show();
     $("#success").hide();
     $("#loginFields").show();
+
+    $('body').css('background-image','url("../img/snapbuilder.png")');
 }
 
 function doLogin() {

@@ -45,7 +45,7 @@ let templateFeatureSelArray = Handlebars.compile(`
 `);
 
 let templatePreviewFrontName = Handlebars.compile(`
-<div class="col s6" style="line-height: normal;">
+<div class="col s6" style="line-height: normal;" id="frontName">
     <p class="bolden">Vorderseite:</p>
     <img src="img/preview/sport.png" width="100%" id="preview-heart"/>
     <div class="white-text center preview" id="preview-front">
@@ -54,7 +54,7 @@ let templatePreviewFrontName = Handlebars.compile(`
 </div>
 `);
 let templatePreviewFrontHeart = Handlebars.compile(`
-<div class="col s6" style="line-height: normal;">
+<div class="col s6" style="line-height: normal;" id="frontHerz">
     <p class="bolden">Vorderseite:</p>
     <img src="img/preview/sport.png" width="100%" id="preview-heart"/>
     <div class="white-text center preview" id="preview-front">
@@ -169,6 +169,13 @@ function refreshPreview() {
         previewFront.textfill({maxFontPixels:100, minFontPixels:10});
         previewHeart.attr('src', "img/preview/"+heart+".png");
 
+    } else if(previews[4] === 1) {
+        let heart = $("#feature_frontHerz").val();
+        let previewFront = $("#preview-front");
+        let previewHeart = $("#preview-heart");
+
+        previewFront.textfill({maxFontPixels:100, minFontPixels:10});
+        previewHeart.attr('src', "img/preview/"+heart+".png");
     }
     if(previews[1] === 1) {
         let city = $("#feature_backCity").val();
@@ -208,14 +215,6 @@ function refreshPreview() {
         if(color === "magenta") previewColor.addClass("purple");
         if(color === "weiss") {previewColor.addClass("white"); previewColor.addClass("black-text");}
         else previewColor.addClass("white-text");
-    }
-    if(previews[4] === 1) {
-        let heart = $("#feature_frontHerz").val();
-        let previewFront = $("#preview-front");
-        let previewHeart = $("#preview-heart");
-
-        previewFront.textfill({maxFontPixels:100, minFontPixels:10});
-        previewHeart.attr('src', "img/preview/"+heart+".png");
     }
     refreshPrice();
 }

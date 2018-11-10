@@ -67,7 +67,7 @@
         public static function getItems() {
             $pdo = new PDO_MYSQL();
 
-            $stmt = $pdo->queryMulti("select * from rrshop_items");
+            $stmt = $pdo->queryMulti("select * from rrshop_items order by itemID");
             $rows = array();
             while($r = $stmt->fetchObject()) {
                 array_push($rows, $r);
@@ -77,7 +77,7 @@
 
         public static function getItemFeatures($itemName) {
             $pdo = new PDO_MYSQL();
-            $stmt = $pdo->queryMulti("select * from rrshop_itemFeatures where itemID = (select itemID from rrshop_items where itemName = :itmNme limit 1)",[":itmNme" => $itemName]);
+            $stmt = $pdo->queryMulti("select * from rrshop_itemFeatures where itemID = (select itemID from rrshop_items where itemName = :itmNme limit 1) order by featureID",[":itmNme" => $itemName]);
             $rows = array();
             while($r = $stmt->fetchObject()) {
                 array_push($rows, $r);
