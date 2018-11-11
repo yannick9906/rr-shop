@@ -231,7 +231,7 @@
                 }
             }
             if(strlen($invoiceString) < 64 && $rows >= 2) $invoiceString.="\n.";
-            if(strlen($invoiceString) < 118 && $rows >= 3) $invoiceString.="\n.\n.";
+            if(strlen($invoiceString) < 118 && $rows >= 3) $invoiceString.="\n.";
             return $invoiceString;
         }
 

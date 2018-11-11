@@ -3,6 +3,11 @@
     font-family: 'Dosis', sans-serif;
 }*/
 
+
+.main {
+    min-height: 44vh;
+}
+
 pre {
     font-family: 'Share Tech Mono', monospace;
 }
