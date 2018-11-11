@@ -1,0 +1,64 @@
+function orderInfo(hash) {
+    let orderID = hash.substr(6);
+    let state0 = $("#state0");
+    let state1 = $("#state1");
+    let state2 = $("#state2");
+    let state3 = $("#state3");
+    let state4 = $("#state4");
+    let stateN = $("#stateN");
+
+    state0.addClass("grey-text bolden");
+    state1.addClass("grey-text bolden");
+    state2.addClass("grey-text bolden");
+    state3.addClass("grey-text bolden");
+    state4.addClass("grey-text bolden");
+    state0.removeClass("green-text");
+    state1.removeClass("green-text");
+    state2.removeClass("green-text");
+    state3.removeClass("green-text");
+    state4.removeClass("green-text");
+    stateN.hide();
+
+    $("#shopHome").hide();
+    $.getJSON("backend/api/order/checkInfo.php",{orderID: orderID}, (json) => {
+        console.log(json);
+        $("#stateTotal").html("Gesamt: "+json.totalPrice+"€");
+        $("#stateID").html("Bestellstatus Bestellung #"+json.orderID);
+        $("#stateInfoName").html(json.customername);
+        $("#stateInfoShip").html(shipmentType[parseInt(json.shipping)]);
+        $("#stateInfoPaym").html(paymentType[parseInt(json.payment)]);
+        $("#stateInfoDate").html(json.timestamp);
+        $("#stateInfoAmou").html(json.items.length-1+" Positionen");
+
+        switch(json.state) {
+            case 4:
+                state4.removeClass("grey-text");
+                state3.removeClass("bolden");
+                state4.addClass("green-text");
+            case 3:
+                state3.removeClass("grey-text");
+                state2.removeClass("bolden");
+                state3.addClass("green-text");
+            case 2:
+                state2.removeClass("grey-text");
+                state1.removeClass("bolden");
+                state2.addClass("green-text");
+            case 1:
+                state1.removeClass("grey-text");
+                state0.removeClass("bolden");
+                state1.addClass("green-text");
+            case 0:
+                state0.removeClass("grey-text");
+                state0.addClass("green-text");
+                break;
+            case 5:
+                stateN.show();
+                state0.removeClass("bolden");
+                state0.removeClass("grey-text");
+                state0.addClass("green-text");
+                break;
+        }
+
+        $("#shopState").show();
+    });
+}

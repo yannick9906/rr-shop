@@ -136,6 +136,33 @@
         </div>
     </div>
 
+    <!-- Order Info -->
+    <div class="main container" id="shopState" style="display: none;">
+        <div class="card-panel row">
+            <h4 class="col s12 black-text rr" id="stateID">Bestellstatus</h4>
+            <span class="col s12 rr bigger right-align black-text" id="stateTotal">Gesamt: 0€</span>
+            <div class="col s12 m5">
+                <span class="row">
+                    <span class="bolden col s12 grey-text" id="state0">Bestellung eingegangen</span>
+                    <span class="bolden col s12 red-text"  id="stateN">Bestellung storniert.</span>
+                    <span class="bolden col s12 grey-text" id="state1">Bestellung bezahlt</span>
+                    <span class="bolden col s12 grey-text" id="state2">Bestellung in Produktion</span>
+                    <span class="bolden col s12 grey-text" id="state3">Bestellung versandt</span>
+                    <span class="bolden col s12 grey-text" id="state4">Bestellung abgeschlossen</span>
+                </span>
+            </div>
+            <div class="col s12 m7">
+                <span class="row">
+                    <span class="bolden col s4">Name: </span>       <span class="col s8" id="stateInfoName">...</span>
+                    <span class="bolden col s4">Versand: </span>    <span class="col s8" id="stateInfoShip">...</span>
+                    <span class="bolden col s4">Zahlung: </span>    <span class="col s8" id="stateInfoPaym">...</span>
+                    <span class="bolden col s4">Datum: </span>      <span class="col s8" id="stateInfoDate">...</span>
+                    <span class="bolden col s4">Anzahl Waren:</span><span class="col s8" id="stateInfoAmou">...</span>
+                </span>
+            </div>
+        </div>
+    </div>
+
     <!-- Checkout: Buyer Info -->
     <div class="main container" id="buyerInfo" style="display: none;">
         <div class="card-panel row">
@@ -394,5 +421,6 @@
     <script type="text/javascript" src="js/shopDetail.js?rev=10"></script>
     <script type="text/javascript" src="js/shopCart.js?rev=10"></script>
     <script type="text/javascript" src="js/shopCheckout.js?rev=10"></script>
+    <script type="text/javascript" src="js/shopState.js?rev=10"></script>
 </body>
 </html>
