@@ -182,10 +182,10 @@
                 </div>
                 <div class="input-field col s12">
                     <textarea id="infoNote" class="materialize-textarea" data-length="1073741823"></textarea>
-                    <label for="infoNote">Notizen</label>
+                    <label for="infoNote">Notizen (optional)</label>
                 </div>
                 <div class="col s12 m3">
-                    <h6 class="bolden">Bezahlmethode</h6>
+                    <h6 class="bolden">Bezahlmethode (Vorkasse)</h6>
                     <p>
                         <label>
                             <input name="infoPayment" type="radio" value="0" />
@@ -208,7 +208,7 @@
                         <input name="payment" type="radio" id="directdebit" disabled="disabled" value="3" />
                         <label for="directdebit">Lastschrift</label>
                     </p>-->
-                    <p><br/></p>
+                    <p>Die Bezahlung muss in Vorkasse sein, da es sich meist um personalisierte Produkte handelt. Die Bearbeitung erfolgt erst nach Eingang der Zahlung.</p>
                 </div>
                 <div class="col s12 m3">
                     <h6 class="bolden">Versandart</h6>
@@ -221,7 +221,7 @@
                     <p>
                         <label>
                             <input name="infoShipping" type="radio" value="1" />
-                            <span>Selbstabholung</span>
+                            <span>Selbstabholung (Mz-Lerchenberg)</span>
                         </label>
                     </p>
                     <p>
@@ -230,7 +230,7 @@
                             <span>Versand (+5 Euro)</span>
                         </label>
                     </p>
-                    <p>Sticker werden immer versandt. Falls Sticker in der Bestellung sind zzgl. 1.50€ Versand.</p>
+                    <p>Sticker werden immer versandt. Falls Sticker in der Bestellung ohne Versand sind zzgl. 1.50€ Versand.</p>
                 </div>
                 <div class="col s12 m6 row">
                     <h6 class="bolden s12">Addresse: </h6>
@@ -279,6 +279,12 @@
                             <span class="bolden col s4">Addresse:</span>       <span class="col s8" id="infoConfirmAddress"></span>
                         </span>
                     </div>
+                    <div class="col s12 m6 card-panel" id="paypal-checkout">
+                        <span class="row">
+                            <span class="bigger rr col s12">PAYPAL Checkout</span>
+                            <span class="col s12 m6" id="paypal-button-container"></span>
+                        </span>
+                    </div>
                 </div>
                 <div class="right-align">
                     <span id="infoConfirmTotalPrice" class="bigger rr"></span>
@@ -325,7 +331,7 @@
                                 <span class="bolden">Möglichkeit 1:</span><br/>
                                 Drucke die per Mail erhaltene Rechnung aus und packe diese zusammen mit dem Bargeld in einen Umschlag.<br/>
                                 Dieser wird entweder bei
-                                <br/><span class="bolden">Philipp Lommel, Am Hillesheimer Weg 8a, 67596 Frettenheim</span>
+                                <br/><span class="bolden">Philipp Lommel, Berliner Straße 19, 55294 Bodenheim</span>
                                 <br/> oder
                                 <br/><span class="bolden">Yannick F&#233;lix, Tucholskyweg 17, 55127 Mainz</span>
                                 <br/>eingeworfen.
@@ -353,11 +359,7 @@
                         <div class="card-panel col s12" style="display: none;" id="infoSuccessPaymentPayPal">
                             <span class="bigger rr">Bezahlmethode PayPal</span>
                             <p>
-                                Schicke den fälligen Betrag an folgende E-Mail Adresse mit der Methode 'Geld an Freunde und Familie senden'. Falls Käuferschutz gewünscht ist, müssen die Gebühren selbst getragen werden. Als Notiz muss die Bestellnummer angegeben werden, ansonsten kann die Bezahlung nicht zugeordnet werden.<br/>
-                                <br/>
-                                <span class="bolden">
-                                shop@rheinhessenriders.tk
-                                </span>
+                                Vielen Dank. Deine Transaktion war erfolgreich. Die Produktion wird so bald wie möglich starten.
                             </p>
                         </div>
                     </div>
@@ -374,13 +376,13 @@
                     <h5 class="white-text rr">RheinhessenRiders</h5>
                     <p class="grey-text text-lighten-4">
                         Was sind wir? RheinhessenRiders steht nicht für eine kleine WhatsApp-Gruppen aus Rheinhessen... Nein wir sind eine Familie von Zweiradverrückten, die ein Hobby teilen und so viel Zeit miteinander verbringen. Monatliche Stammtische, kleinere Meets und natürlich Ausfahrten sind Standard - Zu gegebenen Anlass finden jedoch auch Korsos und Fotoshootings statt für die wir mehrere interne Fotographen haben.<br/>
-                        Organisiert wird alles von einem tollen Adminteam und Strub 😂<br/>
+                        Organisiert wird alles von einem tollen Adminteam.<br/>
                         <br/>
                         Was musst du mitbringen, um zu uns zu kommen?<br/>
 
                         - Du bist mindestens 16 Jahre alt und hast A1 (oder in absehbarer Zeit)<br/>
                         - Du kommst aus dem Raum Rheinhessen 🍷<br/>
-                        - Du verkraftest auch mal ein paar blöde Sprüche (gilt besonders für Rc und Cbr Fahrer)<br/>
+                        - Du verkraftest auch mal ein paar blöde Sprüche (gilt besonders für RC und CBR Fahrer)<br/>
                         <br/>
                     Und liebst natürlich das <s>Shisharauchen</s> Motorradfahren 👌🏻
                     </p>
@@ -410,13 +412,18 @@
             </div>
         </div>
     </footer>
+    <script src="https://browser.sentry-cdn.com/5.11.0/bundle.min.js" integrity="sha384-jbFinqIbKkHNg+QL+yxB4VrBC0EAPTuaLGeRT0T+NfEV89YC6u1bKxHLwoo+/xxY" crossorigin="anonymous">
+    </script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="lib/jquery.textfill.min.js"></script>
     <script type="text/javascript" src="lib/materialize/js/bin/materialize.min.js"></script>
+    <script type="text/javascript" src="lib/materialize/js/select.js"></script>
     <script type="text/javascript" src="lib/handlebars.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script type="text/javascript" src="lib/md5.js"></script>
     <script type="text/javascript" src="lib/lockr.js"></script>
+    <script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=Adz8PT9N3fo_t8E05VeFHPJm6AgsTmw7Ex3rvUfJwpLQxki53QELW0SUppfvy-3ewbrv2KwRIZoKP9l1&currency=EUR"></script>
+    <!--<script type="text/javascript" src="https://www.paypal.com/sdk/js?client-id=AUp8UZ77stPIggM1JwcWraTVzT8a_Kqm5JrJJwppazBhcn40Lz25cCV9SJp_YxmOjg8jC4fV-D-1ePp-&currency=EUR"></script>-->
     <script type="text/javascript" src="js/shopBase.js?rev=10"></script>
     <script type="text/javascript" src="js/shopDetail.js?rev=10"></script>
     <script type="text/javascript" src="js/shopCart.js?rev=10"></script>

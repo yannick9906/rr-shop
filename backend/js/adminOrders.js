@@ -43,7 +43,7 @@ function resetOrders() {
 
 const paymentType = ["Bar / Karte","Überweisung","PayPal","Lastschrift"];
 const shipmentType = ["Mitnahme am nächsten Stammtisch","Selbstabholung", "Versand nach Hause"];
-const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='orange-text'>Bestellung bezahlt</span>", "<span class='orange-text'>Bestellung bestellt</span>","<span class='orange-text'>Bestellung versandt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
+const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='orange-text'>Bestellung bezahlt</span>", "<span class='yellow-text'>Bestellung bestellt</span>","<span class='orange-text'>Bestellung versandt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
 
 let sortNameO = "#sort";
 let listNameO = "#listItems"

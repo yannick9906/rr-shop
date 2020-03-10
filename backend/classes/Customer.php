@@ -115,8 +115,7 @@
                     "email" => $row->email,
                     "addressStreet" => $row->addressStreet,
                     "addressZip" => $row->addressZip,
-                    "addressCity" => $row->addressCity,
-                    "check" => md5($row->customerID+$row->firstname+$row->lastname+$row->email+$row->addressZip)
+                    "addressCity" => $row->addressCity
                 ]);
             }
             return $hits;

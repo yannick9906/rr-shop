@@ -29,6 +29,7 @@ function checkoutBack() {
 function checkoutNext() {
     $("#innerBuyerInfo").hide();
     $("#buyerLoading").show();
+    $("#paypal-checkout").hide();
     $("#infoBuyButton").addClass("disabled");
 
     //Collect input data
@@ -81,7 +82,7 @@ function checkoutNext() {
                     cardID: i,
                     displayName: thisItem.displayName,
                     imageUrl: thisItem.imageUrl,
-                    price: cartItems[i].price,
+                    price: cartItems[i].price.toFixed(2),
                     amount: cartItems[i].amount * thisItem.baseAmount,
                     itemName: cartItems[i].itemName
                 }));
@@ -95,7 +96,7 @@ function checkoutNext() {
                     cartItems[i].amount * thisItem.baseAmount // (optional, default to 1) Product quantity
                 ]);
             }
-            $("#infoConfirmTotalPrice").html("Gesamt: " + itemPrice + "€ + " + shipPrice + "€ Versand");
+            $("#infoConfirmTotalPrice").html("Gesamt: " + itemPrice.toFixed(2) + "€ + " + shipPrice.toFixed(2) + "€ Versand");
 
             orderData.totalPrice    = itemPrice+shipPrice;
             orderData.itemPrice     = itemPrice;
@@ -103,7 +104,53 @@ function checkoutNext() {
 
             $("#buyerLoading").hide();
             $("#buyerConfirm").show();
-            $("#infoBuyButton").removeClass("disabled");
+            if(orderData.payment === 2) {
+                $("#paypal-checkout").show();
+                $("#paypal-button-container").html("");
+                paypal.Buttons({
+                    style: {
+                        buttons: "black"
+                    },
+                    createOrder: function(data, actions) {
+                        // This function sets up the details of the transaction, including the amount and line item details.
+                        return actions.order.create({
+                            application_context: {
+                                brand_name: "RheinhessenRiders Shop",
+                                //shipping_preference: 'SET_PROVIDED_ADDRESS',
+                                user_action: 'PAY_NOW'
+                            },
+                            purchase_units: [{
+                                amount: {
+                                    currency_code: 'EUR',
+                                    value: orderData.totalPrice.toFixed(2)
+                                }/*,
+                                shipping: {
+                                    name: {
+                                        given_name: orderData.firstName,
+                                        surname: orderData.lastName
+                                    },
+                                    address: {
+                                        address_line_1: orderData.addressStreet,
+                                        admin_area_1: orderData.addressCity,
+                                        postal_code: orderData.addressZip
+                                    },
+                                }*/
+                            }]
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        // This function captures the funds from the transaction.
+                        return actions.order.capture().then(function(details) {
+                            // This function shows a transaction success message to your buyer.
+                            console.log("PayPal paid.");
+                            checkoutBuy();
+                        });
+                    }
+                }).render('#paypal-button-container');
+            } else {
+                $("#paypal-checkout").hide();
+                $("#infoBuyButton").removeClass("disabled");
+            }
         });
     } else {
         M.toast("Alle Felder müssen ausgefüllt werden.", 2000, "red");

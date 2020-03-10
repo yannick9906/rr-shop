@@ -106,6 +106,11 @@ function detail(hash) {
             } else if (json[i].featureType === "2") {
                 json[i].width = widths[i];
                 json[i].possibleValues = JSON.parse(json[i].possibleValues);
+                for(let key in json[i].possibleValues) {
+                    if(json[i].possibleValues[key].startsWith("Old")) {
+                        delete(json[i].possibleValues[key]);
+                    }
+                }
                 htmlElem.append(templateFeatureSel(json[i]));
                 $("#feature_"+json[i].featureName).selectedIndex = 1;
             }
@@ -220,20 +225,20 @@ function refreshPreview() {
 }
 
 function refreshPrice() {
-    let price = parseInt(thisItem.basePrice);
+    let price = parseFloat(thisItem.basePrice);
 
     for(let i=0; i < features.length; i++) {
         if(features[i].featureType === "2") {
             let index = $("#feature_"+features[i].featureName).prop('selectedIndex');
             let addPrice = JSON.parse(features[i].addPrice)[index-1];
             console.log(features[i].featureName+": "+index+" = "+addPrice);
-            price += parseInt(addPrice);
+            price += parseFloat(addPrice);
         }
     }
 
-    price *= parseInt($("#feature_amount").val())+1;
+    price *= parseFloat($("#feature_amount").val())+1;
 
-    $("#detailPrice").html(price+" €*");
+    $("#detailPrice").html(price.toFixed(2)+" €*");
     currentPrice = price;
 }
 
@@ -244,7 +249,7 @@ function addToCart() {
         itemType: parseInt(thisItem.itemID),
         itemName: thisItem.itemName,
         amount: parseInt($("#feature_amount").val())+1,
-        price: parseInt(currentPrice),
+        price: parseFloat(currentPrice),
         itemData: {}
     }
 
@@ -256,7 +261,7 @@ function addToCart() {
         thisItem.itemID, // (required) SKU: Product unique identifier
         thisItem.invoiceName, // (optional) Product name
         "Merchandise", // (optional) Product category, or array of up to 5 categories
-        parseInt(currentPrice), // (recommended) Product price
+        parseFloat(currentPrice), // (recommended) Product price
         parseInt($("#feature_amount").val())+1 // (optional, default to 1) Product quantity
     ]);
 

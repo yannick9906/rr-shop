@@ -266,10 +266,12 @@
             $corrected = $items;
             $shipping = [0,0];
             $cost = 0;
+            $totalCost = 0;
             $shipType = 'none';
             //Check for shipping[0]
             for($i=0; $i < sizeof($corrected); $i++) {
                 $itemName = $corrected[$i]['itemName'];
+                $totalCost += $corrected[$i]["price"];
                 if($itemName == "rr_sticker") {
                     $shipping[0] = 1;
                 } else if($shipAll && $itemName != "rr_shipping") {
@@ -277,10 +279,12 @@
                 }
             }
 
-            if($shipping[0] == 0 and $shipping[1] == 1) {
+            if($totalCost >= 50) {
+                $cost = 0; $shipType = 'free';
+            } elseif($shipping[0] == 0 and $shipping[1] == 1) {
                 $cost = 5; $shipType = 'items';
             } elseif($shipping[0] == 1 and $shipping[1] == 1) {
-                $cost = 6.5; $shipType = 'both';
+                $cost = 5; $shipType = 'both';
             } elseif($shipping[0] == 1 and $shipping[1] == 0) {
                 $cost = 1.5; $shipType = 'sticker';
             }

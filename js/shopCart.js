@@ -67,14 +67,14 @@ function displayCart() {
                 cardID: i,
                 displayName: thisItem.displayName,
                 imageUrl: thisItem.imageUrl,
-                price: cartItems[i].price,
+                price: cartItems[i].price.toFixed(2),
                 amount: cartItems[i].amount * thisItem.baseAmount,
                 itemName: cartItems[i].itemName
             }));
             itemDataToDisplay(cartItems[i], i, "cardContent");
         }
         lastTotal = totalPrice;
-        $("#cartTotalPrice").html("Gesamt: "+totalPrice+"€");
+        $("#cartTotalPrice").html("Gesamt: "+totalPrice.toFixed(2)+"€");
 
 
         if(cartItems.length === 0) {

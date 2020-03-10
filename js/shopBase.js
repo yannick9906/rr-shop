@@ -137,6 +137,7 @@ function shopHome() {
 
 
 $(document).ready(() => {
+    Sentry.init({ dsn: 'https://01590785af3946038a4d8045b6b3dd09@sentry.io/1888097' });
     $("#shopHome").html("");
     window.onhashchange = hashChange;
     shopHome();
