@@ -12,7 +12,7 @@
 
     class Order implements \JsonSerializable {
         private $customer, $items, $timestamp;
-        private $orderID, $orderNum, $payment, $shipping, $state, $note, $totalPrice;
+        private $orderID, $orderNum, $payment, $shipping, $state, $note, $totalPrice, $shipID;
         private $pdo;
 
         /**
@@ -27,8 +27,10 @@
          * @param $state
          * @param $note
          * @param $timestamp
+         * @param $totalPrice
+         * @param $shipID
          */
-        public function __construct($orderID, $orderNum, $customer, $items, $payment, $shipping, $state, $note, $timestamp, $totalPrice) {
+        public function __construct($orderID, $orderNum, $customer, $items, $payment, $shipping, $state, $note, $timestamp, $totalPrice, $shipID) {
             $this->orderID = $orderID;
             $this->customer = Customer::fromCustomerID(intval($customer));
             $this->items = $items;
@@ -39,6 +41,7 @@
             $this->timestamp = strtotime($timestamp);
             $this->orderNum = $orderNum;
             $this->totalPrice = $totalPrice;
+            $this->shipID = $shipID;
             $this->pdo = new PDO_MYSQL();
         }
 
@@ -50,11 +53,11 @@
             if(substr( $orderID, 0, 2 ) === "5a") {
                 $pdo = new PDO_MYSQL();
                 $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderNum = :oid", [":oid" => $orderID]);
-                return new Order($res->orderID, $res->orderNum, $res->customer, $res->items, $res->payment, $res->shipping, $res->state, $res->note, $res->timestamp, $res->totalPrice);
+                return new Order($res->orderID, $res->orderNum, $res->customer, $res->items, $res->payment, $res->shipping, $res->state, $res->note, $res->timestamp, $res->totalPrice, $res->shipID);
             } else {
                 $pdo = new PDO_MYSQL();
                 $res = $pdo->query("SELECT * FROM rrshop_orders WHERE orderID = :oid", [":oid" => $orderID]);
-                return new Order($res->orderID, $res->orderNum, $res->customer, $res->items, $res->payment, $res->shipping, $res->state, $res->note, $res->timestamp, $res->totalPrice);
+                return new Order($res->orderID, $res->orderNum, $res->customer, $res->items, $res->payment, $res->shipping, $res->state, $res->note, $res->timestamp, $res->totalPrice, $res->shipID);
             }
         }
 
@@ -69,7 +72,7 @@
         public static function createOrder($customer, $items, $payment, $shipping, $note, $orderPrice) {
             $pdo = new PDO_MYSQL();
 
-            $res1 = $pdo->query("SELECT orderID FROM rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
+            $res1 = $pdo->query("SELECT IFNULL( (SELECT orderID FROM rrshop_orders WHERE orderID >= ".date('Y')."000 ORDER BY timestamp DESC LIMIT 1), ".date('Y')."000) as orderID;",[]);
             $orderID = intval($res1->orderID)+1;
             //Create Order
             $pdo->queryInsert("rrshop_orders", [
@@ -80,6 +83,7 @@
                 "shipping" => intval($shipping),
                 "items" => json_encode($items),
                 "totalPrice" => $orderPrice,
+                "state" => $payment==2 ? 1:0,
                 "note" => $note
             ]);
             $res = $pdo->query("SELECT orderID FROM rrshop_orders ORDER BY timestamp DESC LIMIT 1",[]);
@@ -95,11 +99,10 @@
          * @param int    $page
          * @param int    $pagesize
          * @param string $search
-         * @param string $sort
-         *
+         * @param string $filter
          * @return array Normal dict array with dataO
          */
-        public static function getList($page = 1, $pagesize = 75, $search = "", $sort = "") {
+        public static function getList($page = 1, $pagesize = 75, $search = "", $filter = "") {
             $USORTING = [
                 "timeAsc"  => "ORDER BY timestamp ASC",
                 "idAsc"    => "ORDER BY orderID ASC",
@@ -107,12 +110,22 @@
                 "idDesc"   => "ORDER BY orderID DESC",
                 "" => ""
             ];
+            $OFILTERING = [
+                "default"  => "state >= 0 and state < 6",
+                "new"    => "state >= 0 and state <= 1",
+                "ordered"    => "state >= 2 and state <= 3",
+                "shipping"    => "state >= 4 and state <= 5",
+                "completed" => "state = 6",
+                "storno" => "state = -1",
+                "all"   => "",
+                "" => ""
+            ];
 
             $pdo = new PDO_MYSQL();
             $startElem = ($page-1) * $pagesize;
             $endElem = $pagesize;
-            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING[$sort], "state < 3");
-            $hits = self::getListMeta($page, $pagesize, $search);
+            $stmt = $pdo->queryPagedList("rrshop_orders", $startElem, $endElem, ["orderID"], $search, $USORTING["idDesc"], $OFILTERING[$filter]);
+            $hits = self::getListMeta($page, $pagesize, $search, $filter);
             while($row = $stmt->fetchObject()) {
                 array_push($hits["orders"], [
                     "orderID" => $row->orderID,
@@ -122,6 +135,7 @@
                     "payment" => $row->payment,
                     "shipping" => $row->shipping,
                     "totalPrice" => $row->totalPrice,
+                    "shipID" => $row->shipID,
                     "check" => md5($row->orderID+$row->timestamp+$row->customer)
                 ]);
             }
@@ -131,15 +145,26 @@
         /**
          * Returns the array stub for the getList() methods
          *
-         * @param int $page
-         * @param int $pagesize
+         * @param int    $page
+         * @param int    $pagesize
          * @param string $search
+         * @param string $filter
          * @return array
          */
-        public static function getListMeta($page, $pagesize, $search) {
+        public static function getListMeta($page, $pagesize, $search, $filter) {
+            $OFILTERING = [
+                "default"  => "state >= 0 and state < 6",
+                "new"    => "state >= 0 and state <= 1",
+                "ordered"    => "state >= 2 and state <= 3",
+                "shipping"    => "state >= 4 and state <= 5",
+                "completed" => "state = 6",
+                "storno" => "state = -1",
+                "all"   => "state > -99",
+                "" => "state > -99"
+            ];
             $pdo = new PDO_MYSQL();
-            if($search != "") $res = $pdo->query("select count(*) as size from rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%')) and state < 3", [":search" => $search]);
-            else $res = $pdo->query("select count(*) as size from rrshop_orders where state < 3");
+            if($search != "") $res = $pdo->query("select count(*) as size from rrshop_orders where lower(concat(orderID)) like lower(concat('%',:search,'%')) and ".$OFILTERING[$filter], [":search" => $search]);
+            else $res = $pdo->query("select count(*) as size from rrshop_orders where ".$OFILTERING[$filter]);
             $size = $res->size;
             $maxpage = ceil($size / $pagesize);
             return [
@@ -191,7 +216,8 @@
                  "payment" => $this->payment,
                  "shipping" => $this->shipping,
                  "note" => $this->note,
-                 "totalPrice" => $this->totalPrice],
+                 "totalPrice" => $this->totalPrice,
+                 "shipID" => $this->shipID],
                 "orderID = :oid",
                 ["oid" => $this->orderID]
             );
@@ -427,6 +453,7 @@
                 "customer" => $this->customer,
                 "totalPrice" => $this->totalPrice,
                 "note" => $this->note,
+                "shipID" => $this->shipID,
                 "items" => json_decode($this->items)
             ];
         }

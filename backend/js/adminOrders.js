@@ -11,7 +11,7 @@ function startOrders() {
     $("#editTitle").html("Bestellung bearbeiten");
     $("#newFields").html(newFields);
     $("#editFields").html(editFieldsO);
-    $("#sort").html(sortsO);
+    $("#filter").html(filtersO);
 
     $("#createNewBtn").hide();
 
@@ -22,9 +22,9 @@ function startOrders() {
 
     updatesO = true;
     updateCallerO()
-    $("#filter").keyup(function () {
+    $("#searchText").keyup(function () {
         delay(function(){
-            searchStringO = $("#filter").val();
+            searchStringO = $("#searchText").val();
             dataO = "";
             reqPageO = 1;
             updateDataO();
@@ -43,20 +43,23 @@ function resetOrders() {
 
 const paymentType = ["Bar / Karte","Überweisung","PayPal","Lastschrift"];
 const shipmentType = ["Mitnahme am nächsten Stammtisch","Selbstabholung", "Versand nach Hause"];
-const stateType = ["<span class='grey-text'>Bestellung aufgenommen</span>", "<span class='orange-text'>Bestellung bezahlt</span>", "<span class='yellow-text'>Bestellung bestellt</span>","<span class='orange-text'>Bestellung versandt</span>","<span class='green-text'>Bestellung abgeschlossen</span>","<span class='red-text'>Bestellung storniert.</span>"];
+const stateType = {'-1':"<span class='red-text'>Bestellung storniert.</span>", 0:"<span class='grey-text'>Bestellung aufgenommen</span>", 1:"<span class='orange-text'>Bestellung bezahlt</span>", 2:"<span class='yellow-text'>Bestellung bestellt</span>", 3:"<span class='orange-text'>Bestellung wird zusammengeführt</span>", 4:"<span class='green-text'>Bestellung versandt</span>", 5:"<span class='green-text'>Bestellung abholbereit</span>", 6:"<span class='green-text'>Bestellung abgeschlossen</span>"};
 
-let sortNameO = "#sort";
+let filterNameO = "#filter";
 let listNameO = "#listItems"
 let linkListO = "api/order/getList.php";
 let jsonFieldO = "orders"
 let pagesizeO = 12;
 ///////////////////////////////////////////////////////////////////////
 // TODO Fill List Template and update() method
-let sortsO = `
-<option value="idAsc">ID aufstg.</option>
-<option value="idDesc">ID abstg.</option>
-<option value="timeAsc">Datum aufstg.</option>
-<option value="timeDesc" selected>Datum abstg.</option>
+let filtersO = `
+<option value="default" selected>Standard</option>
+<option value="all">Alle</option>
+<option value="new">Neue & Bezahlte</option>
+<option value="ordered">Bestellt</option>
+<option value="shipping">Versandt</option>
+<option value="completed">Abgeschlossen</option>
+<option value="storno">Storno</option>
 `
 let listElemTmpltO = `
     <tr id="row-{{i}}" style="display: none;" onclick="location.hash = 'order-{{orderID}}'" class="clickable">
@@ -110,7 +113,7 @@ let currPageO = 1;
 let reqPageO = 1;
 let maxPagesO = 1;
 let sizeO = 0;
-let sortO = "idAsc";
+let filterO = "default";
 let dataO = "";
 let currEditO = -1;
 let updatesO = false;
@@ -148,11 +151,10 @@ function updatePagesO() {
 }
 
 function updateDataO() {
-    //console.log("Update Orders");
-    let sort = $(sortNameO).val();
+    let filter = $(filterNameO).val();
     let postdata = {
         page: reqPageO,
-        sort: sort,
+        filter: filter,
         search: searchStringO,
         pagesize: pagesizeO
     }

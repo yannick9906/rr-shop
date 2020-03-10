@@ -17,5 +17,5 @@
     $user = \rrshop\User::checkSession();
     $pdo = new \rrshop\PDO_MYSQL();
 
-    $orders = \rrshop\Order::getList($_GET["page"], intval($_GET["pagesize"]), utf8_decode($_GET["search"]), $_GET["sort"]);
+    $orders = \rrshop\Order::getList($_GET["page"], intval($_GET["pagesize"]), utf8_decode($_GET["search"]), $_GET["filter"]);
     echo json_encode($orders);
