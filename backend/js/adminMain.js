@@ -14,7 +14,9 @@ function startDash() {
     });
     $("#mainPanel").fadeIn();
     $("#welcomePanel").show();
-
+    $('.modal').modal();
+    $('.fixed-action-btn').floatingActionButton();
+    $('.tooltipped').tooltip();
 }
 
 function resetDash() {

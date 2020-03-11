@@ -2,20 +2,19 @@
     /**
      * Created by PhpStorm.
      * User: yanni
-     * Date: 2017-11-22
-     * Time: 05:54 PM
+     * Date: 11.03.2020
+     * Time: 00:17
      */
 
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
-    error_reporting(E_ALL);
+    ini_set("display_errors", "on");
+    error_reporting(E_ALL & ~E_NOTICE);
 
-    require_once "classes/PDO_Mysql.php";
-    require_once "classes/Invoice.php";
-    require_once "classes/Customer.php";
-    require_once "classes/Item.php";
-    require_once "classes/Order.php";
-    require_once "lib/code128.php";
+    require_once "../../classes/PDO_Mysql.php";
+    require_once "../../classes/Invoice.php";
+    require_once "../../classes/Customer.php";
+    require_once "../../classes/Item.php";
+    require_once "../../classes/Order.php";
+    require_once "../../lib/code128.php";
     //require_once "lib/qrcode.class.php";
 
     /**
@@ -30,23 +29,23 @@
         $pdf->setFillColor($color);
         $items = json_decode(utf8_encode($order->getItems()),true);
         for ($j=0; $j < sizeof($items); $j++) {
-                $itemType = \rrshop\Item::getItemByID($items[$j]["itemType"]);
-                $tstartY = $pdf->getY();
-                $pdf->setX(100);
-                $pdf->SetFont("","B",11);
-                $pdf->Cell(100,5,utf8_decode($itemType->getInvoiceName()." ".$items[$j]["amount"]*$itemType->getBaseAmount()."x"),0,1,'L',true);
-                $pdf->SetFont("Courier","B",8);
-                $pdf->setX(100);
-                $pdf->MultiCell(100,10/3,utf8_decode($itemType->itemDataToInvoice($items[$j],3, "; Anzahl: ".$items[$j]["amount"])),0,"L",true);
-                $pdf->SetFont("Arial","",11);
+            $itemType = \rrshop\Item::getItemByID($items[$j]["itemType"]);
+            $tstartY = $pdf->getY();
+            $pdf->setX(100);
+            $pdf->SetFont("","B",11);
+            $pdf->Cell(100,5,utf8_decode($itemType->getInvoiceName()." ".$items[$j]["amount"]*$itemType->getBaseAmount()."x"),0,1,'L',true);
+            $pdf->SetFont("Courier","B",8);
+            $pdf->setX(100);
+            $pdf->MultiCell(100,10/3,utf8_decode($itemType->itemDataToInvoice($items[$j],3, "; Anzahl: ".$items[$j]["amount"])),0,"L",true);
+            $pdf->SetFont("Arial","",11);
 
-                if($pdf->getY() < $tstartY+15 and sizeof($items)<2) $pdf->setY($startY+15);
-                $tendY = $pdf->getY();
-                $pdf->setXY(90, $tstartY);
-                $pdf->SetFont("","");
-                $pdf->Cell(10,5,$j+1,0,1,'C',true);
-                $pdf->setX(90, $tstartY+5);
-                $pdf->Cell(10,$tendY-($tstartY+5),"",0,1,'',true);
+            if($pdf->getY() < $tstartY+15 and sizeof($items)<2) $pdf->setY($startY+15);
+            $tendY = $pdf->getY();
+            $pdf->setXY(90, $tstartY);
+            $pdf->SetFont("","");
+            $pdf->Cell(10,5,$j+1,0,1,'C',true);
+            $pdf->setX(90, $tstartY+5);
+            $pdf->Cell(10,$tendY-($tstartY+5),"",0,1,'',true);
         }
         $endY = $pdf->getY();
 
@@ -76,7 +75,7 @@
         $order->setState(2);
         $order->saveChanges();
     }
-    $orderIDs = $_GET['orderIDs'];
+    $orderIDs = json_decode($_GET['orderIDs']);
 
     if(sizeof($orderIDs) > 0) {
         $whereString = $orderIDs[0];
@@ -111,4 +110,3 @@
     }
 
     $pdf->Output("I");
-    //print_r($orders);

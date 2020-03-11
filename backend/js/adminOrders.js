@@ -176,6 +176,7 @@ function updateDataO() {
             animateO(0);
         }
     });
+    if(JSON.parse(Cookies.get("orderingList")).length > 0) $('#orderingListButton').show();
 }
 
 function animateO(i) {

@@ -116,7 +116,7 @@
         </main>
         <main id="listPanel" style="display: none;">
             <div class="container row" id="listContainer">
-                <form class="col s12 m9" method="post" action="" id="live-search">
+                <form class="col s12 m8" method="post" action="" id="live-search">
                     <div class="row" id="search">
                         <div class="input-field col s12 ">
                             <i id="listSearchIcon" class="mddi prefix grey-text text-darken-2"></i>
@@ -125,7 +125,7 @@
                         </div>
                     </div>
                 </form>
-                <div class="input-field col s6 m2 offset-m1">
+                <div class="input-field col s6 m3 offset-m1">
                     <select id="filter">
 
                     </select>
@@ -300,6 +300,7 @@
                                 <div class="col s12" style="padding:0;">Bearbeitung:</div>
                                 <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Bestellung...</div>
                                 <a style="margin-bottom: 1rem;" onclick="actionPrepareOrdering()" id="info-action-prepare-ordering" class="waves-effect waves-light btn black white-text col s12">Zur Bestellliste hinzufügen</a>
+                                <a style="margin-bottom: 1rem; display: none;" onclick="actionRemoveOrdering()" id="info-action-unprepare-ordering" class="waves-effect waves-light btn black white-text col s12">Von der Bestellliste entfernen</a>
                             </div>
                             <div id="info-action-cluster-ready">
                                 <div class="col s12" style="padding:0;">Bearbeitung:</div>
@@ -309,17 +310,35 @@
                             <div id="info-action-cluster-start-shipment">
                                 <div class="col s12" style="padding:0;">Versand:</div>
                                 <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Versand wird vorbereitet...</div>
+                                <div class="input-field col s4">
+                                    <input id="gls-height" type="number" value="15">
+                                    <label for="gls-height">Höhe</label>
+                                </div>
+                                <div class="input-field col s4">
+                                    <input id="gls-width" type="number" value="30">
+                                    <label for="gls-width">Breite</label>
+                                </div>
+                                <div class="input-field col s4">
+                                    <input id="gls-depht" type="number" value="35">
+                                    <label for="gls-depht">Tiefe</label>
+                                </div>
                                 <a style="margin-bottom: 1rem;" onclick="actionGetGLSLabel()" id="info-action-getLabel" class="waves-effect waves-light btn blue yellow-text col s12">GLS Label ausstellen</a>
+                                <a style="margin-bottom: 1rem;" onclick="actionShipped()" id="info-action-label-generated" class="waves-effect waves-light btn green white-text col s12">Bestellung versandt</a>
                             </div>
                             <div id="info-action-cluster-ready-for-pickup">
-                                <div class="col s12" style="padding:0;">Versand:</div>
+                                <div class="col s12" style="padding:0;">Zusammenstellung:</div>
                                 <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Abholung wird vorbereitet...</div>
-                                <a style="margin-bottom: 1rem;" onclick="actionGetGLSLabel()" id="info-action-ready-for-pickup" class="waves-effect waves-light btn green white-text col s12">Bestellung abholbereit</a>
+                                <a style="margin-bottom: 1rem;" onclick="actionReadyForPickup()" id="info-action-ready-for-pickup" class="waves-effect waves-light btn green white-text col s12">Bestellung abholbereit</a>
+                            </div>
+                            <div id="info-action-cluster-pickup">
+                                <div class="col s12" style="padding:0;">Abholung:</div>
+                                <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Abholung...</div>
+                                <a style="margin-bottom: 1rem;" onclick="actionCompleted()" id="info-action-complete-pickup" class="waves-effect waves-light btn black white-text col s12">Bestellung abschliessen</a>
                             </div>
                             <div id="info-action-cluster-shipment">
                                 <div class="col s12" style="padding:0;">Versand:</div>
                                 <div style="margin-bottom: 1rem; padding: 1rem;" class="card grey lighten-4 center z-depth-0 bigger col s12">Warte auf Zustellung...</div>
-                                <a style="margin-bottom: 1rem;" onclick="actionComplete()" id="info-action-complete" class="waves-effect waves-light btn black white-text col s12">Bestellung abschliessen</a>
+                                <a style="margin-bottom: 1rem;" onclick="actionCompleted()" id="info-action-complete-ship" class="waves-effect waves-light btn black white-text col s12">Bestellung abschliessen</a>
                             </div>
                             <div id="info-action-cluster-complete">
                                 <div class="col s12" style="padding:0;">Abgeschlossen:</div>
@@ -340,13 +359,31 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </main>
+        <div id="orderingListModal" class="modal bottom-sheet">
+            <div class="modal-content">
+                <h4>Bestellliste</h4>
+                <ul class="collection" id="orderingListOrders">
+                    <li class="collection-item"><div>Die Liste ist leer, das sollte sie eigentlich nicht sein..</div></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <a onclick="actionOrderOrderingList()" class="modal-close waves-effect waves-green btn-flat green-text">Bestellen</a>
+            </div>
+        </div>
+        <div class="fixed-action-btn tooltipped" style="display: none;" id="orderingListButton" data-position="left" data-tooltip="Bestellliste aktiv">
+            <a class="btn-floating btn-large green" onclick="openModalOrdering()">
+                <i class="large mddi mddi-view-list"></i>
+            </a>
+        </div>
     </div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="../lib/jquery.textfill.min.js"></script>
 <script type="text/javascript" src="lib/materialize10/js/materialize.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script type="text/javascript" src="../lib/handlebars.min.js"></script>
 <script type="text/javascript" src="../lib/lockr.js"></script>
 <script type="text/javascript" src="../lib/md5.js"></script>
@@ -358,6 +395,7 @@
 <script type="text/javascript" src="js/adminCustomers.js?rev4"></script>
 <script type="text/javascript" src="js/adminOrderEdit.js?rev5"></script>
 <script type="text/javascript" src="js/adminScanner.js?rev4"></script>
+<script type="text/javascript" src="js/adminOrderingList.js?rev1"></script>
 <script>
     $(document).ready(() => {
         $('.sidenav').sidenav();

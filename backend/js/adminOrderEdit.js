@@ -28,6 +28,12 @@ Adresse: {{addressStreet}},<br/>
 </span><br/>
 `);
 
+let orderingListItemTemplate = Handlebars.compile(`
+<li class="collection-item"><div>Bestellung #{{orderID}}<a onclick="actionRemoveOrdering({{orderID}})" class="secondary-content"><i class="mddi mddi-close"></i></a></div></li>
+`);
+
+if(!Cookies.get("orderingList")) Cookies.set("orderingList", "[]");
+
 function startOrderEdit(hash) {
     orderID = hash.substr(6);
     $("#orderEdit").show();
@@ -41,6 +47,7 @@ function startOrderEdit(hash) {
 
 function refreshInfo() {
     resetInfo();
+    if(JSON.parse(Cookies.get("orderingList")).length > 0) $('#orderingListButton').show();
     $.post("api/item/getItemList.php", null, (d) => {
         let items = JSON.parse(d);
 
@@ -65,18 +72,26 @@ function refreshInfo() {
                 if(json.payment === 0) $("#info-action-cluster-offline").show();
                 else $("#info-action-cluster-online").show();
             } else if(json.state === 1) {
-                $("#info-action-payed").addClass("disabled");
                 $("#info-action-cluster-waiting").show();
+                let orderingList = JSON.parse(Cookies.get('orderingList'));
+
+                if(orderingList.indexOf(orderID.toString()) != -1) $("#info-action-unprepare-ordering").show();
+                else $("#info-action-prepare-ordering").show();
             } else if(json.state === 2) {
-                $("#info-action-printed").addClass("disabled");
                 $("#info-action-cluster-ready").show();
             } else if(json.state === 3) {
-                $("#info-action-shipped").addClass("disabled");
-                $("#info-action-cluster-shipment").show();
+                if(json.shipping == 2) {
+                    $("#info-action-cluster-start-shipment").show();
+                } else {
+                    $("#info-action-cluster-ready-for-pickup").show();
+                }
             } else if(json.state === 4) {
-                $("#info-action-completed").addClass("disabled");
-                $("#info-action-cluster-complete").show();
+                $("#info-action-cluster-shipment").show();
             } else if(json.state === 5) {
+                $("#info-action-cluster-pickup").show();
+            } else if(json.state === 4) {
+                $("#info-action-cluster-complete").show();
+            } else if(json.state === -1) {
                 $("#info-action-storno").addClass("disabled");
             }
 
@@ -109,7 +124,6 @@ function refreshInfo() {
 
 function itemDataToDisplay(item, id, nameIdentifier) {
     let displayableData = {};
-    console.log(item.itemData);
     $.getJSON("api/item/getItemDetail.php",{itemName: item.itemName}, (json) => {
         let features = {};
         for(let j=0; j<json.length; j++){
@@ -144,12 +158,17 @@ function resetInfo() {
 
     $("#info-action-cluster-complete").hide();
     $("#info-action-cluster-shipment").hide();
+    $("#info-action-cluster-ready-for-pickup").hide();
     $("#info-action-cluster-start-shipment").hide();
     $("#info-action-cluster-ready").hide();
     $("#info-action-cluster-waiting").hide();
     $("#info-action-cluster-offline").hide();
     $("#info-action-cluster-online").hide();
     $("#info-action-undo").show();
+    $("#info-action-prepare-ordering").hide();
+    $("#info-action-unprepare-ordering").hide();
+    $('#orderingListButton').hide()
+    $('#info-action-cluster-pickup').hide()
 }
 
 
@@ -190,20 +209,103 @@ function actionPayed() {
     });
 }
 
-function actionPrinted() {
+function actionPrepareOrdering() {
+    let orderinglist = JSON.parse(Cookies.get("orderingList"));
+    if($.inArray(orderID, orderinglist)==-1) orderinglist.push(orderID);
+    Cookies.set("orderingList", JSON.stringify(orderinglist));
+    openModalOrdering();
+    refreshInfo();
+}
+
+function actionDelivered() {
     $("#info-action-printed").html("...");
-    $.post("api/order/update.php",{orderID: orderID, state: 2}, (data) => {
+    $.post("api/order/update.php",{orderID: orderID, state: 3}, (data) => {
         let json = JSON.parse(data);
-        if(json.success) M.toast({html: "Bestellung im Druck.", duration: 1000, classes:"green"});
+        if(json.success) M.toast({html: "Bestellung eingetroffen.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
         refreshInfo();
         $("#info-action-printed").html("Bestellung im Druck");
     });
 }
 
+function actionGetGLSLabel() {
+    let opts = {
+        destination: 'DE',
+        height: $("#gls-height").val(),
+        length: $("#gls-depht").val(),
+        width: $("#gls-width").val(),
+        origin:'DE',
+        type:'parcel',
+        zip_code: orderData.customer.addressZip,
+        is_parcelshop_delivery: false
+    }
+    $.getJSON("https://www.gls-one.de/api/products",opts,(json) => {
+        let pos = orderData.customer.addressStreet.lastIndexOf(' ');
+        let addCart = {
+            product: 202762761,
+            properties: {
+                consignee: {
+                    value: {
+                        name: orderData.customer.firstname+' '+orderData.customer.lastname,
+                        street: orderData.customer.addressStreet.substring(0,pos),
+                        houseNumber: orderData.customer.addressStreet.substring(pos),
+                        zipCode: orderData.customer.addressZip,
+                        city: orderData.customer.addressCity,
+                        country: "DE"
+                    },
+                    type: 'address'
+                },
+                dimension: {
+                    value: {
+                        height: $("#gls-height").val(),
+                        length: $("#gls-depht").val(),
+                        width: $("#gls-width").val()
+                    },
+                    type: 'dimension'
+                },
+                consignor: {
+                    value: {
+                        email: "yannick.felix1999@gmail.com",
+                        name: "Yannick Félix",
+                        company: "Rheinhessenriders Shop",
+                        street: "Tucholskyweg",
+                        houseNumber: "17",
+                        zipCode: "55127",
+                        city: "Mainz",
+                        country: "DE"
+                    },
+                    type: 'address'
+                }
+            }
+        }
+        $.ajax({
+            url: "https://www.gls-one.de/api/cart",
+            type: "POST",
+            dataType: "json",
+            data: addCart,
+            contentType: "application/json"
+        });
+        // $.post("https://www.gls-one.de/api/cart",addCart,(data) => {
+        //     console.log("open tab");
+        //     window.open('https://www.gls-one.de/de/cart', '_blank');
+        // },{contentType: "application/json"});
+    });
+}
+
 function actionShipped() {
     $("#info-action-shipped").html("...");
-    $.post("api/order/update.php",{orderID: orderID, state: 3}, (data) => {
+    $.post("api/order/update.php",{orderID: orderID, state: 4}, (data) => {
+        let json = JSON.parse(data);
+        if(json.success) M.toast({html: "Bestellung versandt.", duration: 1000, classes:"green"});
+        else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
+        refreshInfo();
+        $("#info-action-shipped").html("Bestellung versandt");
+    });
+}
+
+function actionReadyForPickup() {
+    $("#info-action-shipped").html("...");
+    $.post("api/order/update.php",{orderID: orderID, state: 5}, (data) => {
         let json = JSON.parse(data);
         if(json.success) M.toast({html: "Bestellung versandt.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
@@ -214,7 +316,7 @@ function actionShipped() {
 
 function actionCompleted() {
     $("#info-action-completed").html("...");
-    $.post("api/order/update.php",{orderID: orderID, state: 4}, (data) => {
+    $.post("api/order/update.php",{orderID: orderID, state: 6}, (data) => {
         let json = JSON.parse(data);
         if(json.success) M.toast({html: "Bestellung abgeschlossen.", duration: 1000, classes:"green"});
         else M.toast({html: "Es ist ein Fehler aufgetreten: "+json.error, duration: 2000, classes:"red"});
