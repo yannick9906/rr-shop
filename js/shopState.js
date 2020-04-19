@@ -8,6 +8,8 @@ function orderInfo(hash) {
     let state5 = $("#state5");
     let state6 = $("#state6");
     let stateN = $("#stateN");
+    let trackIDDisplay = $("#stateInfoTrackIDHeader");
+    let trackIDValue = $("#stateInfoTrackID");
 
     state0.addClass("grey-text bolden");
     state1.addClass("grey-text bolden");
@@ -37,6 +39,7 @@ function orderInfo(hash) {
         $("#stateInfoDate").html(json.timestamp);
         $("#stateInfoAmou").html(json.items.length-1+" Positionen");
 
+        // noinspection FallThroughInSwitchStatementJS
         switch(json.state) {
             case 6:
                 state6.removeClass("grey-text");
@@ -74,6 +77,11 @@ function orderInfo(hash) {
                 state0.removeClass("grey-text");
                 state0.addClass("green-text");
                 break;
+        }
+        if(json.state === 4) {
+            trackIDDisplay.show();
+            trackIDValue.show();
+            trackIDValue.html("<a href='https://gls-group.eu/DE/de/paketverfolgung?match="+json.shipID+"' target='_blank'>GLS: "+json.shipID+"</a>")
         }
 
         $("#shopState").show();
